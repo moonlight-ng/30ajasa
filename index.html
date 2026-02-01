@@ -1,42 +1,146 @@
 <!DOCTYPE html>
-<html lang="">
-	<head>
-    <title>HTML</title>
+<html lang="en">
 
-		<meta name="title" content="HTML">
-		<meta name="description" content="HTML">
-		
-		<!-- Open Graph / Facebook -->
-		<meta property="og:type" content="website">
-		<meta property="og:url" content="https://github.com/fathermerry/html">
-		<meta property="og:title" content="HTML">
-		<meta property="og:description" content="Get in touch">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>30 Ajasa Street</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+</head>
 
-		<!-- Twitter -->
-		<meta property="twitter:card" content="summary_large_image">
-		<meta property="twitter:url" content="https://github.com/fathermerry/html">
-		<meta property="twitter:title" content="HTML">
-    <meta property="twitter:description" content="Get in touch">
-    
-    <style>
-      html, body {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        font-family: system-ui, 'sans-serif';
-      }
-      h1 {
-        margin: 0;
-      }
-    </style>
-	</head>
-	<body>
-    <div>
-      <h1>HTML</h1>
-      <h3>Basic template</h3>
-    </div>
-	</body>
+<body>
+
+    <!-- Peripheral Navigation -->
+    <a href="#" class="nav-fixed nav-tl">(Home)</a>
+    <a href="#phases" class="nav-fixed nav-tc">(Phases)</a>
+    <a href="#questions" class="nav-fixed nav-tr">(Questions)</a>
+
+    <!-- Section 1: Intro / Beige (Hero) -->
+    <section class="viewport-section section-beige hero-section">
+        <div class="hero-slideshow" aria-hidden="true"></div>
+        <header style="text-align: center; max-width: 800px; margin: 0 auto;">
+            <h1 style="font-size: 3rem; margin-bottom: 0.5rem; line-height: 1;"><a href="https://maps.app.goo.gl/zQ8GmyeYWDQ69SfC8" class="title-link" target="_blank" rel="noopener noreferrer"><span id="animated-number">30</span> Ajasa Street</a></h1>
+            <p style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">Lagos Island, Nigeria
+            </p>
+        </header>
+        <a href="#phases" class="hero-chevron" aria-label="Scroll to Phases">
+            <span class="chevron-down"></span>
+        </a>
+    </section>
+    <div class="hero-mobile-strip" aria-hidden="true"></div>
+
+    <!-- Section 2: Quote / Beige -->
+    <section class="viewport-section section-beige">
+        <div style="max-width: 600px; text-align: center;">
+            <blockquote style="font-size: 1.5rem; font-family: var(--font-stack-serif); line-height: 1.4;">
+                “The Lagos landscape is scattered with vestiges of power structures... How can these empty vessels
+                present opportunities?”
+            </blockquote>
+            <cite style="margin-top: 0.5rem;">(Tushar Hathiramani)</cite>
+        </div>
+    </section>
+
+
+    <!-- Section 3: Phase 1 & 2 / Dark -->
+    <section id="phases" class="viewport-section section-dark">
+        <div style="max-width: 600px; text-align: center;">
+            <span class="phase-meta" style="color: #888;">2019 — 2022</span>
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--text-on-dark);">Use & Circumstance</h2>
+
+            <div style="margin-bottom: 3rem;">
+                <h3 style="color: var(--bg-accent);">A Breathing Space</h3>
+                <p>It began as a space for informal labour—fermentation, radio-making, printing. A "living museum" of
+                    craft.</p>
+            </div>
+
+            <img src="images/craft-based-2021.webp" alt="Raffia detail"
+                style="width: 100%; height: 300px; object-fit: cover; margin: 2rem 0; opacity: 0.8;">
+
+            <div>
+                <h3 style="color: var(--bg-accent);">Designing By Circumstance</h3>
+                <p>Covid turned residency rooms into staff quarters. The architecture emerged from necessity and
+                    collective action.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Future / Beige -->
+    <section class="viewport-section section-beige">
+        <div style="max-width: 600px; text-align: center;">
+            <span class="phase-meta">2023 — 2026</span>
+            <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">The Horizon</h2>
+
+            <p><strong>Hospitality As Process.</strong> Moving beyond the traditional marketplace to an evolving
+                research space.</p>
+            <p class="mt-md"><strong>Full Regeneration.</strong> A model for sustainable urban renewal in Lagos, fully
+                realized by 2026.</p>
+        </div>
+    </section>
+
+    <!-- Section 5: Inquiry / Dark -->
+    <section id="questions" class="viewport-section section-dark">
+        <div style="max-width: 700px; text-align: center;">
+            <h2 style="font-size: 2rem; margin-bottom: 3rem; color: var(--text-on-dark);">(Central Questions)</h2>
+
+            <div class="question-row" style="justify-content: center; margin-bottom: 2rem;">
+                <p style="font-size: 1.2rem; font-family: var(--font-stack-serif);">
+                    <em>What are the potentials of informal maker processes as infrastructure?</em>
+                </p>
+            </div>
+
+            <div class="question-row" style="justify-content: center; margin-bottom: 2rem;">
+                <p style="font-size: 1.2rem; font-family: var(--font-stack-serif);">
+                    <em>How can creative recycling build sustenance in low income neighbourhoods?</em>
+                </p>
+            </div>
+
+            <footer>
+                <p style="opacity: 0.4; margin-top: 4rem;">16/16 &copy; 2026. A thinking process, not an arrival.</p>
+            </footer>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const numberElement = document.getElementById("animated-number");
+            const target = 30;
+            const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+            if (isMobile) {
+                numberElement.textContent = target;
+                return;
+            }
+
+            const duration = 2000;
+            const start = 0;
+            const startTime = performance.now();
+
+            function update(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+
+                // Ease out quad
+                const ease = 1 - (1 - progress) * (1 - progress);
+
+                const current = Math.floor(start + (target - start) * ease);
+                numberElement.textContent = current;
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                } else {
+                    numberElement.textContent = target;
+                }
+            }
+
+            requestAnimationFrame(update);
+        });
+    </script>
+    <script src="js/hero-slideshow.js"></script>
+</body>
+
 </html>
