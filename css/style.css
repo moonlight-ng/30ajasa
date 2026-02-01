@@ -446,8 +446,8 @@ header p {
 /* Continue button – big round link below prose */
 .btn-continue {
     display: block;
-    width: 4.5rem;
-    height: 4.5rem;
+    width: 8rem;
+    height: 8rem;
     border-radius: 50%;
     background: var(--text-primary);
     color: var(--bg-primary);
@@ -458,8 +458,8 @@ header p {
     letter-spacing: 0.1em;
     text-decoration: none;
     text-align: center;
-    line-height: 4.5rem;
-    margin: var(--space-lg) auto 0;
+    line-height: 8rem;
+    margin: 0 auto var(--space-lg);
     transition: opacity 0.2s ease;
 }
 
