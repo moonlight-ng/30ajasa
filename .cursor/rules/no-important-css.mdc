@@ -1,0 +1,20 @@
+---
+description: Do not use !important in CSS; use specificity and cascade instead
+globs: **/*.css
+alwaysApply: false
+---
+
+# No !important in CSS
+
+Do **not** use `!important` in stylesheets. It is bad practice: it breaks the cascade, makes overrides harder, and leads to specificity wars.
+
+## Instead
+
+- Use more specific selectors (e.g. `.foot p` instead of `p` when targeting footer text).
+- Order rules so later rules override earlier ones when specificity is equal.
+- Use cascade and inheritance (e.g. set `font-size` on `.foot` and `font-size: inherit` on `.foot p`).
+- Restructure selectors or add a single class rather than forcing with `!important`.
+
+## Exception
+
+Only consider `!important` for rare utility overrides (e.g. a single `.sr-only` or print rule) and document why it is necessary.

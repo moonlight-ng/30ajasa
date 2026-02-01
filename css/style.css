@@ -23,6 +23,7 @@
     --space-sm: 1.5rem;
     --space-md: 4rem;
     --space-lg: 8rem;
+    --space-xl: 10rem;
 }
 
 /* Global Noise Texture */
@@ -91,6 +92,14 @@ body {
     font-size: var(--base-size);
     line-height: var(--line-height);
     -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+}
+
+.page-content {
+    flex: 1 0 auto;
 }
 
 /* Full Viewport Layout */
@@ -126,53 +135,53 @@ body {
 h1,
 h2,
 h3 {
-    font-family: var(--font-serif) !important;
-    font-weight: 400 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.1em !important;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--text-primary);
 }
 
 h1 {
-    font-size: 2.2rem !important;
+    font-size: 2.2rem;
 }
 
 /* Number in title matches "Ajasa Street" (inherit h1 styling) */
 h1 span,
 h1 #animated-number {
-    font-family: inherit !important;
-    font-weight: inherit !important;
-    text-transform: inherit !important;
-    letter-spacing: inherit !important;
+    font-family: inherit;
+    font-weight: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
 }
 
 .title-link {
-    color: #000 !important;
+    color: #000;
     text-decoration: underline;
-    text-decoration-style: dashed;
-    text-decoration-color: rgba(0, 0, 0, 0.15);
-    text-decoration-thickness: 1.5px;
+    text-decoration-style: dotted;
+    text-decoration-color: rgba(0, 0, 0, 0.2);
     text-underline-offset: 0.2em;
 }
 
 .title-link:hover {
     color: #000;
+    text-decoration-color: #000;
 }
 
 h2 {
-    font-size: 1.8rem !important;
+    font-size: 1.8rem;
 }
 
 h3 {
-    font-size: 1.4rem !important;
+    font-size: 1.4rem;
 }
 
 p,
 blockquote,
 li,
 span {
-    font-family: var(--font-sans) !important;
-    font-weight: 600 !important;
+    font-family: var(--font-sans);
+    font-weight: 600;
     /* Helvetica Bold per request */
     color: var(--text-primary);
 }
@@ -191,12 +200,12 @@ span {
 .nav-fixed {
     position: fixed;
     z-index: 100;
-    font-family: var(--font-serif) !important;
+    font-family: var(--font-serif);
     /* User Request: Serif */
-    font-size: 13px !important;
-    font-weight: 400 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.1em !important;
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
     color: var(--text-primary);
     text-decoration: none;
     opacity: 0.9;
@@ -238,7 +247,6 @@ span {
     flex-direction: column;
     align-items: flex-start;
     pointer-events: auto;
-    transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1), top 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero-slideshow > img,
@@ -320,7 +328,7 @@ span {
 
     h1,
     h2 {
-        font-size: 1.8rem !important;
+        font-size: 1.8rem;
     }
 
     .hero-mobile-strip {
@@ -362,7 +370,7 @@ span {
 /* Single Size Policy overrides for Sans Body */
 p,
 li {
-    font-size: var(--base-size) !important;
+    font-size: var(--base-size);
     max-width: 32em;
     /* Tighter reading column */
 }
@@ -373,7 +381,7 @@ blockquote {
     /* Quotes in Serif for elegance */
     font-style: normal;
     /* User Request: Not Italic */
-    font-size: 1rem !important;
+    font-size: 1rem;
     /* Matches Body Size */
     line-height: 1.5;
     margin: var(--space-md) 0;
@@ -382,7 +390,7 @@ blockquote {
 }
 
 cite {
-    font-family: var(--font-serif) !important;
+    font-family: var(--font-serif);
     /* User Request: Serif */
     font-style: normal;
     font-size: 0.9rem;
@@ -396,11 +404,11 @@ cite {
 
 /* Header Subheading - "A Community Project..." */
 header p {
-    font-family: var(--font-sans) !important;
-    font-weight: 600 !important;
+    font-family: var(--font-sans);
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    font-size: 0.9rem !important;
+    font-size: 0.9rem;
     color: var(--text-primary);
 }
 
@@ -434,7 +442,7 @@ button:hover {
 
 .question-row p {
     font-family: var(--font-serif);
-    font-size: 1.4rem !important;
+    font-size: 1.4rem;
     font-style: italic;
     text-align: center;
     max-width: 28em;
@@ -444,9 +452,92 @@ button:hover {
     margin: var(--space-lg) 0;
 }
 
-footer {
-    margin-top: var(--space-xl);
-    opacity: 0.5;
-    font-family: var(--font-sans);
-    font-size: 0.8rem !important;
+/* Footer – nav style, full width, left/right balanced */
+.foot {
+    flex: 0 0 auto;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    padding: var(--space-sm);
+    background: var(--bg-primary);
+    font-family: var(--font-serif);
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-primary);
+    opacity: 0.9;
+}
+
+.foot-in {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    text-align: center;
+}
+
+.foot-left,
+.foot-right {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+.foot-left p,
+.foot-right p {
+    margin: 0;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    color: inherit;
+    line-height: var(--line-height);
+}
+
+.foot-logo-link {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.foot-logo {
+    display: block;
+    height: auto;
+    max-width: 100%;
+    max-height: 50px;
+    width: 50px;
+    object-fit: contain;
+}
+
+.foot-link {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-color: rgba(0, 0, 0, 0.2);
+    text-underline-offset: 0.15em;
+}
+
+.foot-link:hover {
+    text-decoration-color: #000;
+}
+
+@media (min-width: 769px) {
+    .foot-in {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-md);
+        align-items: start;
+        text-align: left;
+    }
+
+    .foot-left {
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    .foot-right {
+        align-items: flex-end;
+        text-align: right;
+    }
 }

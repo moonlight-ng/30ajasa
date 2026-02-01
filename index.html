@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>30 Ajasa Street</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -20,6 +21,7 @@
     <a href="#phases" class="nav-fixed nav-tc">(Phases)</a>
     <a href="#questions" class="nav-fixed nav-tr">(Questions)</a>
 
+    <main class="page-content">
     <!-- Section 1: Intro / Beige (Hero) -->
     <section class="viewport-section section-beige hero-section">
         <div class="hero-slideshow" aria-hidden="true"></div>
@@ -44,66 +46,20 @@
             <cite style="margin-top: 0.5rem;">(Tushar Hathiramani)</cite>
         </div>
     </section>
+    </main>
 
-
-    <!-- Section 3: Phase 1 & 2 / Dark -->
-    <section id="phases" class="viewport-section section-dark">
-        <div style="max-width: 600px; text-align: center;">
-            <span class="phase-meta" style="color: #888;">2019 — 2022</span>
-            <h2 style="font-size: 2.5rem; margin-bottom: 2rem; color: var(--text-on-dark);">Use & Circumstance</h2>
-
-            <div style="margin-bottom: 3rem;">
-                <h3 style="color: var(--bg-accent);">A Breathing Space</h3>
-                <p>It began as a space for informal labour—fermentation, radio-making, printing. A "living museum" of
-                    craft.</p>
+    <footer class="foot">
+        <div class="foot-in">
+            <div class="foot-left">
+                <p>The Ajasa Street Development is a collective project between <a href="https://16by16.co" target="_blank" rel="noopener noreferrer" class="foot-link">16/16</a> and the fashion brands <a href="https://thisisusworld.com" target="_blank" rel="noopener noreferrer" class="foot-link">This Is Us</a> and <a href="https://iamisigo.com" target="_blank" rel="noopener noreferrer" class="foot-link">I.AM.ISIGO</a>.</p>
+                <p>&copy; 2026</p>
             </div>
-
-            <img src="images/craft-based-2021.webp" alt="Raffia detail"
-                style="width: 100%; height: 300px; object-fit: cover; margin: 2rem 0; opacity: 0.8;">
-
-            <div>
-                <h3 style="color: var(--bg-accent);">Designing By Circumstance</h3>
-                <p>Covid turned residency rooms into staff quarters. The architecture emerged from necessity and
-                    collective action.</p>
+            <div class="foot-right">
+                <a href="https://16by16.co" target="_blank" rel="noopener noreferrer" class="foot-logo-link"><img src="images/16-16.webp" alt="16/16" class="foot-logo"></a>
+                <p>Website by <a href="https://independent-arts.org" target="_blank" rel="noopener noreferrer" class="foot-link">Independent Arts</a></p>
             </div>
         </div>
-    </section>
-
-    <!-- Section 4: Future / Beige -->
-    <section class="viewport-section section-beige">
-        <div style="max-width: 600px; text-align: center;">
-            <span class="phase-meta">2023 — 2026</span>
-            <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">The Horizon</h2>
-
-            <p><strong>Hospitality As Process.</strong> Moving beyond the traditional marketplace to an evolving
-                research space.</p>
-            <p class="mt-md"><strong>Full Regeneration.</strong> A model for sustainable urban renewal in Lagos, fully
-                realized by 2026.</p>
-        </div>
-    </section>
-
-    <!-- Section 5: Inquiry / Dark -->
-    <section id="questions" class="viewport-section section-dark">
-        <div style="max-width: 700px; text-align: center;">
-            <h2 style="font-size: 2rem; margin-bottom: 3rem; color: var(--text-on-dark);">(Central Questions)</h2>
-
-            <div class="question-row" style="justify-content: center; margin-bottom: 2rem;">
-                <p style="font-size: 1.2rem; font-family: var(--font-stack-serif);">
-                    <em>What are the potentials of informal maker processes as infrastructure?</em>
-                </p>
-            </div>
-
-            <div class="question-row" style="justify-content: center; margin-bottom: 2rem;">
-                <p style="font-size: 1.2rem; font-family: var(--font-stack-serif);">
-                    <em>How can creative recycling build sustenance in low income neighbourhoods?</em>
-                </p>
-            </div>
-
-            <footer>
-                <p style="opacity: 0.4; margin-top: 4rem;">16/16 &copy; 2026. A thinking process, not an arrival.</p>
-            </footer>
-        </div>
-    </section>
+    </footer>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -141,6 +97,21 @@
         });
     </script>
     <script src="js/hero-slideshow.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script>
+        const lenis = new Lenis({
+            duration: 0.6,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            smoothWheel: true,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+    </script>
 </body>
 
 </html>
