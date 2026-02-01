@@ -15,11 +15,12 @@
 </head>
 
 <body>
+    <noscript><style>body{opacity:1}</style></noscript>
 
     <!-- Peripheral Navigation -->
-    <a href="#" class="nav-fixed nav-tl">(Home)</a>
-    <a href="#building" class="nav-fixed nav-tc">(Building)</a>
-    <a href="#makerspace" class="nav-fixed nav-tr">(Makerspace)</a>
+    <a href="#" class="nav-fixed nav-tl nav-active">(Home)</a>
+    <a href="building/" class="nav-fixed nav-tc">(Building)</a>
+    <a href="makerspace/" class="nav-fixed nav-tr">(Makerspace)</a>
 
     <main class="page-content">
     <!-- Section 1: Intro / Beige (Hero) -->
@@ -30,7 +31,7 @@
             <p style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">Lagos Island, Nigeria
             </p>
         </header>
-        <a href="#building" class="hero-chevron" aria-label="Scroll to Building">
+        <a href="building/" class="hero-chevron" aria-label="Go to Building">
             <span class="chevron-down"></span>
         </a>
     </section>
@@ -62,6 +63,7 @@
             <p>Since then, the space has hosted events, residencies, workshops, and gatherings that bring artists and the local community together. During COVID, residency rooms became staff quarters, and DIY architecture emerged through collective projects.</p>
             <p>The story of how 30 Ajasa came to be is one of raw production spirit and a yearning to understand the needs of others. By removing pressure for tangible outputs, the space allows art and craft-making to give rise to impact.</p>
         </div>
+        <a href="building/" class="btn-continue">Continue</a>
     </section>
     </main>
 
@@ -78,6 +80,7 @@
         </div>
     </footer>
 
+    <script src="js/page-transitions.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const numberElement = document.getElementById("animated-number");

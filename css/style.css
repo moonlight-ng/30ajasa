@@ -96,6 +96,16 @@ body {
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+body.page-ready {
+    opacity: 1;
+}
+
+body.page-transition-out {
+    opacity: 0;
 }
 
 .page-content {
@@ -230,6 +240,11 @@ span {
 
 .nav-fixed:hover {
     opacity: 1;
+}
+
+.nav-fixed.nav-active {
+    font-weight: 700;
+    pointer-events: none;
 }
 
 .nav-tl {
@@ -426,6 +441,30 @@ header p {
     letter-spacing: 0.1em;
     font-size: 0.9rem;
     color: var(--text-primary);
+}
+
+/* Continue button – big round link below prose */
+.btn-continue {
+    display: block;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-align: center;
+    line-height: 4.5rem;
+    margin: var(--space-lg) auto 0;
+    transition: opacity 0.2s ease;
+}
+
+.btn-continue:hover {
+    opacity: 0.85;
 }
 
 button {

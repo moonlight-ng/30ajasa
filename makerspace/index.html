@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Makerspace — 30 Ajasa Street</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <noscript><style>body{opacity:1}</style></noscript>
+
+    <!-- Peripheral Navigation -->
+    <a href="../" class="nav-fixed nav-tl">(Home)</a>
+    <a href="../building/" class="nav-fixed nav-tc">(Building)</a>
+    <a href="./" class="nav-fixed nav-tr nav-active">(Makerspace)</a>
+
+    <main class="page-content">
+        <section class="viewport-section section-beige">
+            <div class="prose" style="max-width: 600px; margin: 0 auto;">
+                <h2 style="font-family: var(--font-serif); font-size: 1.5rem; margin-bottom: var(--space-md);">Makerspace</h2>
+                <p>In 2019, the hospitality establishment 16/16 rented a building at 30 Ajasa Street and reimagined it as a "breathing space"—a place where informal labour could enter and actively participate in lo-tech making: fermentation, radio-making, printing, up-cycling.</p>
+                <p>Since then, the space has hosted events, residencies, workshops, and gatherings that bring artists and the local community together. During COVID, residency rooms became staff quarters, and DIY architecture emerged through collective projects.</p>
+                <p>The story of how 30 Ajasa came to be is one of raw production spirit and a yearning to understand the needs of others. By removing pressure for tangible outputs, the space allows art and craft-making to give rise to impact.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="foot">
+        <div class="foot-in">
+            <div class="foot-left">
+                <p>The Ajasa Street Development is a collective project between <a href="https://16by16.co" target="_blank" rel="noopener noreferrer" class="foot-link">16/16</a> and the fashion brands <a href="https://thisisusworld.com" target="_blank" rel="noopener noreferrer" class="foot-link">This Is Us</a> and <a href="https://iamisigo.com" target="_blank" rel="noopener noreferrer" class="foot-link">I.AM.ISIGO</a>.</p>
+                <p>&copy; 2026</p>
+            </div>
+            <div class="foot-right">
+                <a href="https://16by16.co" target="_blank" rel="noopener noreferrer" class="foot-logo-link"><img src="../images/16-16.webp" alt="16/16" class="foot-logo"></a>
+                <p>Website by <a href="https://independent-arts.org" target="_blank" rel="noopener noreferrer" class="foot-link">Independent Arts</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/page-transitions.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script>
+        const lenis = new Lenis({
+            duration: 0.8,
+            easing: (t) => 1 - Math.pow(1 - t, 4),
+            smoothWheel: true,
+        });
+
+        function raf(time) {
+            lenis.raf(time);
+            requestAnimationFrame(raf);
+        }
+
+        requestAnimationFrame(raf);
+    </script>
+</body>
+
+</html>
