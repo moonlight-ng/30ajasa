@@ -1,6 +1,6 @@
 /**
  * Hero slideshow: cycles images every 3s at random positions.
- * Pauses when hero is out of view (Intersection Observer) and on hover.
+ * Pauses when hero is out of view (Intersection Observer).
  */
 (function () {
     "use strict";
@@ -13,7 +13,7 @@
     const HALF = POSITION_MAX_PCT / 2;
 
     const SLIDES = [
-        { src: "images/hfactor-matter-ajasa-street.jpg" },
+        { src: "images/space.png" },
         { src: "images/manifesto.webp" },
         { src: "images/diy-water-filter.webp" },
         { src: "images/system.webp" },
@@ -128,13 +128,12 @@
         slideshowEl.appendChild(slideWrapper);
 
         var currentIndex = 0;
-        var paused = false;
         var inView = false;
         var intervalId = null;
         var quadrantState = { last: -1 }; // -1 so first slide can use any quadrant
 
         function goToNext() {
-            if (!inView || paused) return;
+            if (!inView) return;
             currentIndex = (currentIndex + 1) % SLIDES.length;
             setSlide(slideWrapper, imgEl, currentIndex, quadrantState);
         }
@@ -155,7 +154,7 @@
             function (entries) {
                 entries.forEach(function (entry) {
                     inView = entry.isIntersecting;
-                    if (inView && !paused) {
+                    if (inView) {
                         startInterval();
                     } else {
                         stopInterval();
@@ -166,21 +165,11 @@
         );
         observer.observe(heroSection);
 
-        slideWrapper.addEventListener("mouseenter", function () {
-            paused = true;
-            stopInterval();
-        });
-
-        slideWrapper.addEventListener("mouseleave", function () {
-            paused = false;
-            if (inView) startInterval();
-        });
-
         document.addEventListener("click", function () {
             currentIndex = (currentIndex + 1) % SLIDES.length;
             setSlide(slideWrapper, imgEl, currentIndex, quadrantState);
             stopInterval();
-            if (inView && !paused) startInterval();
+            if (inView) startInterval();
         });
 
         // Initial slide

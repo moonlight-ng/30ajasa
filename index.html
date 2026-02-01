@@ -26,7 +26,7 @@
     <section class="viewport-section section-beige hero-section">
         <div class="hero-slideshow" aria-hidden="true"></div>
         <header style="text-align: center; max-width: 800px; margin: 0 auto;">
-            <h1 style="font-size: 3rem; margin-bottom: 0.5rem; line-height: 1;"><a href="https://maps.app.goo.gl/zQ8GmyeYWDQ69SfC8" class="title-link" target="_blank" rel="noopener noreferrer"><span id="animated-number">30</span> Ajasa Street</a></h1>
+            <h1 style="font-size: 2rem; margin-bottom: 0.5rem; line-height: 1;"><a href="https://maps.app.goo.gl/zQ8GmyeYWDQ69SfC8" class="title-link" target="_blank" rel="noopener noreferrer"><span id="animated-number">30</span> Ajasa Street</a></h1>
             <p style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">Lagos Island, Nigeria
             </p>
         </header>
@@ -36,15 +36,32 @@
     </section>
     <div class="hero-mobile-strip" aria-hidden="true"></div>
 
-    <!-- Section 2: Quote / Beige -->
+    <!-- Section 2: Quote / Beige (full page) -->
     <section class="viewport-section section-beige">
         <div style="max-width: 600px; text-align: center;">
-            <blockquote style="font-size: 1.5rem; font-family: var(--font-stack-serif); line-height: 1.4;">
+            <blockquote style="font-size: 1rem; font-family: var(--font-stack-serif); line-height: 1.4;">
                 “The Lagos landscape is scattered with vestiges of power structures... How can these empty vessels
                 present opportunities?”
             </blockquote>
             <cite style="margin-top: 0.5rem;">(Tushar Hathiramani)</cite>
         </div>
+    </section>
+
+    <!-- Section 3: Content / Beige (full page) -->
+    <section class="viewport-section section-beige">
+        <figure style="max-width: 100%; margin: 0;">
+            <img src="images/2020.webp" alt="Ajasa Street Design by HFactor & Matter" width="600" height="auto" style="display: block; width: 100%; max-width: 600px; margin: 0 auto; filter: grayscale(100%);">
+        </figure>
+        <div class="prose" style="max-width: 600px; margin-top: 8rem; margin-bottom: 8rem;">
+            <p>In 2019, a building at 30 Ajasa Street was rented by the hospitality establishment 16/16.</p>
+            <p>For the past five years, it has operated as a “breathing space” through which informal labour can enter and actively participate in the process of lo-tech making - whether fermentation, radio-making, printing or up-cycling.</p>
+            <p>We've had numerous events, festivals and parties in the space bringing our community of artists together with the local community to engage and interact.</p>
+            <p>During the COVID era, the space rejigged itself to provide safety and comfort to the 16/16 team. Residency rooms became staff quarters and DIY architecture began to be built out via numerous collective projects.</p>
+            <p>How the space at 30 Ajasa has come to be built is a short story in raw production spirit and a yearning to understand the needs of others. By removing pressure from having tangible outputs, the Ajasa Street Development and its integrated processes allow art and craft-making to give rise to impact.</p>
+        </div>
+        <figure style="max-width: 100%; margin: 0;">
+            <img src="images/hfactor-matter-ajasa-street.jpg" alt="Ajasa Street Design by HFactor & Matter" width="600" height="auto" style="display: block; width: 100%; max-width: 600px; margin: 0 auto;">
+        </figure>
     </section>
     </main>
 
@@ -100,8 +117,8 @@
     <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script>
         const lenis = new Lenis({
-            duration: 0.6,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            duration: 0.8,
+            easing: (t) => 1 - Math.pow(1 - t, 4),
             smoothWheel: true,
         });
 

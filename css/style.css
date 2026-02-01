@@ -131,6 +131,22 @@ body {
     text-transform: uppercase;
 }
 
+/* Prose below content (e.g. image) */
+.prose {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: var(--line-height);
+    color: var(--text-primary);
+}
+
+.prose p {
+    margin: 0 0 1em;
+}
+
+.prose p:last-child {
+    margin-bottom: 0;
+}
+
 /* Typography Overrides */
 h1,
 h2,
