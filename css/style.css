@@ -238,6 +238,7 @@ span {
     flex-direction: column;
     align-items: flex-start;
     pointer-events: auto;
+    transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1), top 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .hero-slideshow > img,

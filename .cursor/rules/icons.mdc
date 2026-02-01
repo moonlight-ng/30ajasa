@@ -1,0 +1,22 @@
+---
+description: Conventions for project icons in icons/
+globs: icons/**/*.svg
+alwaysApply: false
+---
+
+# Icons
+
+Icons live in `icons/` as SVG files. Use them from HTML via `<img src="icons/icon-name.svg">` with a class for sizing and placement.
+
+## Conventions
+
+- **One icon per file**: e.g. `arrow-up-right.svg`, `chevron-down.svg`.
+- **Stroke-based, minimal**: Prefer thin strokes (`stroke-width` 1–1.5), `fill="none"`, `stroke-linecap="round"`, `stroke-linejoin="round"`.
+- **Use `currentColor`**: Set `stroke="currentColor"` (and `fill="currentColor"` if filled) so icons can inherit text color when inlined; when used as `<img>`, they render as black by default.
+- **ViewBox**: Use a square viewBox (e.g. `viewBox="0 0 12 12"`) and consistent width/height so CSS can scale with `width`/`height` or `em`.
+- **Accessibility**: Include `aria-hidden="true"` on decorative SVGs; use `alt=""` on `<img>` when the icon is decorative.
+
+## Reference icons
+
+- `icons/arrow-up-right.svg` – external link (title link hover).
+- `icons/chevron-down.svg` – scroll down (hero).

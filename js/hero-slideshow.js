@@ -5,7 +5,7 @@
 (function () {
     "use strict";
 
-    const SLIDE_DURATION_MS = 3000;
+    const SLIDE_DURATION_MS = 2000;
     const IMAGE_SIZE_PCT = 40; // max width/height % so image stays in bounds
     const POSITION_MAX_PCT = 100 - IMAGE_SIZE_PCT; // e.g. 60% so left/top in [0, 60]
 
