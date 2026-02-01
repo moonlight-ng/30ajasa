@@ -5,12 +5,18 @@
 (function () {
     "use strict";
 
-    const SLIDE_DURATION_MS = 2000;
-    const IMAGE_SIZE_PCT = 40; // max width/height % so image stays in bounds
-    const POSITION_MAX_PCT = 100 - IMAGE_SIZE_PCT; // e.g. 60% so left/top in [0, 60]
+    const SLIDE_DURATION_MS = 3000;
+    const IMAGE_SIZE_PCT = 32; // max width/height % so images stay in periphery
+    const POSITION_MAX_PCT = 100 - IMAGE_SIZE_PCT; // e.g. 72% so left/top in [0, 72]
 
-    // Quadrants: 0 = top-left, 1 = top-right, 2 = bottom-left, 3 = bottom-right (by half of range)
-    const HALF = POSITION_MAX_PCT / 2;
+    // Center exclusion: keep slides out of the middle (title / main content)
+    const CENTER_MIN_PCT = 44;
+    const CENTER_MAX_PCT = 56;
+
+    // Quadrants: 0 = top-left, 1 = top-right, 2 = bottom-left, 3 = bottom-right
+    // Positions constrained so slide box does not overlap [CENTER_MIN, CENTER_MAX]
+    const PERIPHERY_EDGE = CENTER_MIN_PCT - IMAGE_SIZE_PCT; // e.g. 8 — max left/top for top-left
+    const PERIPHERY_FAR = CENTER_MAX_PCT; // min left/top for bottom-right
 
     const SLIDES = [
         { src: "images/space.png" },
@@ -27,17 +33,17 @@
     function getPositionInQuadrant(quadrant) {
         var left, top;
         if (quadrant === 0) {
-            left = randomInRange(0, HALF);
-            top = randomInRange(0, HALF);
+            left = randomInRange(0, PERIPHERY_EDGE);
+            top = randomInRange(0, PERIPHERY_EDGE);
         } else if (quadrant === 1) {
-            left = randomInRange(HALF, POSITION_MAX_PCT);
-            top = randomInRange(0, HALF);
+            left = randomInRange(PERIPHERY_FAR, POSITION_MAX_PCT);
+            top = randomInRange(0, PERIPHERY_EDGE);
         } else if (quadrant === 2) {
-            left = randomInRange(0, HALF);
-            top = randomInRange(HALF, POSITION_MAX_PCT);
+            left = randomInRange(0, PERIPHERY_EDGE);
+            top = randomInRange(PERIPHERY_FAR, POSITION_MAX_PCT);
         } else {
-            left = randomInRange(HALF, POSITION_MAX_PCT);
-            top = randomInRange(HALF, POSITION_MAX_PCT);
+            left = randomInRange(PERIPHERY_FAR, POSITION_MAX_PCT);
+            top = randomInRange(PERIPHERY_FAR, POSITION_MAX_PCT);
         }
         return { left: left, top: top };
     }
@@ -109,8 +115,8 @@
             img.src = staticSlide.src;
             img.alt = "";
             img.setAttribute("class", "hero-slideshow-img");
-            img.style.left = "30%";
-            img.style.top = "30%";
+            img.style.left = "12%";
+            img.style.top = "12%";
             slideshowEl.appendChild(img);
             return;
         }

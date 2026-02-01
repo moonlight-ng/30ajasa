@@ -284,8 +284,8 @@ span {
 .hero-slideshow-slide img,
 .hero-slideshow-slide .hero-slideshow-img {
     display: block;
-    max-width: 40vw;
-    max-height: 40vh;
+    max-width: 32vw;
+    max-height: 32vh;
     width: auto;
     height: auto;
     object-fit: contain;
