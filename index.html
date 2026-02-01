@@ -18,8 +18,8 @@
 
     <!-- Peripheral Navigation -->
     <a href="#" class="nav-fixed nav-tl">(Home)</a>
-    <a href="#phases" class="nav-fixed nav-tc">(Phases)</a>
-    <a href="#questions" class="nav-fixed nav-tr">(Questions)</a>
+    <a href="#building" class="nav-fixed nav-tc">(Building)</a>
+    <a href="#makerspace" class="nav-fixed nav-tr">(Makerspace)</a>
 
     <main class="page-content">
     <!-- Section 1: Intro / Beige (Hero) -->
@@ -30,14 +30,14 @@
             <p style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">Lagos Island, Nigeria
             </p>
         </header>
-        <a href="#phases" class="hero-chevron" aria-label="Scroll to Phases">
+        <a href="#building" class="hero-chevron" aria-label="Scroll to Building">
             <span class="chevron-down"></span>
         </a>
     </section>
     <div class="hero-mobile-strip" aria-hidden="true"></div>
 
     <!-- Section 2: Quote / Beige (full page) -->
-    <section class="viewport-section section-beige">
+    <section id="building" class="viewport-section section-beige">
         <div style="max-width: 600px; text-align: center;">
             <blockquote style="font-size: 1rem; font-family: var(--font-stack-serif); line-height: 1.4;">
                 “The Lagos landscape is scattered with vestiges of power structures... How can these empty vessels
@@ -48,20 +48,20 @@
     </section>
 
     <!-- Section 3: Content / Beige (full page) -->
-    <section class="viewport-section section-beige">
-        <figure style="max-width: 100%; margin: 0;">
-            <img src="images/2020.webp" alt="Ajasa Street Design by HFactor & Matter" width="600" height="auto" style="display: block; width: 100%; max-width: 600px; margin: 0 auto; filter: grayscale(100%);">
-        </figure>
-        <div class="prose" style="max-width: 600px; margin-top: 8rem; margin-bottom: 8rem;">
-            <p>In 2019, a building at 30 Ajasa Street was rented by the hospitality establishment 16/16.</p>
-            <p>For the past five years, it has operated as a “breathing space” through which informal labour can enter and actively participate in the process of lo-tech making - whether fermentation, radio-making, printing or up-cycling.</p>
-            <p>We've had numerous events, festivals and parties in the space bringing our community of artists together with the local community to engage and interact.</p>
-            <p>During the COVID era, the space rejigged itself to provide safety and comfort to the 16/16 team. Residency rooms became staff quarters and DIY architecture began to be built out via numerous collective projects.</p>
-            <p>How the space at 30 Ajasa has come to be built is a short story in raw production spirit and a yearning to understand the needs of others. By removing pressure from having tangible outputs, the Ajasa Street Development and its integrated processes allow art and craft-making to give rise to impact.</p>
+    <section id="makerspace" class="viewport-section section-beige">
+        <div style="display: flex; gap: 2rem; justify-content: center; align-items: flex-start; flex-wrap: wrap; max-width: 100%;">
+            <figure style="flex: 1 1 300px; max-width: 600px; margin: 0;">
+                <img src="images/2020.webp" alt="Ajasa Street Design by hFactor & Ma-tt-er" width="600" height="auto" style="display: block; width: 100%; max-width: 600px; margin: 0 auto;;">
+            </figure>
+            <figure style="flex: 1 1 300px; max-width: 600px; margin: 0;">
+                <img src="images/hfactor-matter-ajasa-street.jpg" alt="Ajasa Street Design by HFactor & Matter" width="600" height="auto" style="display: block; width: 100%; max-width: 600px; margin: 0 auto;">
+            </figure>
         </div>
-        <figure style="max-width: 100%; margin: 0;">
-            <img src="images/hfactor-matter-ajasa-street.jpg" alt="Ajasa Street Design by HFactor & Matter" width="600" height="auto" style="display: block; width: 100%; max-width: 600px; margin: 0 auto;">
-        </figure>
+        <div class="prose" style="max-width: 600px; margin-top: 8rem; margin-bottom: 8rem;">
+            <p>In 2019, the hospitality establishment 16/16 rented a building at 30 Ajasa Street and reimagined it as a "breathing space"—a place where informal labour could enter and actively participate in lo-tech making: fermentation, radio-making, printing, up-cycling.</p>
+            <p>Since then, the space has hosted events, residencies, workshops, and gatherings that bring artists and the local community together. During COVID, residency rooms became staff quarters, and DIY architecture emerged through collective projects.</p>
+            <p>The story of how 30 Ajasa came to be is one of raw production spirit and a yearning to understand the needs of others. By removing pressure for tangible outputs, the space allows art and craft-making to give rise to impact.</p>
+        </div>
     </section>
     </main>
 
@@ -128,6 +128,23 @@
         }
 
         requestAnimationFrame(raf);
+
+        // Smooth scroll for in-page anchor links
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener("click", function (e) {
+                const href = this.getAttribute("href");
+                if (href === "#") {
+                    e.preventDefault();
+                    lenis.scrollTo(0, { duration: 0.8 });
+                    return;
+                }
+                const target = document.querySelector(href);
+                if (target) {
+                    e.preventDefault();
+                    lenis.scrollTo(target, { duration: 0.8, offset: 0 });
+                }
+            });
+        });
     </script>
 </body>
 
