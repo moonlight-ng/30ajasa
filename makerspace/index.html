@@ -19,7 +19,6 @@
     <meta name="twitter:title" content="Makerspace — 30 Ajasa Street">
     <meta name="twitter:description" content="The makerspace at 30 Ajasa Street, Lagos Island—a breathing space for lo-tech making since 2019.">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -57,21 +56,6 @@
     <div id="footer-placeholder"></div>
     <script src="../js/footer.js"></script>
     <script src="../js/page-transitions.js"></script>
-    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script>
-        const lenis = new Lenis({
-            duration: 0.8,
-            easing: (t) => 1 - Math.pow(1 - t, 4),
-            smoothWheel: true,
-        });
-
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-
-        requestAnimationFrame(raf);
-    </script>
 </body>
 
 </html>

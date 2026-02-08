@@ -19,7 +19,6 @@
     <meta name="twitter:title" content="30 Ajasa Street">
     <meta name="twitter:description" content="30 Ajasa Street is a regenerative cultural space on Lagos Island, Nigeria—a breathing space for lo-tech making, workshops, and community since 2019.">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -145,34 +144,16 @@
         });
     </script>
     <script src="js/hero-slideshow.js"></script>
-    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
     <script>
-        const lenis = new Lenis({
-            duration: 0.8,
-            easing: (t) => 1 - Math.pow(1 - t, 4),
-            smoothWheel: true,
-        });
-
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
-        }
-
-        requestAnimationFrame(raf);
-
-        // Smooth scroll for in-page anchor links
+        // Native smooth scroll for in-page anchor links
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
             anchor.addEventListener("click", function (e) {
                 const href = this.getAttribute("href");
-                if (href === "#") {
-                    e.preventDefault();
-                    lenis.scrollTo(0, { duration: 0.8 });
-                    return;
-                }
+                if (href === "#") return;
                 const target = document.querySelector(href);
                 if (target) {
                     e.preventDefault();
-                    lenis.scrollTo(target, { duration: 0.8, offset: 0 });
+                    target.scrollIntoView({ behavior: "smooth" });
                 }
             });
         });
