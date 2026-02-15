@@ -1,5 +1,6 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 const rewritePlugin = () => {
     return {
@@ -20,7 +21,16 @@ const rewritePlugin = () => {
 }
 
 export default defineConfig({
-    plugins: [rewritePlugin()],
+    plugins: [
+        rewritePlugin(),
+        viteStaticCopy({
+            targets: [
+                { src: 'app/scripts/*', dest: 'app/scripts' },
+                { src: 'app/components/*', dest: 'app/components' },
+                { src: 'app/data/*', dest: 'app/data' },
+            ],
+        }),
+    ],
     build: {
         rollupOptions: {
             input: {

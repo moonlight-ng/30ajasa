@@ -2,10 +2,11 @@
   "name": "30ajasa",
   "version": "1.0.0",
   "description": "Simple HTML starter kit",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && mv dist/pages/building dist/building && mv dist/pages/film-club dist/film-club && mv dist/pages/makerspace dist/makerspace && rmdir dist/pages",
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,7 +14,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "vite": "^6.4.1"
-  },
-  "dependencies": {}
+    "vite": "^6.4.1",
+    "vite-plugin-static-copy": "^3.2.0"
+  }
 }
