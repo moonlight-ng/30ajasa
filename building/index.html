@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building — 30 Ajasa Street</title>
+    <meta name="description"
+        content="The building at 30 Ajasa Street, Onikan, Lagos Island—a regenerative cultural space by hFACTOR and Ma-tt-er. Creative residencies, workshops, urban agriculture, and sustainable living practices.">
+    <link rel="canonical" href="https://30ajasa.com/building/">
+    <link rel="icon" href="../app/assets/images/shared/logos/16-16.webp" type="image/webp">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Building — 30 Ajasa Street">
+    <meta property="og:description"
+        content="The building at 30 Ajasa Street, Onikan, Lagos Island—a regenerative cultural space by hFACTOR and Ma-tt-er. Creative residencies, workshops, and urban agriculture.">
+    <meta property="og:url" content="https://30ajasa.com/building/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://30ajasa.com/app/assets/images/building/hfactor-matter-ajasa-street.jpg">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Building — 30 Ajasa Street">
+    <meta name="twitter:description"
+        content="The building at 30 Ajasa Street, Onikan, Lagos Island—a regenerative cultural space by hFACTOR and Ma-tt-er.">
+    <link rel="stylesheet" href="../app/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Place",
+                "name": "30 Ajasa Street",
+                "description": "A regenerative cultural space in Onikan, Lagos Island—narrow structure with Brazilian Baroque and British Colonial influences, transformed in 2019 by hFACTOR Collective and Ma-tt-er. Multi-functional: creative residencies, workshop and making spaces, agricultural systems.",
+                "address": {
+                    "@type": "PostalAddress",
+                    "streetAddress": "30 Ajasa Street",
+                    "addressLocality": "Onikan, Lagos Island",
+                    "addressCountry": "NG"
+                },
+                "url": "https://30ajasa.com/building/"
+            },
+            {
+                "@type": "Article",
+                "headline": "The Building at 30 Ajasa Street",
+                "description": "The building at 30 Ajasa Street sits in Onikan, Lagos Island—transformed into a regenerative cultural space through collaboration between hFACTOR Collective and Ma-tt-er, merging cultural infrastructure with urban agriculture.",
+                "url": "https://30ajasa.com/building/",
+                "publisher": { "@id": "https://30ajasa.com/#organization" }
+            }
+        ]
+    }
+    </script>
+</head>
+
+<body>
+    <noscript>
+        <style>
+            body {
+                opacity: 1
+            }
+        </style>
+    </noscript>
+
+    <!-- Peripheral Navigation -->
+    <div id="navigation-placeholder"></div>
+
+    <main class="page-content">
+        <section class="viewport-section section-beige">
+            <h1 class="visually-hidden">The Building at 30 Ajasa Street</h1>
+            <div style="max-width: 600px; text-align: center;">
+                <blockquote style="font-size: 1rem; font-family: var(--font-sans); line-height: 1.4;">
+                    “Decolonization in architecture will work only by restructuring, rejigging and refiguring.
+                    Architecture needs to understand that it can only survive by being activated by the human, itself a
+                    highly impermanent body.”
+                </blockquote>
+                <cite style="margin-top: 0.5rem;">(Toke Joseph)</cite>
+            </div>
+        </section>
+        <section class="viewport-section section-beige">
+            <figure style="flex: 1 1 300px; max-width: 600px; margin: 0;">
+                <img src="../app/assets/images/building/hfactor-matter-ajasa-street.jpg"
+                    alt="hFACTOR and Ma-tt-er — Ajasa Street floor plan" width="600" height="auto"
+                    style="display: block; width: 100%; max-width: 600px; margin: 0 auto;">
+            </figure>
+            <div class="prose" style="max-width: 600px; margin-top: 8rem; margin-bottom: 8rem;">
+                <p>The building at 30 Ajasa Street sits in Onikan, Lagos Island—a narrow structure typical of the area's
+                    mixed architectural heritage of Brazilian Baroque and British Colonial influences. In 2019, it was
+                    transformed into a regenerative cultural space through a collaboration between hFACTOR Collective
+                    and Ma-tt-er, merging cultural infrastructure with functional urban agriculture systems under one
+                    roof. The space was designed to be multi-functional: creative residencies upstairs, workshop and
+                    making spaces downstairs, and agricultural systems woven throughout.</p>
+                <p>The building houses artist residency rooms, workshop areas for lo-tech making (fermentation, radio
+                    production, printing, up-cycling), a carpentry workshop, clay station, and communal kitchen spaces.
+                    Physical infrastructures were built through creative residencies and workshops, with plants and
+                    plant life central to the design—creating a living archive of local plant knowledge alongside a
+                    digital sound bank that serves as the building's institutional memory. The space operates as both a
+                    creative incubator and a teaching tool for sustainable living practices around food, shelter, and
+                    materials.</p>
+                <p>The building represents a shift from cultural spaces that are simply consumed to ones that actively
+                    grow in relationship with their environment. It addresses urban regeneration as both cultural and
+                    ecological necessity, offering a model for integrating creative education with self-sustaining
+                    systems that teach ecological literacy and provide alternative modes of wellbeing and climate
+                    adaptation. The structure itself is an ongoing experiment in how craft-based materials can create
+                    shelter, separation, and connection.</p>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="../app/scripts/navigation.js"></script>
+    <script>
+        // Load navigation component
+        fetch('../app/components/navigation.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navigation-placeholder').innerHTML = html;
+                // Re-initialize navigation after component loads
+                if (window.initNavigation) {
+                    window.initNavigation();
+                }
+            });
+    </script>
+    <script src="../app/scripts/footer.js"></script>
+    <script src="../app/scripts/page-transitions.js"></script>
+</body>
+
+</html>

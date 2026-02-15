@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - 30 Ajasa Street</title>
+    <meta name="description" content="Page not found.">
+    <link rel="icon" href="app/assets/images/shared/logos/16-16.webp" type="image/webp">
+    <link rel="stylesheet" href="app/styles/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <noscript>
+        <style>
+            body {
+                opacity: 1
+            }
+        </style>
+    </noscript>
+
+    <!-- Peripheral Navigation -->
+    <div id="navigation-placeholder"></div>
+
+    <main class="page-content">
+        <section class="viewport-section section-beige">
+            <header style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <h1 style="font-size: 2rem; margin-bottom: 0.5rem; line-height: 1;">404</h1>
+                <p style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">
+                    Page Not Found
+                </p>
+            </header>
+            <div class="prose" style="max-width: 600px; margin: 2rem auto; text-align: center;">
+                <p>The page you are looking for does not exist or has been moved.</p>
+            </div>
+            <a href="/" class="btn-continue">Back to Home</a>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="app/scripts/navigation.js"></script>
+    <script>
+        // Load navigation component
+        fetch('app/components/navigation.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navigation-placeholder').innerHTML = html;
+                // Re-initialize navigation after component loads
+                if (window.initNavigation) {
+                    window.initNavigation();
+                }
+            });
+    </script>
+    <script src="app/scripts/footer.js"></script>
+    <script src="app/scripts/page-transitions.js"></script>
+</body>
+
+</html>

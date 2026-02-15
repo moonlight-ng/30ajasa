@@ -5,20 +5,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Makerspace — 30 Ajasa Street</title>
-    <meta name="description" content="The makerspace at 30 Ajasa Street, Lagos Island—a breathing space for lo-tech making since 2019: fermentation, radio-making, printing, up-cycling. Events, residencies, and community gatherings.">
+    <meta name="description"
+        content="The makerspace at 30 Ajasa Street, Lagos Island—a breathing space for lo-tech making since 2019: fermentation, radio-making, printing, up-cycling. Events, residencies, and community gatherings.">
     <link rel="canonical" href="https://30ajasa.com/makerspace/">
-    <link rel="icon" href="../assets/images/shared/logos/16-16.webp" type="image/webp">
+    <link rel="icon" href="../app/assets/images/shared/logos/16-16.webp" type="image/webp">
     <!-- Open Graph -->
     <meta property="og:title" content="Makerspace — 30 Ajasa Street">
-    <meta property="og:description" content="The makerspace at 30 Ajasa Street, Lagos Island—a breathing space for lo-tech making: fermentation, radio-making, printing, up-cycling. Events, residencies, and community.">
+    <meta property="og:description"
+        content="The makerspace at 30 Ajasa Street, Lagos Island—a breathing space for lo-tech making: fermentation, radio-making, printing, up-cycling. Events, residencies, and community.">
     <meta property="og:url" content="https://30ajasa.com/makerspace/">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://30ajasa.com/assets/images/hero/2020.webp">
+    <meta property="og:image" content="https://30ajasa.com/app/assets/images/hero/2020.webp">
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Makerspace — 30 Ajasa Street">
-    <meta name="twitter:description" content="The makerspace at 30 Ajasa Street, Lagos Island—a breathing space for lo-tech making since 2019.">
-    <link rel="stylesheet" href="../styles/style.css">
+    <meta name="twitter:description"
+        content="The makerspace at 30 Ajasa Street, Lagos Island—a breathing space for lo-tech making since 2019.">
+    <link rel="stylesheet" href="../app/styles/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -37,26 +40,43 @@
 </head>
 
 <body>
-    <noscript><style>body{opacity:1}</style></noscript>
+    <noscript>
+        <style>
+            body {
+                opacity: 1
+            }
+        </style>
+    </noscript>
 
     <!-- Peripheral Navigation -->
-    <a href="../" class="nav-fixed nav-tl">(Home)</a>
-    <a href="../building/" class="nav-fixed nav-tcl">(Building)</a>
-    <a href="../film-club/" class="nav-fixed nav-tcr">(Film Club)</a>
-    <a href="./" class="nav-fixed nav-tr nav-active">(Makerspace)</a>
+    <div id="navigation-placeholder"></div>
 
     <main class="page-content">
         <section class="viewport-section section-beige">
             <h1 class="visually-hidden">The Makerspace at 30 Ajasa Street</h1>
             <div class="prose" style="max-width: 600px; margin: 0 auto;">
-                <p style="text-align: center;">Clay. Glass. Cinema. <br> <span style="font-weight: normal; color: var(--text-secondary);">Coming soon.</span></p>
+                <p style="text-align: center;">Clay. Glass. Cinema. <br> <span
+                        style="font-weight: normal; color: var(--text-secondary);">Coming soon.</span></p>
             </div>
         </section>
     </main>
 
     <div id="footer-placeholder"></div>
-    <script src="../scripts/footer.js"></script>
-    <script src="../scripts/page-transitions.js"></script>
+    <script src="../app/scripts/navigation.js"></script>
+    <script>
+        // Load navigation component
+        fetch('../app/components/navigation.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navigation-placeholder').innerHTML = html;
+                // Re-initialize navigation after component loads
+                if (window.initNavigation) {
+                    window.initNavigation();
+                }
+            });
+    </script>
+    <script src="../app/scripts/footer.js"></script>
+    <script src="../app/scripts/page-transitions.js"></script>
 </body>
 
 </html>
