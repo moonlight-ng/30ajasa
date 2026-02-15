@@ -54,18 +54,32 @@
     <main class="page-content">
         <div class="catalogue-container">
             <!-- Sidebar -->
-            <aside class="catalogue-sidebar">
-                <div class="filter-group">
-                    <h3 class="filter-title">Material</h3>
-                    <div id="filter-material" class="filter-options">
-                        <!-- Material options injected here -->
+            <aside class="catalogue-sidebar" id="makerspace-filters-drawer" aria-hidden="true">
+                <!-- Collapsed: FILTERS centered (visible when drawer closed) -->
+                <div class="makerspace-filters-drawer-peek makerspace-filters-drawer-peek--collapsed">
+                    <button type="button" class="makerspace-filters-drawer-trigger" id="makerspace-filters-trigger" aria-expanded="false" aria-controls="makerspace-filters-drawer" aria-label="Open filters">FILTERS</button>
+                </div>
+                <!-- Expanded: FILTERS left, Reset right (visible when drawer open) -->
+                <div class="makerspace-filters-drawer-peek makerspace-filters-drawer-peek--expanded" aria-hidden="true">
+                    <button type="button" class="makerspace-filters-drawer-trigger" aria-expanded="true" aria-controls="makerspace-filters-drawer" aria-label="Close filters">FILTERS</button>
+                    <button type="button" class="makerspace-filters-reset" id="makerspace-filters-reset" aria-label="Reset filters">Reset</button>
+                </div>
+                <div class="makerspace-filters-drawer-content">
+                    <div class="filter-group">
+                        <h3 class="filter-title">Material</h3>
+                        <div id="filter-material" class="filter-options">
+                            <!-- Material options injected here -->
+                        </div>
+                    </div>
+                    <div class="filter-group">
+                        <h3 class="filter-title">Color</h3>
+                        <div id="filter-color" class="filter-options">
+                            <!-- Color options injected here -->
+                        </div>
                     </div>
                 </div>
-                <div class="filter-group">
-                    <h3 class="filter-title">Color</h3>
-                    <div id="filter-color" class="filter-options">
-                        <!-- Color options injected here -->
-                    </div>
+                <div class="makerspace-filters-save-bar" role="group">
+                    <button type="button" class="makerspace-filters-save-btn">Save</button>
                 </div>
             </aside>
 
@@ -73,7 +87,7 @@
             <div class="catalogue-main">
                 <section class="section-beige">
                     <h1 class="visually-hidden">The Makerspace at 30 Ajasa Street</h1>
-
+                    <h2 class="section-title-mobile">Makerspace</h2>
                     <div id="catalogue-grid" class="catalogue-grid-full">
                         <!-- Catalogue items will be injected here -->
                     </div>
@@ -124,6 +138,15 @@
                     renderGrid(allObjects);    // Render initial grid
                 })
                 .catch(err => console.error('Error loading catalogue:', err));
+
+            document.getElementById('makerspace-filters-reset')?.addEventListener('click', () => {
+                activeFilters.material.clear();
+                activeFilters.color.clear();
+                [materialFilterContainer, colorFilterContainer].forEach(c => {
+                    if (c) c.querySelectorAll('input[type="checkbox"]').forEach(inp => { inp.checked = false; });
+                });
+                applyFilters();
+            });
 
             // Extract unique values and render checkboxes
             function renderFilters(objects) {
@@ -195,6 +218,12 @@
                 });
 
                 renderGrid(filtered);
+                updateFiltersActiveState();
+            }
+
+            function updateFiltersActiveState() {
+                const hasActive = activeFilters.material.size > 0 || activeFilters.color.size > 0;
+                document.body.classList.toggle('makerspace-filters-active', hasActive);
             }
 
             function renderGrid(objects) {
@@ -265,6 +294,47 @@
                     dots.forEach(dot => {
                         dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index, 10)));
                     });
+                });
+            }
+
+            // Makerspace mobile filters drawer: two header divs (collapsed=centered, expanded=left+reset), Save closes, Escape
+            const filtersTriggers = document.querySelectorAll('.makerspace-filters-drawer-trigger');
+            const filtersDrawer = document.getElementById('makerspace-filters-drawer');
+            const peekExpanded = document.querySelector('.makerspace-filters-drawer-peek--expanded');
+            const saveBtn = document.querySelector('.makerspace-filters-save-btn');
+            if (filtersTriggers.length && filtersDrawer) {
+                function openDrawer() {
+                    document.body.classList.add('makerspace-filters-drawer-open');
+                    filtersDrawer.setAttribute('aria-hidden', 'false');
+                    filtersTriggers.forEach(t => {
+                        t.setAttribute('aria-expanded', 'true');
+                        t.setAttribute('aria-label', 'Close filters');
+                    });
+                    if (peekExpanded) peekExpanded.setAttribute('aria-hidden', 'false');
+                }
+                function closeDrawer() {
+                    document.body.classList.remove('makerspace-filters-drawer-open');
+                    filtersDrawer.setAttribute('aria-hidden', 'true');
+                    filtersTriggers.forEach(t => {
+                        t.setAttribute('aria-expanded', 'false');
+                        t.setAttribute('aria-label', 'Open filters');
+                    });
+                    if (peekExpanded) peekExpanded.setAttribute('aria-hidden', 'true');
+                    const collapsedTrigger = document.getElementById('makerspace-filters-trigger');
+                    if (collapsedTrigger) collapsedTrigger.focus();
+                }
+                filtersTriggers.forEach(trigger => {
+                    trigger.addEventListener('click', function () {
+                        document.body.classList.contains('makerspace-filters-drawer-open') ? closeDrawer() : openDrawer();
+                    });
+                });
+                if (saveBtn) {
+                    saveBtn.addEventListener('click', closeDrawer);
+                }
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape' && document.body.classList.contains('makerspace-filters-drawer-open')) {
+                        closeDrawer();
+                    }
                 });
             }
         });

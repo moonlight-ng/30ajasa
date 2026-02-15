@@ -54,6 +54,25 @@ body::before {
     border: 0;
 }
 
+/* Section titles visible on mobile only: bold serif uppercase */
+.section-title-mobile {
+    display: none;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-align: center;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+}
+
+@media (max-width: 768px) {
+    .section-title-mobile {
+        display: block;
+    }
+}
+
 /* Utilities replacing inline styles */
 .mt-sm {
     margin-top: var(--space-sm);
@@ -96,6 +115,16 @@ body::before {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+::selection {
+    background: rgba(0, 0, 0, 0.03);
+    color: inherit;
+}
+
+::-moz-selection {
+    background: rgba(0, 0, 0, 0.03);
+    color: inherit;
 }
 
 body {
@@ -232,8 +261,6 @@ span {
     max-height: 60vh;
     object-fit: contain;
     margin: var(--space-md) 0;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    /* Soft shadow */
 }
 
 /* Navigation – desktop: peripheral links. Mobile: (Menu) trigger + full-page overlay. */
@@ -444,6 +471,10 @@ body.nav-body-open {
 
 /* Mobile Adjustment */
 @media (max-width: 768px) {
+    .page-content {
+        padding-top: 5rem;
+    }
+
     .viewport-section {
         padding: var(--space-sm);
         min-height: auto;
@@ -805,7 +836,6 @@ button:hover {
 .catalogue-carousel-dot {
     width: 0.4rem;
     height: 0.4rem;
-    border-radius: 50%;
     border: none;
     padding: 0;
     background: rgba(255, 255, 255, 0.5);
@@ -956,6 +986,199 @@ button:hover {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.25rem;
+    }
+
+    .makerspace-filters-drawer-peek {
+        display: none;
+    }
+
+    .makerspace-filters-save-bar {
+        display: none;
+    }
+}
+
+/* Makerspace mobile: card peeking from bottom + slide-up drawer */
+@media (max-width: 899px) {
+    .makerspace-filters-drawer-peek {
+        flex: 0 0 auto;
+        width: 100%;
+        height: 52px;
+        padding: 0 var(--space-sm);
+        box-sizing: border-box;
+        background: var(--bg-primary);
+        align-items: center;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .makerspace-filters-drawer-peek--collapsed {
+        display: flex;
+        justify-content: center;
+    }
+
+    body.makerspace-filters-drawer-open .makerspace-filters-drawer-peek--collapsed {
+        display: none;
+    }
+
+    .makerspace-filters-drawer-peek--expanded {
+        display: none;
+        justify-content: space-between;
+    }
+
+    body.makerspace-filters-drawer-open .makerspace-filters-drawer-peek--expanded {
+        display: flex;
+    }
+
+    .makerspace-filters-drawer-trigger {
+        border: 0;
+        padding: 0;
+        background: transparent;
+        font-family: var(--font-serif);
+        font-size: 13px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: opacity 0.2s;
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .makerspace-filters-drawer-trigger:hover {
+        opacity: 0.8;
+    }
+
+    .makerspace-filters-reset {
+        border: 0;
+        padding: 0;
+        background: transparent;
+        font-family: var(--font-serif);
+        font-size: 13px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--text-primary);
+        cursor: pointer;
+        transition: opacity 0.2s;
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        text-decoration-color: #888;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .makerspace-filters-reset:hover {
+        opacity: 0.8;
+    }
+
+    .catalogue-sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 100;
+        max-height: 70vh;
+        transform: translateY(calc(100% - 52px));
+        transition: transform 0.3s ease;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-primary);
+        border: none;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        padding: 0;
+    }
+
+    body.makerspace-filters-drawer-open .catalogue-sidebar {
+        transform: translateY(0);
+    }
+
+    body.makerspace-filters-drawer-open {
+        overflow: hidden;
+    }
+
+    .makerspace-filters-drawer-content {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        gap: var(--space-sm);
+        padding: var(--space-sm);
+        min-height: 0;
+        width: 100%;
+        box-sizing: border-box;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .makerspace-filters-drawer-content .filter-group {
+        margin-bottom: 0;
+    }
+
+    .makerspace-filters-drawer-content .filter-group:not(:last-child) {
+        padding-bottom: var(--space-sm);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .makerspace-filters-drawer-content .filter-title {
+        margin-bottom: 0.5rem;
+        padding: 0 0.25rem;
+    }
+
+    .makerspace-filters-drawer-content .filter-options {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 0.25rem;
+    }
+
+    .makerspace-filters-drawer-content .filter-option {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        min-height: 48px;
+        width: 100%;
+        box-sizing: border-box;
+        background: rgba(0, 0, 0, 0.03);
+    }
+
+    .makerspace-filters-drawer-content .filter-option:hover {
+        background: rgba(0, 0, 0, 0.06);
+    }
+
+    .makerspace-filters-save-bar {
+        margin-top: auto;
+        width: 100%;
+        box-sizing: border-box;
+        background: var(--bg-primary);
+        padding: 0;
+        padding-bottom: env(safe-area-inset-bottom, 0);
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .makerspace-filters-save-btn {
+        width: 100%;
+        box-sizing: border-box;
+        height: 52px;
+        padding: 0 var(--space-sm);
+        border: 0;
+        background: var(--bg-primary);
+        color: var(--text-primary);
+        font-family: var(--font-serif);
+        font-size: 13px;
+        font-weight: 400;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        text-decoration-color: #888;
+        text-align: center;
+        cursor: pointer;
+        transition: opacity 0.2s;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .makerspace-filters-save-btn:hover {
+        opacity: 0.8;
     }
 }
 

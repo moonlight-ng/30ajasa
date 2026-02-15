@@ -1,0 +1,14 @@
+---
+description: Do not use border-radius; keep edges sharp
+globs: **/*.css, **/*.html
+alwaysApply: false
+---
+
+# No border-radius
+
+Do **not** use `border-radius` in stylesheets or inline styles. Keep corners sharp.
+
+## Instead
+
+- Use square corners for panels, buttons, and cards.
+- Use other visual means (borders, spacing) to define elements if needed.

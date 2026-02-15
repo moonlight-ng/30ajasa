@@ -71,21 +71,7 @@
     <div id="navigation-placeholder"></div>
 
     <main class="page-content">
-        <!-- Section 1: Intro / Beige (Hero) -->
-        <section class="viewport-section section-beige hero-section">
-            <header style="text-align: center; max-width: 800px; margin: 0 auto;">
-                <h1 style="font-size: 2rem; margin-bottom: 0.5rem; line-height: 1;"><a
-                        href="https://maps.app.goo.gl/zQ8GmyeYWDQ69SfC8" class="title-link" target="_blank"
-                        rel="noopener noreferrer"><span id="animated-number">30</span> Ajasa Street</a></h1>
-                <p style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">Lagos Island, Nigeria
-                </p>
-            </header>
-            <a href="building/" class="hero-chevron" aria-label="Go to Building">
-                <span class="chevron-down"></span>
-            </a>
-        </section>
-
-        <!-- Section 2: Quote / Beige (full page) -->
+        <!-- Section 1: Quote / Beige (full page) -->
         <section id="building" class="viewport-section section-beige">
             <div style="max-width: 600px; text-align: center;">
                 <blockquote style="font-size: 1rem; font-family: var(--font-stack-serif); line-height: 1.4;">
@@ -96,11 +82,11 @@
             </div>
         </section>
 
-        <!-- Section 3: Content / Beige (full page) -->
+        <!-- Section 2: Content / Beige (full page) -->
         <section id="makerspace" class="viewport-section section-beige">
             <div style="max-width: 800px; margin: 0 auto; text-align: center;">
                 <div class="before-after-slider"
-                    style="position: relative; width: 100%; overflow: hidden; border-radius: 8px;">
+                    style="position: relative; width: 100%; overflow: hidden;">
                     <img src="/images/hero/2026.png" alt="Ajasa Street 2026" style="width: 100%; display: block;">
                     <div style="position: absolute; top: 0; left: 0; width: 50%; height: 100%; overflow: hidden;">
                         <img src="/images/hero/2020.png" alt="Ajasa Street 2020"
@@ -109,7 +95,7 @@
                     <div class="slider-handle"
                         style="position: absolute; top: 0; left: 50%; width: 4px; height: 100%; background: white; cursor: ew-resize; transform: translateX(-50%); z-index: 10;">
                         <div
-                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.3);">
+                            style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: white; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0,0,0,0.1);">
                             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                                 <path d="M3 10h14M3 10l4-4M3 10l4 4M17 10l-4-4M17 10l-4 4" stroke="currentColor"
                                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -155,41 +141,6 @@
     </script>
     <script src="app/scripts/footer.js"></script>
     <script src="app/scripts/page-transitions.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const numberElement = document.getElementById("animated-number");
-            const target = 30;
-            const isMobile = window.matchMedia("(max-width: 768px)").matches;
-
-            if (isMobile) {
-                numberElement.textContent = target;
-                return;
-            }
-
-            const duration = 2000;
-            const start = 0;
-            const startTime = performance.now();
-
-            function update(currentTime) {
-                const elapsed = currentTime - startTime;
-                const progress = Math.min(elapsed / duration, 1);
-
-                // Ease out quad
-                const ease = 1 - (1 - progress) * (1 - progress);
-
-                const current = Math.floor(start + (target - start) * ease);
-                numberElement.textContent = current;
-
-                if (progress < 1) {
-                    requestAnimationFrame(update);
-                } else {
-                    numberElement.textContent = target;
-                }
-            }
-
-            requestAnimationFrame(update);
-        });
-    </script>
     <script>
         // Before/After Slider
         document.addEventListener('DOMContentLoaded', function () {

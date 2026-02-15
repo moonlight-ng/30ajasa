@@ -40,7 +40,7 @@ function initNavigation() {
             overlay.setAttribute('aria-hidden', 'true');
             menuBtn.setAttribute('aria-expanded', 'false');
             menuBtn.setAttribute('aria-label', 'Open menu');
-            menuBtn.textContent = '(Menu)';
+            menuBtn.textContent = '30 AJASA ST';
             document.body.classList.remove('nav-body-open');
             menuBtn.focus();
         }
@@ -68,7 +68,7 @@ function initNavigation() {
         if (btn) {
             btn.setAttribute('aria-expanded', 'false');
             btn.setAttribute('aria-label', 'Open menu');
-            btn.textContent = '(Menu)';
+            btn.textContent = '30 AJASA ST';
             btn.focus();
         }
         document.body.classList.remove('nav-body-open');
