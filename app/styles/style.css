@@ -285,6 +285,19 @@ span {
         visibility: visible;
     }
 
+    .nav-mobile .nav-trigger {
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 50vh;
+        transform: none;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding-top: var(--space-sm);
+    }
+
     .nav-mobile .nav-trigger,
     .nav-mobile .nav-link {
         font-size: 15px;
