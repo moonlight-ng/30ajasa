@@ -284,6 +284,21 @@ span {
         display: block;
         visibility: visible;
     }
+
+    .nav-mobile .nav-trigger,
+    .nav-mobile .nav-link {
+        font-size: 15px;
+    }
+
+    .nav-mobile .nav-overlay {
+        justify-content: flex-end;
+    }
+
+    .nav-mobile .nav-list {
+        flex: 0 0 auto;
+        justify-content: flex-start;
+        gap: 3rem;
+    }
 }
 
 /* Desktop: fixed corner/center links, same style as original */
@@ -480,6 +495,10 @@ body.nav-body-open {
         min-height: auto;
         padding-top: 6rem;
         padding-bottom: 4rem;
+    }
+
+    .viewport-section.viewport-section--full-mobile {
+        min-height: calc(100vh - 200px);
     }
 
     .hero-section {
