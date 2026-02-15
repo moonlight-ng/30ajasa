@@ -1,5 +1,20 @@
-<!-- Peripheral Navigation -->
-<a href="../" class="nav-fixed nav-tl" data-page="home">(Home)</a>
-<a href="../building/" class="nav-fixed nav-tcl" data-page="building">(Building)</a>
-<a href="../makerspace/" class="nav-fixed nav-tcr" data-page="makerspace">(Makerspace)</a>
-<a href="../film-club/" class="nav-fixed nav-tr" data-page="film-club">(Film Club)</a>
+<!-- Desktop nav: peripheral links only (original style) -->
+<nav class="nav-desktop" aria-label="Site navigation">
+    <a href="../" class="nav-fixed nav-tl" data-page="home">(Home)</a>
+    <a href="../building/" class="nav-fixed nav-tcl" data-page="building">(Building)</a>
+    <a href="../makerspace/" class="nav-fixed nav-tcr" data-page="makerspace">(Makerspace)</a>
+    <a href="../film-club/" class="nav-fixed nav-tr" data-page="film-club">(Film Club)</a>
+</nav>
+
+<!-- Mobile nav: (Menu) trigger + full-page overlay, links () wrapped -->
+<nav class="nav-mobile" aria-label="Site navigation">
+    <button type="button" class="nav-trigger" id="nav-mobile-btn" aria-expanded="false" aria-controls="nav-mobile-overlay" aria-label="Open menu">(Menu)</button>
+    <div class="nav-overlay" id="nav-mobile-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Site menu">
+        <ul class="nav-list">
+            <li><a href="../" class="nav-link" data-page="home">(Home)</a></li>
+            <li><a href="../building/" class="nav-link" data-page="building">(Building)</a></li>
+            <li><a href="../makerspace/" class="nav-link" data-page="makerspace">(Makerspace)</a></li>
+            <li><a href="../film-club/" class="nav-link" data-page="film-club">(Film Club)</a></li>
+        </ul>
+    </div>
+</nav>

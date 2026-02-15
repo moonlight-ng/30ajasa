@@ -1,53 +1,79 @@
 function initNavigation() {
-    // Get current page from URL path
     const currentPath = window.location.pathname;
     let currentPage = 'home';
+    if (currentPath.includes('/building/')) currentPage = 'building';
+    else if (currentPath.includes('/film-club/')) currentPage = 'film-club';
+    else if (currentPath.includes('/makerspace/')) currentPage = 'makerspace';
 
-    if (currentPath.includes('/building/')) {
-        currentPage = 'building';
-    } else if (currentPath.includes('/film-club/')) {
-        currentPage = 'film-club';
-    } else if (currentPath.includes('/makerspace/')) {
-        currentPage = 'makerspace';
-    }
+    const pathSegments = currentPath.replace(/^\//, '').split('/').filter(Boolean);
+    const depth = pathSegments.length;
 
-    // Set active state for current page
-    const activeNavLink = document.querySelector(`[data-page="${currentPage}"]`);
-    if (activeNavLink) {
-        activeNavLink.classList.add('nav-active');
-    }
-
-    // Adjust paths based on current directory depth
-    const navLinks = document.querySelectorAll('[data-page]');
-    const depth = currentPath.split('/').length - 2; // Adjust for domain and empty segments
-
-    navLinks.forEach(link => {
+    function setHrefsAndActive(link) {
         const page = link.getAttribute('data-page');
-        let href = '';
+        const href = depth === 0
+            ? (page === 'home' ? './' : `${page}/`)
+            : (page === 'home' ? '../' : `../${page}/`);
+        link.setAttribute('href', href);
+        if (page === currentPage) link.classList.add('nav-active');
+    }
 
-        if (depth === 0) {
-            // Root level (index.html)
-            if (page === 'home') {
-                href = '#';
-            } else {
-                href = `${page}/`;
-            }
-        } else {
-            // In subdirectory (building/, film-club/, makerspace/)
-            if (page === 'home') {
-                href = '../';
-            } else {
-                // Sibling directories
-                href = `../${page}/`;
-            }
+    // All [data-page] links (desktop peripheral + mobile overlay)
+    document.querySelectorAll('[data-page]').forEach(setHrefsAndActive);
+
+    // Mobile only: (Menu) toggle overlay
+    const menuBtn = document.getElementById('nav-mobile-btn');
+    const overlay = document.getElementById('nav-mobile-overlay');
+    if (menuBtn && overlay) {
+        function openMenu() {
+            overlay.classList.add('nav-open');
+            overlay.setAttribute('aria-hidden', 'false');
+            menuBtn.setAttribute('aria-expanded', 'true');
+            menuBtn.setAttribute('aria-label', 'Close menu');
+            menuBtn.textContent = '(Close)';
+            document.body.classList.add('nav-body-open');
+            const firstLink = overlay.querySelector('.nav-link');
+            if (firstLink) firstLink.focus();
         }
 
-        link.setAttribute('href', href);
+        function closeMenu() {
+            overlay.classList.remove('nav-open');
+            overlay.setAttribute('aria-hidden', 'true');
+            menuBtn.setAttribute('aria-expanded', 'false');
+            menuBtn.setAttribute('aria-label', 'Open menu');
+            menuBtn.textContent = '(Menu)';
+            document.body.classList.remove('nav-body-open');
+            menuBtn.focus();
+        }
+
+        menuBtn.addEventListener('click', function () {
+            overlay.classList.contains('nav-open') ? closeMenu() : openMenu();
+        });
+
+        overlay.addEventListener('click', function (e) {
+            if (e.target === overlay) closeMenu();
+        });
+
+        overlay.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') return;
+        const openOverlay = document.querySelector('.nav-overlay.nav-open');
+        if (!openOverlay) return;
+        openOverlay.classList.remove('nav-open');
+        openOverlay.setAttribute('aria-hidden', 'true');
+        const btn = document.getElementById('nav-mobile-btn');
+        if (btn) {
+            btn.setAttribute('aria-expanded', 'false');
+            btn.setAttribute('aria-label', 'Open menu');
+            btn.textContent = '(Menu)';
+            btn.focus();
+        }
+        document.body.classList.remove('nav-body-open');
     });
 }
 
-// Auto-initialize on DOM content loaded
 document.addEventListener('DOMContentLoaded', initNavigation);
-
-// Expose function for manual initialization after component loading
 window.initNavigation = initNavigation;
