@@ -276,6 +276,18 @@ span {
     transform: translateX(-50%);
 }
 
+.nav-tcl {
+    top: var(--space-sm);
+    left: 35%;
+    transform: translateX(-50%);
+}
+
+.nav-tcr {
+    top: var(--space-sm);
+    left: 65%;
+    transform: translateX(-50%);
+}
+
 /* Hero slideshow – background images */
 .hero-slideshow {
     position: absolute;

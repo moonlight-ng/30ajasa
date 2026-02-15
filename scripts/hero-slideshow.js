@@ -19,11 +19,11 @@
     const PERIPHERY_FAR = CENTER_MAX_PCT; // min left/top for bottom-right
 
     const SLIDES = [
-        { src: "images/space.png" },
-        { src: "images/manifesto.webp" },
-        { src: "images/diy-water-filter.webp" },
-        { src: "images/system.webp" },
-        { src: "images/tushar-sat02.webp" },
+        { src: "assets/images/building/space.png" },
+        { src: "assets/images/shared/ui/manifesto.webp" },
+        { src: "assets/images/makerspace/diy-water-filter.webp" },
+        { src: "assets/images/film-club/system.webp" },
+        { src: "assets/images/film-club/tushar-sat02.webp" },
     ];
 
     function randomInRange(min, max) {

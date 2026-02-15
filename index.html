@@ -7,18 +7,18 @@
     <title>30 Ajasa Street</title>
     <meta name="description" content="30 Ajasa Street is a regenerative cultural space on Lagos Island, Nigeria—a breathing space for lo-tech making, workshops, and community since 2019. A project of 16/16, This Is Us, and I.AM.ISIGO.">
     <link rel="canonical" href="https://30ajasa.com/">
-    <link rel="icon" href="images/16-16.webp" type="image/webp">
+    <link rel="icon" href="assets/images/shared/logos/16-16.webp" type="image/webp">
     <!-- Open Graph -->
     <meta property="og:title" content="30 Ajasa Street">
     <meta property="og:description" content="30 Ajasa Street is a regenerative cultural space on Lagos Island, Nigeria—a breathing space for lo-tech making, workshops, and community since 2019.">
     <meta property="og:url" content="https://30ajasa.com/">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://30ajasa.com/images/2020.webp">
+    <meta property="og:image" content="https://30ajasa.com/assets/images/hero/2020.webp">
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="30 Ajasa Street">
     <meta name="twitter:description" content="30 Ajasa Street is a regenerative cultural space on Lagos Island, Nigeria—a breathing space for lo-tech making, workshops, and community since 2019.">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="styles/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -62,8 +62,9 @@
 
     <!-- Peripheral Navigation -->
     <a href="#" class="nav-fixed nav-tl nav-active">(Home)</a>
-    <a href="building/" class="nav-fixed nav-tc">(Building)</a>
-    <a href="makerspace/" class="nav-fixed nav-tr">(Makerspace)</a>
+    <a href="pages/building/" class="nav-fixed nav-tcl">(Building)</a>
+    <a href="pages/film-club/" class="nav-fixed nav-tcr">(Film Club)</a>
+    <a href="pages/makerspace/" class="nav-fixed nav-tr">(Makerspace)</a>
 
     <main class="page-content">
     <!-- Section 1: Intro / Beige (Hero) -->
@@ -74,7 +75,7 @@
             <p style="text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem;">Lagos Island, Nigeria
             </p>
         </header>
-        <a href="building/" class="hero-chevron" aria-label="Go to Building">
+        <a href="pages/building/" class="hero-chevron" aria-label="Go to Building">
             <span class="chevron-down"></span>
         </a>
     </section>
@@ -94,20 +95,20 @@
     <!-- Section 3: Content / Beige (full page) -->
     <section id="makerspace" class="viewport-section section-beige">
         <figure style="flex: 1 1 300px; max-width: 600px; margin: 0;">
-            <img src="images/2020.webp" alt="Ajasa Street Design by hFactor & Ma-tt-er" width="600" height="auto" style="display: block; width: 100%; max-width: 600px; margin: 0 auto;;">
+            <img src="assets/images/hero/2020.webp" alt="Ajasa Street Design by hFactor & Ma-tt-er" width="600" height="auto" style="display: block; width: 100%; max-width: 600px; margin: 0 auto;;">
         </figure>
         <div class="prose" style="max-width: 600px; margin-top: 8rem; margin-bottom: 8rem;">
             <p>In 2019, the hospitality establishment 16/16 rented a building at 30 Ajasa Street and reimagined it as a "breathing space"—a place where informal labour could enter and actively participate in lo-tech making: fermentation, radio-making, printing, up-cycling.</p>
             <p>Since then, the space has hosted events, workshops, and gatherings that bring artists and the local community together. Residency rooms have served as staff quarters, and DIY architecture has emerged through collective projects.</p>
             <p>The story of how 30 Ajasa came to be is one of raw production spirit and a yearning to understand the needs of others. By removing pressure for tangible outputs, the space allows art and craft-making to give rise to impact.</p>
         </div>
-        <a href="building/" class="btn-continue">Continue</a>
+        <a href="pages/building/" class="btn-continue">Continue</a>
     </section>
     </main>
 
     <div id="footer-placeholder"></div>
-    <script src="js/footer.js"></script>
-    <script src="js/page-transitions.js"></script>
+    <script src="scripts/footer.js"></script>
+    <script src="scripts/page-transitions.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const numberElement = document.getElementById("animated-number");
@@ -143,7 +144,7 @@
             requestAnimationFrame(update);
         });
     </script>
-    <script src="js/hero-slideshow.js"></script>
+    <script src="scripts/hero-slideshow.js"></script>
     <script>
         // Native smooth scroll for in-page anchor links
         document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
