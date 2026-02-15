@@ -91,6 +91,29 @@
         </div>
     </main>
 
+    <!-- Product Slideshow Full-Page Modal -->
+    <div id="product-slideshow" class="product-slideshow" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Product details">
+        <button type="button" class="product-slideshow-close" aria-label="Close"><img src="/icons/close.svg" alt="" width="20" height="20"></button>
+        <div class="product-slideshow-inner">
+            <button type="button" class="product-slideshow-prev" aria-label="Previous"><img src="/icons/carousel-prev.svg" alt="" width="20" height="20"></button>
+            <div class="product-slideshow-media">
+                <!-- Slides injected by JS -->
+            </div>
+            <button type="button" class="product-slideshow-next" aria-label="Next"><img src="/icons/carousel-next.svg" alt="" width="20" height="20"></button>
+        </div>
+        <div class="product-slideshow-info">
+            <div class="product-slideshow-specs">
+                <dl class="product-slideshow-labels">
+                    <!-- Filled by JS -->
+                </dl>
+            </div>
+            <div class="product-slideshow-actions">
+                <span class="product-slideshow-counter" aria-live="polite"></span>
+                <a href="#" class="product-slideshow-contact">Contact Us</a>
+            </div>
+        </div>
+    </div>
+
     <div id="footer-placeholder"></div>
     <script src="../../app/scripts/navigation.js"></script>
     <script>
@@ -131,6 +154,7 @@
                     allObjects = (data.objects || []).filter(hasMedia);
                     renderFilters(allObjects); // Extract and render filters
                     renderGrid(allObjects);    // Render initial grid
+                    initProductSlideshow();    // One-time init
                 })
                 .catch(err => console.error('Error loading catalogue:', err));
 
@@ -237,7 +261,7 @@
                     const slidesHtml = media.map((m, i) => {
                         const active = i === 0 ? ' active' : '';
                         if (m.type === 'video') {
-                            return `<div class="catalogue-media-slide${active}" data-index="${i}"><video src="${m.src}" controls playsinline preload="metadata" alt=""></video></div>`;
+                            return `<div class="catalogue-media-slide${active}" data-index="${i}"><video src="${m.src}" playsinline preload="metadata" muted alt=""></video></div>`;
                         }
                         return `<div class="catalogue-media-slide${active}" data-index="${i}"><img src="${m.src}" alt="${obj.name}" loading="${i === 0 ? 'lazy' : 'lazy'}"></div>`;
                     }).join('');
@@ -254,7 +278,7 @@
                     ` : '';
 
                     return `
-                        <div class="catalogue-item" data-item-index="${itemIndex}">
+                        <div class="catalogue-item" data-item-index="${itemIndex}" data-object-id="${obj.id || ''}">
                             <div class="catalogue-image-wrapper catalogue-media-wrapper" data-current="0" data-slide-count="${media.length}">
                                 <div class="catalogue-media-carousel">
                                     ${slidesHtml}
@@ -284,11 +308,180 @@
                         dots.forEach((d, j) => d.classList.toggle('active', j === i));
                     }
 
-                    prev && prev.addEventListener('click', () => goTo(parseInt(wrapper.dataset.current, 10) - 1));
-                    next && next.addEventListener('click', () => goTo(parseInt(wrapper.dataset.current, 10) + 1));
+                    prev && prev.addEventListener('click', (e) => { e.stopPropagation(); goTo(parseInt(wrapper.dataset.current, 10) - 1); });
+                    next && next.addEventListener('click', (e) => { e.stopPropagation(); goTo(parseInt(wrapper.dataset.current, 10) + 1); });
                     dots.forEach(dot => {
-                        dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index, 10)));
+                        dot.addEventListener('click', (e) => { e.stopPropagation(); goTo(parseInt(dot.dataset.index, 10)); });
                     });
+                });
+            }
+
+            function renderProductLabels(obj) {
+                const material = Array.isArray(obj.material) ? obj.material.join(', ') : (obj.material || '');
+                const rows = [
+                    ['ID', obj.id],
+                    ['Name', obj.name],
+                    ['Colour', obj.colour],
+                    ['Size', obj.size],
+                    ['Material', material],
+                    ['Model', obj.model],
+                    ['Year', obj.year]
+                ].filter(([, v]) => v != null && String(v).trim() !== '');
+                return rows.map(([label, value]) => `<div class="product-slideshow-label-row"><dt>${label}</dt><dd>${value}</dd></div>`).join('');
+            }
+
+            function initProductSlideshow() {
+                const slideshow = document.getElementById('product-slideshow');
+                const mediaEl = slideshow?.querySelector('.product-slideshow-media');
+                const labelsEl = slideshow?.querySelector('.product-slideshow-labels');
+                const counterEl = slideshow?.querySelector('.product-slideshow-counter');
+                const contactEl = slideshow?.querySelector('.product-slideshow-contact');
+                const closeBtn = slideshow?.querySelector('.product-slideshow-close');
+                const prevBtn = slideshow?.querySelector('.product-slideshow-prev');
+                const nextBtn = slideshow?.querySelector('.product-slideshow-next');
+                if (!slideshow || !mediaEl || !labelsEl || !contactEl) return;
+
+                let currentProduct = null;
+                let currentSlideIndex = 0;
+                let currentMedia = [];
+                const focusableSelector = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+                function getFocusables() {
+                    return Array.from(slideshow.querySelectorAll(focusableSelector)).filter(el => el.offsetParent !== null);
+                }
+
+                function trapFocus(e) {
+                    if (e.key !== 'Tab' || !slideshow.classList.contains('open')) return;
+                    const focusables = getFocusables();
+                    const first = focusables[0];
+                    const last = focusables[focusables.length - 1];
+                    if (e.shiftKey) {
+                        if (document.activeElement === first) {
+                            e.preventDefault();
+                            last.focus();
+                        }
+                    } else {
+                        if (document.activeElement === last) {
+                            e.preventDefault();
+                            first.focus();
+                        }
+                    }
+                }
+
+                function goToSlide(index) {
+                    const count = currentMedia.length;
+                    if (count === 0) return;
+                    currentSlideIndex = (index + count) % count;
+                    mediaEl.querySelectorAll('.product-slideshow-slide').forEach((s, j) => {
+                        const isActive = j === currentSlideIndex;
+                        s.classList.toggle('active', isActive);
+                        const vid = s.querySelector('video');
+                        if (vid) {
+                            if (isActive) vid.play().catch(() => {});
+                            else vid.pause();
+                        }
+                    });
+                    if (counterEl && count > 1) {
+                        counterEl.textContent = `${String(currentSlideIndex + 1).padStart(2, '0')} / ${String(count).padStart(2, '0')}`;
+                    }
+                }
+
+                function openSlideshow(obj) {
+                    const images = Array.isArray(obj.images) ? obj.images : [];
+                    const videos = Array.isArray(obj.videos) ? obj.videos : [];
+                    currentMedia = [
+                        ...images.map(src => ({ type: 'image', src: '/' + src })),
+                        ...videos.map(src => ({ type: 'video', src: '/' + src }))
+                    ];
+                    if (currentMedia.length === 0) return;
+
+                    currentProduct = obj;
+                    currentSlideIndex = 0;
+
+                    const slidesHtml = currentMedia.map((m, i) => {
+                        const active = i === 0 ? ' active' : '';
+                        if (m.type === 'video') {
+                            return `<div class="product-slideshow-slide${active}" data-index="${i}"><video src="${m.src}" playsinline autoplay muted loop></video></div>`;
+                        }
+                        return `<div class="product-slideshow-slide${active}" data-index="${i}"><img src="${m.src}" alt="${obj.name}"></div>`;
+                    }).join('');
+
+                    mediaEl.innerHTML = slidesHtml;
+                    labelsEl.innerHTML = renderProductLabels(obj);
+                    contactEl.href = `mailto:makerspace@16by16.co?subject=Inquiry:%20${encodeURIComponent(obj.id || obj.name)}`;
+
+                    goToSlide(0);
+
+                    const multi = currentMedia.length > 1;
+                    prevBtn.style.display = nextBtn.style.display = multi ? '' : 'none';
+
+                    slideshow.classList.add('open');
+                    slideshow.setAttribute('aria-hidden', 'false');
+                    document.body.classList.add('product-slideshow-open');
+                    closeBtn.focus();
+
+                    const keyHandler = (e) => {
+                        if (!slideshow.classList.contains('open')) return;
+                        if (e.key === 'Escape') {
+                            closeSlideshow();
+                            e.preventDefault();
+                        } else if (e.key === 'ArrowLeft') {
+                            goToSlide(currentSlideIndex - 1);
+                            e.preventDefault();
+                        } else if (e.key === 'ArrowRight') {
+                            goToSlide(currentSlideIndex + 1);
+                            e.preventDefault();
+                        }
+                    };
+                    document.addEventListener('keydown', keyHandler);
+                    slideshow._keyHandler = keyHandler;
+                }
+
+                let focusRestoreEl = null;
+
+                function closeSlideshow() {
+                    slideshow.classList.remove('open');
+                    slideshow.setAttribute('aria-hidden', 'true');
+                    document.body.classList.remove('product-slideshow-open');
+                    if (slideshow._keyHandler) {
+                        document.removeEventListener('keydown', slideshow._keyHandler);
+                        slideshow._keyHandler = null;
+                    }
+                    if (focusRestoreEl) {
+                        focusRestoreEl.focus();
+                        focusRestoreEl = null;
+                    }
+                }
+
+                closeBtn.addEventListener('click', closeSlideshow);
+                prevBtn.addEventListener('click', () => goToSlide(currentSlideIndex - 1));
+                nextBtn.addEventListener('click', () => goToSlide(currentSlideIndex + 1));
+
+                slideshow.addEventListener('click', (e) => {
+                    if (e.target === slideshow) closeSlideshow();
+                });
+                slideshow.addEventListener('keydown', trapFocus);
+
+                let touchStartX = 0;
+                mediaEl.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+                mediaEl.addEventListener('touchend', (e) => {
+                    const touchEndX = e.changedTouches[0].clientX;
+                    const diff = touchStartX - touchEndX;
+                    if (Math.abs(diff) > 50) {
+                        if (diff > 0) goToSlide(currentSlideIndex + 1);
+                        else goToSlide(currentSlideIndex - 1);
+                    }
+                }, { passive: true });
+
+                container.addEventListener('click', (e) => {
+                    const item = e.target.closest('.catalogue-item');
+                    if (!item) return;
+                    if (e.target.closest('.catalogue-carousel-arrow, .catalogue-carousel-dot')) return;
+                    const objectId = item.dataset.objectId;
+                    const obj = objectId ? allObjects.find(o => o.id === objectId) : null;
+                    if (!obj) return;
+                    focusRestoreEl = item;
+                    openSlideshow(obj);
                 });
             }
 
