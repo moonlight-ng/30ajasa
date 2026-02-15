@@ -52,13 +52,34 @@
     <div id="navigation-placeholder"></div>
 
     <main class="page-content">
-        <section class="viewport-section section-beige">
-            <h1 class="visually-hidden">The Makerspace at 30 Ajasa Street</h1>
-            <div class="prose" style="max-width: 600px; margin: 0 auto;">
-                <p style="text-align: center;">Clay. Glass. Cinema. <br> <span
-                        style="font-weight: normal; color: var(--text-secondary);">Coming soon.</span></p>
+        <div class="catalogue-container">
+            <!-- Sidebar -->
+            <aside class="catalogue-sidebar">
+                <div class="filter-group">
+                    <h3 class="filter-title">Material</h3>
+                    <div id="filter-material" class="filter-options">
+                        <!-- Material options injected here -->
+                    </div>
+                </div>
+                <div class="filter-group">
+                    <h3 class="filter-title">Color</h3>
+                    <div id="filter-color" class="filter-options">
+                        <!-- Color options injected here -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Grid -->
+            <div class="catalogue-main">
+                <section class="section-beige">
+                    <h1 class="visually-hidden">The Makerspace at 30 Ajasa Street</h1>
+
+                    <div id="catalogue-grid" class="catalogue-grid-full">
+                        <!-- Catalogue items will be injected here -->
+                    </div>
+                </section>
             </div>
-        </section>
+        </div>
     </main>
 
     <div id="footer-placeholder"></div>
@@ -74,6 +95,179 @@
                     window.initNavigation();
                 }
             });
+    </script>
+    <script>
+        // Fetch and Render Makerspace Catalogue
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('catalogue-grid');
+            const materialFilterContainer = document.getElementById('filter-material');
+            const colorFilterContainer = document.getElementById('filter-color');
+
+            if (!container) return;
+
+            let allObjects = [];
+            let activeFilters = {
+                material: new Set(),
+                color: new Set()
+            };
+
+            fetch('/app/data/catalogue.json')
+                .then(response => response.json())
+                .then(data => {
+                    const hasMedia = (obj) => {
+                        const images = Array.isArray(obj.images) ? obj.images : [];
+                        const videos = Array.isArray(obj.videos) ? obj.videos : [];
+                        return images.length > 0 || videos.length > 0;
+                    };
+                    allObjects = (data.objects || []).filter(hasMedia);
+                    renderFilters(allObjects); // Extract and render filters
+                    renderGrid(allObjects);    // Render initial grid
+                })
+                .catch(err => console.error('Error loading catalogue:', err));
+
+            // Extract unique values and render checkboxes
+            function renderFilters(objects) {
+                const materials = new Set();
+                const colors = new Set();
+
+                objects.forEach(obj => {
+                    // Handle material (array or string)
+                    if (Array.isArray(obj.material)) {
+                        obj.material.forEach(m => m && materials.add(m.trim()));
+                    } else if (obj.material) {
+                        materials.add(obj.material.trim());
+                    }
+
+                    // Handle colour
+                    if (obj.colour) {
+                        colors.add(obj.colour.trim());
+                    }
+                });
+
+                // Sort and render properties
+                renderFilterGroup(materialFilterContainer, Array.from(materials).sort(), 'material');
+                renderFilterGroup(colorFilterContainer, Array.from(colors).sort(), 'color');
+            }
+
+            function renderFilterGroup(container, values, type) {
+                container.innerHTML = values.map(value => `
+                    <label class="filter-option">
+                        <input type="checkbox" value="${value}" data-type="${type}">
+                        ${value}
+                    </label>
+                `).join('');
+
+                // Add event listeners
+                container.querySelectorAll('input').forEach(input => {
+                    input.addEventListener('change', (e) => {
+                        const value = e.target.value;
+                        const isChecked = e.target.checked;
+
+                        if (isChecked) {
+                            activeFilters[type].add(value);
+                        } else {
+                            activeFilters[type].delete(value);
+                        }
+
+                        applyFilters();
+                    });
+                });
+            }
+
+            function applyFilters() {
+                const filtered = allObjects.filter(obj => {
+                    // Check Material (OR logic within material)
+                    // If no material filters selected, pass true. Else check intersection.
+                    let materialMatch = true;
+                    if (activeFilters.material.size > 0) {
+                        const objMaterials = Array.isArray(obj.material) ? obj.material : [obj.material];
+                        materialMatch = objMaterials.some(m => activeFilters.material.has(m));
+                    }
+
+                    // Check Color (OR logic within color)
+                    let colorMatch = true;
+                    if (activeFilters.color.size > 0) {
+                        colorMatch = activeFilters.color.has(obj.colour);
+                    }
+
+                    // AND logic between categories
+                    return materialMatch && colorMatch;
+                });
+
+                renderGrid(filtered);
+            }
+
+            function renderGrid(objects) {
+                container.innerHTML = objects.map((obj, itemIndex) => {
+                    const images = Array.isArray(obj.images) ? obj.images : [];
+                    const videos = Array.isArray(obj.videos) ? obj.videos : [];
+                    const media = [
+                        ...images.map(src => ({ type: 'image', src: `/${src}` })),
+                        ...videos.map(src => ({ type: 'video', src: `/${src}` }))
+                    ];
+                    const hasMedia = media.length > 0;
+                    const multi = media.length > 1;
+
+                    if (!hasMedia) return '';
+
+                    const slidesHtml = media.map((m, i) => {
+                        const active = i === 0 ? ' active' : '';
+                        if (m.type === 'video') {
+                            return `<div class="catalogue-media-slide${active}" data-index="${i}"><video src="${m.src}" controls playsinline preload="metadata" alt=""></video></div>`;
+                        }
+                        return `<div class="catalogue-media-slide${active}" data-index="${i}"><img src="${m.src}" alt="${obj.name}" loading="${i === 0 ? 'lazy' : 'lazy'}"></div>`;
+                    }).join('');
+
+                    const arrowsHtml = multi ? `
+                        <button type="button" class="catalogue-carousel-arrow catalogue-carousel-prev" aria-label="Previous media"><img src="/icons/carousel-prev.svg" alt="" width="12" height="12"></button>
+                        <button type="button" class="catalogue-carousel-arrow catalogue-carousel-next" aria-label="Next media"><img src="/icons/carousel-next.svg" alt="" width="12" height="12"></button>
+                    ` : '';
+
+                    const dotsHtml = multi ? `
+                        <div class="catalogue-carousel-dots">
+                            ${media.map((_, i) => `<button type="button" class="catalogue-carousel-dot${i === 0 ? ' active' : ''}" aria-label="Go to slide ${i + 1}" data-index="${i}"></button>`).join('')}
+                        </div>
+                    ` : '';
+
+                    return `
+                        <div class="catalogue-item" data-item-index="${itemIndex}">
+                            <div class="catalogue-image-wrapper catalogue-media-wrapper" data-current="0" data-slide-count="${media.length}">
+                                <div class="catalogue-media-carousel">
+                                    ${slidesHtml}
+                                </div>
+                                ${arrowsHtml}
+                                ${dotsHtml}
+                            </div>
+                            <div class="catalogue-info">
+                                <h3>${obj.name}</h3>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                // Carousel behaviour: arrows and dots
+                container.querySelectorAll('.catalogue-media-wrapper').forEach(wrapper => {
+                    const slides = wrapper.querySelectorAll('.catalogue-media-slide');
+                    const dots = wrapper.querySelectorAll('.catalogue-carousel-dot');
+                    const prev = wrapper.querySelector('.catalogue-carousel-prev');
+                    const next = wrapper.querySelector('.catalogue-carousel-next');
+                    const count = slides.length;
+
+                    function goTo(index) {
+                        const i = (index + count) % count;
+                        wrapper.dataset.current = String(i);
+                        slides.forEach((s, j) => s.classList.toggle('active', j === i));
+                        dots.forEach((d, j) => d.classList.toggle('active', j === i));
+                    }
+
+                    prev && prev.addEventListener('click', () => goTo(parseInt(wrapper.dataset.current, 10) - 1));
+                    next && next.addEventListener('click', () => goTo(parseInt(wrapper.dataset.current, 10) + 1));
+                    dots.forEach(dot => {
+                        dot.addEventListener('click', () => goTo(parseInt(dot.dataset.index, 10)));
+                    });
+                });
+            }
+        });
     </script>
     <script src="../../app/scripts/footer.js"></script>
     <script src="../../app/scripts/page-transitions.js"></script>

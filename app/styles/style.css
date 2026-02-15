@@ -6,10 +6,11 @@
     --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
     /* Single Cream Palette - Unified Light Theme */
-    --bg-primary: #F4F2EB;
-    /* Antique Cream */
-    --bg-accent: #F4F2EB;
-    --bg-dark: #F4F2EB;
+    /* Single Cream Palette - Unified Light Theme */
+    --bg-primary: #FFFFFF;
+    /* White */
+    --bg-accent: #FFFFFF;
+    --bg-dark: #FFFFFF;
 
     --text-primary: #111111;
     /* Sharp Black */
@@ -305,7 +306,7 @@ span {
     pointer-events: auto;
 }
 
-.hero-slideshow > img,
+.hero-slideshow>img,
 .hero-slideshow-slide img,
 .hero-slideshow-slide .hero-slideshow-img {
     display: block;
@@ -317,7 +318,7 @@ span {
     transition: opacity 0.5s ease;
 }
 
-.hero-slideshow > img {
+.hero-slideshow>img {
     position: absolute;
 }
 
@@ -619,5 +620,324 @@ button:hover {
     .foot-right {
         align-items: flex-end;
         text-align: right;
+    }
+}
+
+/* Makerspace Catalogue Grid */
+.catalogue-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+    margin: var(--space-lg) auto;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 var(--space-sm);
+}
+
+.catalogue-item {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.catalogue-image-wrapper {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background-color: rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.catalogue-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    display: block;
+}
+
+.catalogue-item:hover .catalogue-image-wrapper .catalogue-media-slide.active img {
+    transform: scale(1.03);
+}
+
+/* Media carousel: multiple images/videos */
+.catalogue-media-wrapper {
+    position: relative;
+}
+
+.catalogue-media-carousel {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.catalogue-media-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+}
+
+.catalogue-media-slide.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.catalogue-media-slide img,
+.catalogue-media-slide video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.catalogue-media-slide video {
+    background: #000;
+}
+
+/* Arrows: visible on hover */
+.catalogue-carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 2.5rem;
+    height: 2.5rem;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-primary);
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.2s ease, background 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.catalogue-carousel-prev {
+    left: 0;
+}
+
+.catalogue-carousel-next {
+    right: 0;
+}
+
+.catalogue-media-wrapper:hover .catalogue-carousel-arrow {
+    opacity: 1;
+}
+
+.catalogue-carousel-arrow:hover {
+    background: rgba(255, 255, 255, 1);
+}
+
+.catalogue-carousel-arrow img {
+    display: block;
+    width: 12px;
+    height: 12px;
+}
+
+/* Dots: opposite the filename (bottom-right of image area, above title) */
+.catalogue-carousel-dots {
+    position: absolute;
+    bottom: 0.5rem;
+    right: 0.5rem;
+    left: auto;
+    display: flex;
+    gap: 0.35rem;
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.catalogue-media-wrapper:hover .catalogue-carousel-dots {
+    opacity: 1;
+}
+
+.catalogue-carousel-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.catalogue-carousel-dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.catalogue-carousel-dot.active {
+    background: rgba(255, 255, 255, 1);
+    transform: scale(1.2);
+}
+
+.catalogue-info h3 {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+}
+
+.catalogue-meta,
+.catalogue-details {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.catalogue-meta {
+    margin-bottom: 0.25rem;
+}
+
+.no-image {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .catalogue-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-md);
+        padding: 0 var(--space-md);
+    }
+}
+
+@media (min-width: 1200px) {
+    .catalogue-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Makerspace Full Layout */
+.catalogue-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.catalogue-sidebar {
+    width: 100%;
+    padding: var(--space-sm);
+    background: var(--bg-primary);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.catalogue-main {
+    flex: 1;
+    width: 100%;
+}
+
+/* Filter Styles */
+.filter-group {
+    margin-bottom: var(--space-md);
+}
+
+.filter-title {
+    font-family: var(--font-serif);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-sm);
+    color: var(--text-primary);
+}
+
+.filter-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.filter-option {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    transition: color 0.2s;
+}
+
+.filter-option:hover {
+    color: var(--text-primary);
+}
+
+.filter-option input[type="checkbox"] {
+    accent-color: var(--text-primary);
+    cursor: pointer;
+}
+
+/* Desktop Sidebar */
+@media (min-width: 900px) {
+    .catalogue-container {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .catalogue-sidebar {
+        width: 250px;
+        flex-shrink: 0;
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        overflow-y: auto;
+        border-bottom: none;
+        border-right: 1px solid rgba(0, 0, 0, 0.05);
+        padding: var(--space-md) var(--space-sm);
+    }
+
+    .catalogue-main {
+        padding-top: var(--space-md);
+    }
+
+    .filter-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+}
+
+/* Full Width Grid Overrides */
+.catalogue-grid-full {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
+    padding: 0 var(--space-sm);
+    width: 100%;
+}
+
+@media (min-width: 600px) {
+    .catalogue-grid-full {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (min-width: 1200px) {
+    .catalogue-grid-full {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (min-width: 1600px) {
+    .catalogue-grid-full {
+        grid-template-columns: repeat(5, 1fr);
     }
 }

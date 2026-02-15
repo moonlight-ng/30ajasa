@@ -1,0 +1,129 @@
+{
+    "name": "30 Ajasa Street",
+    "maker": "Keeper-Maker, 30 Ajasa",
+    "objects": [
+        {
+            "id": "BSBA21",
+            "name": "Bamboo Straw",
+            "colour": "Green",
+            "size": "10CM",
+            "model": "01",
+            "material": "Bamboo",
+            "images": ["images/makerspace/bsba21.jpg"],
+            "videos": []
+        },
+        {
+            "id": "COPL13",
+            "name": "Bottle Cap Coaster",
+            "colour": "Material mix",
+            "size": null,
+            "model": "01",
+            "material": "Bottle Caps",
+            "images": ["images/makerspace/copl13.jpg"],
+            "videos": []
+        },
+        {
+            "id": "TRPL02",
+            "name": "Plastic Tray",
+            "colour": "Material mix",
+            "size": null,
+            "model": null,
+            "year": "2024",
+            "material": "Bottle Caps",
+            "images": ["images/makerspace/trpl02.jpg"],
+            "videos": []
+        },
+        {
+            "id": "IHCL10",
+            "name": "Clay Incense Holder",
+            "colour": "Red",
+            "size": "5-8 CM",
+            "model": "01",
+            "material": "Clay",
+            "images": [
+                "images/makerspace/ihcl10-01.jpg",
+                "images/makerspace/ihcl10-02.jpg"
+            ],
+            "videos": []
+        },
+        {
+            "id": "SDCL24",
+            "name": "Clay Soap Dish",
+            "colour": "Red",
+            "size": "Varies",
+            "model": "01",
+            "material": "Clay",
+            "images": [],
+            "videos": ["videos/makerspace/SDCL24-ClaySoapDish.mp4"]
+        },
+        {
+            "id": "STCL08",
+            "name": "Clay Stool",
+            "colour": "Red",
+            "size": "Varies",
+            "model": "01",
+            "material": "Clay",
+            "images": [],
+            "videos": []
+        },
+        {
+            "id": "LICB05",
+            "name": "Cylindrical Cardboard Light",
+            "colour": "Red",
+            "size": null,
+            "model": "01",
+            "material": [
+                "Cardboard",
+                "Spray Paint"
+            ],
+            "images": ["images/makerspace/licb05.jpg"],
+            "videos": []
+        },
+        {
+            "id": "CORP03",
+            "name": "Dried Palm Leaf Coaster",
+            "colour": "Green",
+            "size": "5 X 5 CM",
+            "model": "01",
+            "material": "Palm Leaves",
+            "images": [],
+            "videos": ["videos/makerspace/CORP03-PalmLeafCoaster.mp4"]
+        },
+        {
+            "id": "TRPL14",
+            "name": "PVC + Corn Husk Tray",
+            "colour": "Multicolour",
+            "size": "Varies",
+            "model": "01",
+            "material": [
+                "PVC",
+                "Dried Corn Husks"
+            ],
+            "images": [],
+            "videos": []
+        },
+        {
+            "id": "CUPL01",
+            "name": "Re-purposed Plastic Bottle Cup",
+            "colour": "Multicolour",
+            "size": "Varies",
+            "model": "01",
+            "material": [
+                "Plastic Bottles",
+                "Nylon Bags"
+            ],
+            "images": ["images/makerspace/cupl01.jpg"],
+            "videos": []
+        },
+        {
+            "id": "CUBA30",
+            "name": "Bamboo Cup",
+            "colour": null,
+            "size": null,
+            "model": null,
+            "material": "Bamboo",
+            "images": ["images/makerspace/cuba30.jpg"],
+            "videos": []
+        }
+    ]
+}
