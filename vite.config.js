@@ -11,8 +11,8 @@ const rewritePlugin = () => {
                     req.url = req.url.replace('/makerspace', '/pages/makerspace')
                 } else if (req.url.startsWith('/building')) {
                     req.url = req.url.replace('/building', '/pages/building')
-                } else if (req.url.startsWith('/film-club')) {
-                    req.url = req.url.replace('/film-club', '/pages/film-club')
+                } else if (req.url.startsWith('/contact')) {
+                    req.url = req.url.replace('/contact', '/pages/contact')
                 }
                 next()
             })
@@ -37,7 +37,7 @@ export default defineConfig({
                 main: resolve(__dirname, 'index.html'),
                 notFound: resolve(__dirname, '404.html'),
                 building: resolve(__dirname, 'pages/building/index.html'),
-                filmClub: resolve(__dirname, 'pages/film-club/index.html'),
+                contact: resolve(__dirname, 'pages/contact/index.html'),
                 makerspace: resolve(__dirname, 'pages/makerspace/index.html'),
             },
         },

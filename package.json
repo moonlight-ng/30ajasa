@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && mv dist/pages/building dist/building && mv dist/pages/film-club dist/film-club && mv dist/pages/makerspace dist/makerspace && rmdir dist/pages",
+    "build": "vite build && mv dist/pages/building dist/building && mv dist/pages/contact dist/contact && mv dist/pages/makerspace dist/makerspace && rmdir dist/pages",
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

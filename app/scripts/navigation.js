@@ -2,7 +2,7 @@ function initNavigation() {
     const currentPath = window.location.pathname;
     let currentPage = 'home';
     if (currentPath.includes('/building/')) currentPage = 'building';
-    else if (currentPath.includes('/film-club/')) currentPage = 'film-club';
+    else if (currentPath.includes('/contact/')) currentPage = 'contact';
     else if (currentPath.includes('/makerspace/')) currentPage = 'makerspace';
 
     const pathSegments = currentPath.replace(/^\//, '').split('/').filter(Boolean);
