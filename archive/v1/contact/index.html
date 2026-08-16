@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, follow">
+    <title>Contact - Makerspace</title>
+    <meta name="description"
+        content="Contact Makerspace - Get in touch at makerspace@16by16.co">
+    <link rel="canonical" href="https://30ajasa.com/contact/">
+    <link rel="icon" href="/images/shared/logos/16-16.webp" type="image/webp">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Contact - Makerspace">
+    <meta property="og:description"
+        content="Contact Makerspace - Get in touch at makerspace@16by16.co">
+    <meta property="og:url" content="https://30ajasa.com/contact/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://30ajasa.com/images/hero/2026.png">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact - Makerspace">
+    <meta name="twitter:description"
+        content="Contact Makerspace - Get in touch at makerspace@16by16.co">
+    <link rel="stylesheet" href="/app/styles/style.css">
+</head>
+
+<body>
+    <noscript>
+        <style>
+            body {
+                opacity: 1
+            }
+        </style>
+    </noscript>
+
+    <!-- Peripheral Navigation -->
+    <div id="navigation-placeholder"></div>
+
+    <main class="page-content">
+        <section class="viewport-section viewport-section--full-mobile section-beige">
+            <div class="prose" style="max-width: 600px; text-align: center;">
+                <p><a href="mailto:makerspace@16by16.co">makerspace@16by16.co</a></p>
+            </div>
+        </section>
+    </main>
+
+    <div id="footer-placeholder"></div>
+    <script src="/app/scripts/navigation.js"></script>
+    <script>
+        // Load navigation component
+        fetch('/app/components/navigation.html')
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('navigation-placeholder').innerHTML = html;
+                // Re-initialize navigation after component loads
+                if (window.initNavigation) {
+                    window.initNavigation();
+                }
+            });
+    </script>
+    <script src="/app/scripts/footer.js"></script>
+    <script src="/app/scripts/page-transitions.js"></script>
+</body>
+
+</html>
+

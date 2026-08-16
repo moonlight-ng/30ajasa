@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && mv dist/pages/building dist/building && mv dist/pages/contact dist/contact && mv dist/pages/makerspace dist/makerspace && rmdir dist/pages",
+    "build": "vite build && mv dist/pages/building dist/building && mv dist/pages/contact dist/contact && mv dist/pages/rent dist/rent && mv dist/pages/film-club dist/film-club && mv dist/pages/makerspace dist/makerspace && rmdir dist/pages && mkdir -p dist/server dist/.openai && cp worker/index.js dist/server/index.js && cp .openai/hosting.json dist/.openai/hosting.json && cp -R .openai/drizzle dist/.openai/drizzle",
+    "db:generate": "drizzle-kit generate",
     "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +15,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "drizzle-kit": "^0.31.10",
+    "drizzle-orm": "^0.45.2",
     "vite": "^6.4.1",
     "vite-plugin-static-copy": "^3.2.0"
   }

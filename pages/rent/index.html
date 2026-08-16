@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent the Space — Makerspace</title>
+    <meta name="description"
+        content="Rent Makerspace on Lagos Island for four hours at ₦100,000 and bring people together to teach, learn and make.">
+    <link rel="canonical" href="https://30ajasa.com/rent/">
+    <link rel="icon" href="/images/shared/logos/16-16.webp" type="image/webp">
+    <meta property="og:site_name" content="Makerspace">
+    <meta property="og:locale" content="en_NG">
+    <meta property="og:title" content="Rent the Space — Makerspace">
+    <meta property="og:description"
+        content="A community space for people to teach, learn and make together. Four hours for ₦100,000.">
+    <meta property="og:url" content="https://30ajasa.com/rent/">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://30ajasa.com/images/building/space.png">
+    <meta property="og:image:alt" content="Makerspace at 30 Ajasa Street">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Rent the Space — Makerspace">
+    <meta name="twitter:description"
+        content="A community space for people to teach, learn and make together. Four hours for ₦100,000.">
+    <meta name="twitter:image" content="https://30ajasa.com/images/building/space.png">
+    <link rel="stylesheet" href="../../app/styles/style.css">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Rent the Space — Makerspace",
+        "url": "https://30ajasa.com/rent/",
+        "description": "Rent Makerspace on Lagos Island for four hours at ₦100,000.",
+        "about": {
+            "@type": "Place",
+            "@id": "https://30ajasa.com/#place",
+            "name": "Makerspace at 30 Ajasa Street"
+        }
+    }
+    </script>
+</head>
+
+<body class="making-booking-page rental-page">
+    <noscript>
+        <style>
+            body { opacity: 1 }
+        </style>
+    </noscript>
+
+    <header class="making-header">
+        <a class="making-wordmark" href="/">Makerspace</a>
+        <a href="/contact/">Contact</a>
+    </header>
+
+    <main>
+        <section class="rental-intro" aria-labelledby="rental-heading">
+            <p class="making-label">Space rental</p>
+            <div>
+                <h1 id="rental-heading">Rent the space</h1>
+                <p>Makerspace is a community of people teaching one another how to make things. It is a place for sharing skills, trying ideas and building the future together.</p>
+                <p>Rent the space to host a workshop, class, shoot, meeting or gathering of your own.</p>
+                <div class="rental-price" aria-label="Rental price: 100,000 naira for four hours">
+                    <p class="making-label">Rate</p>
+                    <p class="rental-price-amount">₦100,000</p>
+                    <p class="rental-price-duration">Four hours</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="rental-request" aria-labelledby="rental-request-heading">
+            <div class="booking-heading booking-heading--prose">
+                <p class="making-label">Rental request</p>
+                <h2 id="rental-request-heading">Choose your four hours.</h2>
+                <p>Complete the details below and we will prepare an email for you to send to the Makerspace team.</p>
+            </div>
+
+            <form class="rental-form" id="rental-form" data-recipient="makerspace@16by16.co">
+                <fieldset>
+                    <legend>Your details</legend>
+                    <div class="rental-field-grid rental-field-grid--two">
+                        <label>
+                            <span>Name</span>
+                            <input type="text" name="name" autocomplete="name" required maxlength="100">
+                        </label>
+                        <label>
+                            <span>Email</span>
+                            <input type="email" name="email" autocomplete="email" required maxlength="160">
+                        </label>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Date and time</legend>
+                    <div class="rental-field-grid rental-field-grid--three">
+                        <label>
+                            <span>Date</span>
+                            <input type="date" name="date" required>
+                        </label>
+                        <label>
+                            <span>From</span>
+                            <input type="time" name="from" required>
+                        </label>
+                        <label>
+                            <span>To</span>
+                            <input type="time" name="to" required>
+                        </label>
+                    </div>
+                    <p class="rental-field-note">₦100,000 for a four-hour rental.</p>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Your plans</legend>
+                    <label class="rental-textarea-label">
+                        <span>What would you like to use the space for?</span>
+                        <textarea name="use" rows="5" required maxlength="800"></textarea>
+                    </label>
+                </fieldset>
+
+                <div class="booking-submit-row">
+                    <p id="rental-status" role="status" aria-live="polite">Your four-hour request will open in your email app for you to review and send.</p>
+                    <button type="submit">Prepare rental email</button>
+                </div>
+            </form>
+
+            <noscript>
+                <p class="rental-noscript">Email <a href="mailto:makerspace@16by16.co">makerspace@16by16.co</a> with your name, date, start and end time, and how you plan to use the space.</p>
+            </noscript>
+        </section>
+    </main>
+
+    <footer class="making-footer">
+        <nav class="making-footer-nav" aria-label="Footer navigation">
+            <a href="/">Home</a>
+            <a href="/#book">Book a class</a>
+            <a href="/rent/" aria-current="page">Rent the space</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <p class="making-footer-meta">&copy; 2026</p>
+        <a class="making-footer-logo" href="https://16by16.co" target="_blank" rel="noopener noreferrer" aria-label="16/16">
+            <img src="/images/shared/logos/16-16.webp" alt="16/16" width="50" height="50">
+        </a>
+    </footer>
+
+    <script src="../../app/scripts/rent-inquiry.js"></script>
+    <script src="../../app/scripts/page-transitions.js"></script>
+</body>
+
+</html>

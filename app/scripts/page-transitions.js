@@ -7,8 +7,19 @@
     function isInternalLink(link) {
         const href = link.getAttribute("href");
         if (!href || href === "#" || link.target === "_blank") return false;
+        if (href.startsWith("#")) return false;
         try {
-            return new URL(link.href).origin === window.location.origin;
+            const url = new URL(link.href);
+            if (url.origin !== window.location.origin) return false;
+            // Same-page anchors should scroll, not fade-navigate
+            if (
+                url.pathname === window.location.pathname &&
+                url.search === window.location.search &&
+                url.hash
+            ) {
+                return false;
+            }
+            return true;
         } catch {
             return true;
         }

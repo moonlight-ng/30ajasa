@@ -5,14 +5,11 @@ function initNavigation() {
     else if (currentPath.includes('/contact/')) currentPage = 'contact';
     else if (currentPath.includes('/makerspace/')) currentPage = 'makerspace';
 
-    const pathSegments = currentPath.replace(/^\//, '').split('/').filter(Boolean);
-    const depth = pathSegments.length;
+    const archiveBase = currentPath.startsWith('/archive/v1') ? '/archive/v1/' : '/';
 
     function setHrefsAndActive(link) {
         const page = link.getAttribute('data-page');
-        const href = depth === 0
-            ? (page === 'home' ? './' : `${page}/`)
-            : (page === 'home' ? '../' : `../${page}/`);
+        const href = page === 'home' ? archiveBase : `${archiveBase}${page}/`;
         link.setAttribute('href', href);
         if (page === currentPage) link.classList.add('nav-active');
     }
