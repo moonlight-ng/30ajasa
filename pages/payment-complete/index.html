@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment complete — Makerspace</title>
+    <meta name="description" content="Your Makerspace workshop payment is complete. Prepare for your visit.">
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/app/styles/style.css">
+</head>
+
+<body class="making-booking-page payment-complete-page">
+    <noscript>
+        <style>
+            body { opacity: 1 }
+        </style>
+    </noscript>
+
+    <header class="making-header">
+        <a class="making-wordmark" href="/">Makerspace</a>
+        <a href="/#book">Workshops</a>
+    </header>
+
+    <main>
+        <section class="payment-result" aria-labelledby="payment-kicker">
+            <h2 class="making-introduction-title" id="payment-kicker">Checking your payment</h2>
+            <div class="payment-result-copy" data-payment-state="loading">
+                <p class="payment-result-message" id="payment-result-message" role="status" aria-live="polite">
+                    We’re securely verifying the result with Paystack.
+                </p>
+                <dl class="payment-receipt" id="payment-receipt" hidden>
+                    <div>
+                        <dt>Workshop</dt>
+                        <dd data-receipt="workshop"></dd>
+                    </div>
+                    <div>
+                        <dt>Email address</dt>
+                        <dd data-receipt="email"></dd>
+                    </div>
+                    <div>
+                        <dt>When</dt>
+                        <dd data-receipt="session"></dd>
+                    </div>
+                    <div>
+                        <dt>Payment</dt>
+                        <dd data-receipt="amount"></dd>
+                    </div>
+                    <div>
+                        <dt>Reference</dt>
+                        <dd data-receipt="reference"></dd>
+                    </div>
+                </dl>
+                <div class="payment-result-actions">
+                    <button type="button" id="payment-retry" hidden>Check again</button>
+                    <a href="/#book" id="payment-return" hidden>Return to workshops</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="workshop-preparation" aria-labelledby="preparation-heading">
+            <h2 class="making-introduction-title" id="preparation-heading">How to prepare</h2>
+            <div>
+                <ol class="preparation-list">
+                    <li>
+                        <span>01</span>
+                        <div>
+                            <h3>Arrive ten minutes early</h3>
+                            <p>We’ll welcome you, show you around and get everyone settled before the session begins.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span>02</span>
+                        <div>
+                            <h3>Dress for the workbench</h3>
+                            <p>Wear comfortable clothes and closed shoes. Making can be dusty, inky or a little messy.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <span>03</span>
+                        <div>
+                            <h3>Bring your curiosity</h3>
+                            <p>No previous experience is expected. We provide the shared tools and materials for your workshop.</p>
+                        </div>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <article class="first-visit-note" aria-labelledby="first-visit-heading">
+            <h2 class="making-introduction-title" id="first-visit-heading">What to expect</h2>
+            <div>
+                <p>A workshop here is practical, social and deliberately unhurried.</p>
+                <div class="first-visit-columns">
+                    <p>We start together with a short introduction to the tools, materials and the day’s process. Your facilitator will demonstrate the essentials, then stay close while you work at your own pace.</p>
+                    <p>You’ll share a table with a small group, ask questions freely and learn from what other people try. Experiments and imperfect first attempts are part of the session—not something to hide.</p>
+                </div>
+            </div>
+        </article>
+
+        <section class="first-visit-contact" aria-label="Questions before your visit">
+            <p>Questions before your visit? <a href="mailto:makerspace@16by16.co">makerspace@16by16.co</a></p>
+        </section>
+    </main>
+
+    <footer class="making-footer">
+        <p class="making-footer-meta">&copy; 2026</p>
+        <a class="making-footer-logo" href="https://16by16.co" target="_blank" rel="noopener noreferrer" aria-label="16/16">
+            <img src="/images/shared/logos/16-16.webp" alt="16/16" width="50" height="50">
+        </a>
+    </footer>
+
+    <script src="/app/scripts/page-transitions.js"></script>
+    <script src="/app/scripts/payment-complete.js"></script>
+</body>
+
+</html>

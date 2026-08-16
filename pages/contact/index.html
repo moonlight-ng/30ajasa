@@ -8,7 +8,7 @@
     <meta name="description"
         content="Contact Makerspace by email or visit us at 30 Ajasa Street, Onikan, Lagos Island.">
     <link rel="canonical" href="https://makerspace.16by16.co/contact/">
-    <link rel="icon" href="/images/shared/logos/16-16.webp" type="image/webp">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <meta property="og:site_name" content="Makerspace">
     <meta property="og:locale" content="en_NG">
     <meta property="og:title" content="Contact — Makerspace">
@@ -42,7 +42,7 @@
     </script>
 </head>
 
-<body>
+<body class="making-booking-page contact-page">
     <noscript>
         <style>
             body {
@@ -51,52 +51,41 @@
         </style>
     </noscript>
 
-    <!-- Peripheral Navigation -->
-    <div id="navigation-placeholder"></div>
+    <header class="making-header">
+        <a class="making-wordmark" href="/">Makerspace</a>
+        <a href="/">Home</a>
+    </header>
 
-    <main class="page-content">
-        <section class="contact-simple" aria-labelledby="contact-heading">
-            <header class="contact-simple-heading">
-                <p class="contact-eyebrow">Makerspace</p>
-                <h1 id="contact-heading">Contact</h1>
-            </header>
-            <address class="contact-details">
-                <div>
-                    <p class="contact-label">Email</p>
-                    <a href="mailto:makerspace@16by16.co">makerspace@16by16.co</a>
-                </div>
-                <div>
-                    <p class="contact-label">Visit</p>
-                    <p>30 Ajasa Street<br>Onikan, Lagos Island<br>Nigeria</p>
-                </div>
-            </address>
-        </section>
-
-        <section class="contact-rent" aria-labelledby="contact-rent-heading">
-            <p class="contact-label">Space rental</p>
-            <div>
-                <h2 id="contact-rent-heading">Make the space yours for a while.</h2>
-                <p>Planning a workshop, class, shoot, meeting or gathering? Rent the space for four hours at ₦100,000.</p>
-                <a class="contact-rent-link" href="/rent/">Rent the space</a>
+    <main>
+        <section class="contact-hero" aria-labelledby="contact-heading">
+            <div class="contact-hero-info">
+                <h1 class="making-introduction-title" id="contact-heading">Get in touch.</h1>
+                <address class="contact-address">
+                    <div>
+                        <p class="making-label">Email</p>
+                        <a href="mailto:makerspace@16by16.co">makerspace@16by16.co</a>
+                    </div>
+                    <div>
+                        <p class="making-label">Address</p>
+                        <p>30 Ajasa Street<br>Onikan, Lagos Island, Nigeria</p>
+                    </div>
+                    <div>
+                        <a href="https://www.google.com/maps/search/?api=1&amp;query=30+Ajasa+Street%2C+Onikan%2C+Lagos+Island%2C+Nigeria" target="_blank" rel="noopener noreferrer">Open in Google Maps</a>
+                    </div>
+                </address>
             </div>
+            <figure class="contact-hero-figure">
+                <img src="/images/building/30-ajasa-street.jpg" alt="The facade of 30 Ajasa Street" width="2000" height="1500" loading="lazy" decoding="async">
+            </figure>
         </section>
     </main>
 
-    <div id="footer-placeholder"></div>
-    <script src="../../app/scripts/navigation.js"></script>
-    <script>
-        // Load navigation component
-        fetch('../../app/components/navigation.html')
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('navigation-placeholder').innerHTML = html;
-                // Re-initialize navigation after component loads
-                if (window.initNavigation) {
-                    window.initNavigation();
-                }
-            });
-    </script>
-    <script src="../../app/scripts/footer.js"></script>
+    <footer class="making-footer">
+        <p class="making-footer-meta">&copy; 2026</p>
+        <a class="making-footer-logo" href="https://16by16.co" target="_blank" rel="noopener noreferrer" aria-label="16/16">
+            <img src="/images/shared/logos/16-16.webp" alt="16/16" width="50" height="50">
+        </a>
+    </footer>
     <script src="../../app/scripts/page-transitions.js"></script>
 </body>
 

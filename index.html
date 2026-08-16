@@ -4,25 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Makerspace — Workshops &amp; Community on Lagos Island</title>
+    <title>Makerspace - Ceramics and 3D printing workshop</title>
     <meta name="description"
-        content="Makerspace is a workshop and community at 30 Ajasa Street, Lagos Island. Book beginner clay and 3D printing classes, or rent the space for creative events.">
+        content="Makerspace is a workshop and community at 30 Ajasa Street, Lagos Island. Book beginner ceramics and 3D printing classes, or rent the space for creative events.">
     <link rel="canonical" href="https://makerspace.16by16.co/">
-    <link rel="icon" href="/images/shared/logos/16-16.webp" type="image/webp">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <meta property="og:site_name" content="Makerspace">
     <meta property="og:locale" content="en_NG">
-    <meta property="og:title" content="Makerspace — Workshops &amp; Community on Lagos Island">
+    <meta property="og:title" content="Makerspace - Ceramics and 3D printing workshop">
     <meta property="og:description"
-        content="A workshop and community at 30 Ajasa Street, Lagos Island. Book clay and 3D printing classes, or rent the space.">
+        content="A workshop and community at 30 Ajasa Street, Lagos Island. Book ceramics and 3D printing classes, or rent the space.">
     <meta property="og:url" content="https://makerspace.16by16.co/">
     <meta property="og:type" content="website">
-    <meta property="og:image" content="https://makerspace.16by16.co/images/makerspace/introduction-to-making.png">
-    <meta property="og:image:alt" content="Introduction to Making: clay vessels and geometric objects">
+    <meta property="og:image" content="https://makerspace.16by16.co/images/makerspace/seo-shapes.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Two black circles with a black triangle between them on a white background">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Makerspace — Workshops &amp; Community on Lagos Island">
+    <meta name="twitter:title" content="Makerspace - Ceramics and 3D printing workshop">
     <meta name="twitter:description"
-        content="A workshop and community at 30 Ajasa Street, Lagos Island. Book clay and 3D printing classes, or rent the space.">
-    <meta name="twitter:image" content="https://makerspace.16by16.co/images/makerspace/introduction-to-making.png">
+        content="A workshop and community at 30 Ajasa Street, Lagos Island. Book ceramics and 3D printing classes, or rent the space.">
+    <meta name="twitter:image" content="https://makerspace.16by16.co/images/makerspace/seo-shapes.png">
     <link rel="stylesheet" href="/app/styles/style.css">
     <script type="application/ld+json">
     {
@@ -80,7 +82,7 @@
 
     <header class="making-header">
         <span class="making-wordmark">Makerspace</span>
-        <button type="button" class="making-menu-trigger">Menu</button>
+        <a href="/contact/">Contact</a>
     </header>
 
     <main>
@@ -90,16 +92,26 @@
                 <span class="visually-hidden">Makerspace</span>
             </h1>
             <div>
-                <p>Makerspace is a workshop and a community of artists and tinkerers building, learning and creating together.</p>
+                <p><strong>Makerspace is a workshop and community of artists and tinkerers learning and creating together.</strong></p>
                 <p>Our space at 30 Ajasa Street, Lagos Island doubles as a venue for workshops and creative events.</p>
                 <p class="making-home-ctas">
                     <a href="#book">Book a session</a>
-                    <a href="/rent/">Rent the space</a>
+                    <a href="#rent">Rent the space</a>
                 </p>
             </div>
         </section>
 
         <section class="making-carousel" aria-label="Objects made at Makerspace">
+            <button type="button" class="making-carousel-nav making-carousel-nav--prev" data-carousel-scroll="-1" aria-label="Previous objects">
+                <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M7.5 3L4.5 6l3 3" />
+                </svg>
+            </button>
+            <button type="button" class="making-carousel-nav making-carousel-nav--next" data-carousel-scroll="1" aria-label="Next objects">
+                <svg viewBox="0 0 12 12" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <path d="M4.5 3l3 3-3 3" />
+                </svg>
+            </button>
             <ul class="making-carousel-track" tabindex="0">
                 <li><img src="/images/makerspace/bsba21.jpg" alt="Bamboo straw made at Makerspace" width="1200" height="1200" loading="lazy" decoding="async"></li>
                 <li><img src="/images/makerspace/copl13.jpg" alt="Bottle-cap coaster made at Makerspace" width="1200" height="1200" loading="lazy" decoding="async"></li>
@@ -111,36 +123,35 @@
             </ul>
         </section>
 
-        <section class="making-introduction" aria-labelledby="make-something-heading">
-            <h2 class="making-introduction-title" id="make-something-heading">Make something</h2>
+        <section class="making-introduction" id="book" aria-labelledby="book-session-heading">
+            <h2 class="making-introduction-title" id="book-session-heading">Book a session.</h2>
             <div>
                 <p class="making-label">Discover the joy of turning ideas into real, tangible things. Explore new tools and materials, understand how things come together, and experience the satisfaction of creating something yourself.</p>
             </div>
         </section>
 
-        <section class="booking-section" id="book" aria-labelledby="book-heading">
+        <section class="booking-section" aria-labelledby="book-heading">
             <h2 class="visually-hidden" id="book-heading">Book a class</h2>
-            <form class="booking-form" id="booking-form" data-payment-url="https://paystack.com/buy/introduction-to-making">
+            <form class="booking-form" id="booking-form">
                 <fieldset>
-                    <legend>Book a class</legend>
                     <div class="booking-choice-grid booking-choice-grid--classes">
                         <label>
-                            <input type="radio" name="class" value="introduction-to-clay" required>
+                            <input type="radio" name="class" value="introduction-to-clay" data-price="30000" required>
                             <span>
                                 <span class="booking-class-avatars" aria-hidden="true">
-                                    <svg class="booking-shape" viewBox="0 0 44 44" width="44" height="44" focusable="false">
+                                    <svg class="booking-shape booking-shape--green" viewBox="0 0 44 44" width="44" height="44" focusable="false">
                                         <circle cx="22" cy="22" r="15" fill="currentColor" />
                                     </svg>
                                 </span>
-                                Introduction to Clay
+                                Introduction to Ceramics
                                 <small>₦30,000</small>
                             </span>
                         </label>
                         <label>
-                            <input type="radio" name="class" value="introduction-to-3d-printing" required>
+                            <input type="radio" name="class" value="introduction-to-3d-printing" data-price="30000" required>
                             <span>
                                 <span class="booking-class-avatars" aria-hidden="true">
-                                    <svg class="booking-shape" viewBox="0 0 44 44" width="44" height="44" focusable="false">
+                                    <svg class="booking-shape booking-shape--orange" viewBox="0 0 44 44" width="44" height="44" focusable="false">
                                         <polygon points="22,7 38,37 6,37" fill="currentColor" />
                                     </svg>
                                 </span>
@@ -149,13 +160,13 @@
                             </span>
                         </label>
                         <label>
-                            <input type="radio" name="class" value="introduction-to-making" required>
+                            <input type="radio" name="class" value="introduction-to-making" data-price="50000" required>
                             <span>
                                 <span class="booking-class-avatars booking-class-avatars--double" aria-hidden="true">
-                                    <svg class="booking-shape" viewBox="0 0 44 44" width="44" height="44" focusable="false">
+                                    <svg class="booking-shape booking-shape--green" viewBox="0 0 44 44" width="44" height="44" focusable="false">
                                         <circle cx="22" cy="22" r="15" fill="currentColor" />
                                     </svg>
-                                    <svg class="booking-shape" viewBox="0 0 44 44" width="44" height="44" focusable="false">
+                                    <svg class="booking-shape booking-shape--orange" viewBox="0 0 44 44" width="44" height="44" focusable="false">
                                         <polygon points="22,7 38,37 6,37" fill="currentColor" />
                                     </svg>
                                 </span>
@@ -186,11 +197,34 @@
                     <div class="booking-choice-grid booking-choice-grid--times">
                         <label>
                             <input type="radio" name="period" value="morning" required>
-                            <span>Morning <small data-remaining-for="morning">Select a date</small></span>
+                            <span class="booking-period">
+                                <span class="booking-period-head">
+                                    Morning
+                                    <svg class="booking-shape" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                        <circle cx="12" cy="12" r="4" fill="currentColor" stroke="none" />
+                                        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
+                                    </svg>
+                                </span>
+                                <span class="booking-period-meta">
+                                    <small data-remaining-for="morning">Select a date</small>
+                                    <span class="booking-period-time">10am – 1pm</span>
+                                </span>
+                            </span>
                         </label>
                         <label>
                             <input type="radio" name="period" value="evening" required>
-                            <span>Evening <small data-remaining-for="evening">Select a date</small></span>
+                            <span class="booking-period">
+                                <span class="booking-period-head">
+                                    Evening
+                                    <svg class="booking-shape" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                                        <path d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z" fill="currentColor" stroke="none" />
+                                    </svg>
+                                </span>
+                                <span class="booking-period-meta">
+                                    <small data-remaining-for="evening">Select a date</small>
+                                    <span class="booking-period-time">4 – 7pm</span>
+                                </span>
+                            </span>
                         </label>
                     </div>
                 </fieldset>
@@ -210,26 +244,121 @@
                 </fieldset>
 
                 <div class="booking-submit-row">
-                    <p id="booking-status" role="status" aria-live="polite">Your place is reserved before you continue to payment.</p>
-                    <button type="submit">Reserve &amp; continue to payment</button>
+                    <div class="booking-order">
+                        <div class="booking-stepper" role="group" aria-label="Places">
+                            <button type="button" data-quantity-step="-1" aria-label="Remove a place">&minus;</button>
+                            <output id="booking-quantity" aria-live="polite">1</output>
+                            <button type="button" data-quantity-step="1" aria-label="Add a place">+</button>
+                        </div>
+                        <div class="booking-order-total">
+                            <span class="making-label">Total</span>
+                            <p class="booking-total" id="booking-total">&#8358;30,000</p>
+                        </div>
+                    </div>
+                    <button type="submit">Reserve</button>
                 </div>
+                <p class="booking-status" id="booking-status" role="status" aria-live="polite"></p>
             </form>
+
+            <section class="booking-review" id="booking-review" aria-labelledby="booking-review-title" hidden>
+                <header class="booking-review-header">
+                    <div>
+                        <p class="making-label" id="booking-review-kicker">Reservation held</p>
+                        <h2 id="booking-review-title" tabindex="-1">Review booking</h2>
+                    </div>
+                    <div class="booking-review-timer" aria-label="Time remaining on this reservation">
+                        <span>Time remaining</span>
+                        <strong id="booking-review-countdown">10:00</strong>
+                    </div>
+                </header>
+
+                <p class="booking-review-intro" id="booking-review-intro">
+                    Your places are set aside. Complete payment before the timer reaches zero.
+                </p>
+
+                <dl class="booking-review-summary" id="booking-review-summary">
+                    <div>
+                        <dt>Workshop</dt>
+                        <dd data-review-value="workshop"></dd>
+                    </div>
+                    <div>
+                        <dt>Date</dt>
+                        <dd data-review-value="date"></dd>
+                    </div>
+                    <div>
+                        <dt>Time</dt>
+                        <dd data-review-value="time"></dd>
+                    </div>
+                    <div>
+                        <dt>Places</dt>
+                        <dd data-review-value="quantity"></dd>
+                    </div>
+                    <div>
+                        <dt>Reserved for</dt>
+                        <dd data-review-value="customer"></dd>
+                    </div>
+                    <div class="booking-review-summary-total">
+                        <dt>Total</dt>
+                        <dd data-review-value="total"></dd>
+                    </div>
+                </dl>
+
+                <p class="booking-review-notice" id="booking-review-notice">
+                    Cancelling releases your places immediately. Payment is handled securely by Paystack.
+                </p>
+
+                <div class="booking-review-actions" id="booking-review-actions">
+                    <button type="button" class="booking-review-cancel" id="booking-review-cancel">Cancel reservation</button>
+                    <button type="button" class="booking-review-pay" id="booking-review-pay">Pay now</button>
+                </div>
+            </section>
+        </section>
+
+        <section class="making-introduction making-introduction--rent" id="rent" aria-labelledby="rent-space-heading">
+            <h2 class="making-introduction-title" id="rent-space-heading">Rent the space.</h2>
+            <div>
+                <p class="making-label">Makerspace is a place for sharing skills, trying ideas and building together. Take it over to host a workshop, class, shoot, meeting or gathering of your own. Send us a request and we’ll come back with details.</p>
+                <div class="rental-details">
+                    <div>
+                        <p class="making-label">Rate</p>
+                        <p>₦100,000</p>
+                    </div>
+                    <div>
+                        <p class="making-label">Time</p>
+                        <p>4 hours</p>
+                    </div>
+                </div>
+                <details class="rental-guidelines">
+                    <summary>
+                        <span class="rental-guidelines-title">Guidelines</span>
+                    </summary>
+                    <ul>
+                        <li>This is a shared building, so there may be other guests around.</li>
+                        <li>We can’t promise 24/7 power, but a backup is available.</li>
+                        <li>There’s no air conditioning, but there are fans.</li>
+                        <li>Workshop tools are not included unless arranged separately.</li>
+                        <li>Street parking is limited. Shared transport or taxis work best.</li>
+                        <li>Setup is yours to handle. Leave the space as you found it.</li>
+                        <li>Do not place anything on the street.</li>
+                        <li>You are responsible for your guests and any damage.</li>
+                    </ul>
+                </details>
+                <p class="making-home-ctas">
+                    <a class="rental-request-link" href="mailto:makerspace@16by16.co?subject=Space%20rental%20request&amp;body=Hello%20Makerspace%2C%0D%0A%0D%0AI%20would%20like%20to%20rent%20the%20space%20for%204%20hours%20(%E2%82%A6100%2C000).%0D%0A%0D%0AName%3A%0D%0AEmail%3A%0D%0APhone%3A%0D%0APreferred%20date%3A%0D%0AStart%20time%3A%0D%0AEnd%20time%3A%0D%0ANumber%20of%20people%3A%0D%0AWhat%20I%20would%20like%20to%20use%20the%20space%20for%3A%0D%0A%0D%0AThank%20you.">Email a rental request</a>
+                </p>
+            </div>
         </section>
     </main>
 
     <footer class="making-footer">
-        <nav class="making-footer-nav" aria-label="Footer navigation">
-            <a href="/">Home</a>
-            <a href="/#book">Book a class</a>
-            <a href="/rent/">Rent the space</a>
-            <a href="/contact/">Contact</a>
-        </nav>
         <p class="making-footer-meta">&copy; 2026</p>
         <a class="making-footer-logo" href="https://16by16.co" target="_blank" rel="noopener noreferrer" aria-label="16/16">
             <img src="/images/shared/logos/16-16.webp" alt="16/16" width="50" height="50">
         </a>
     </footer>
     <script src="/app/scripts/page-transitions.js"></script>
+    <script src="/app/scripts/carousel.js"></script>
+    <script src="https://js.paystack.co/v2/inline.js"></script>
     <script src="/app/scripts/booking-calendar.js"></script>
 </body>
 

@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "rewrites": [
+    { "source": "/building", "destination": "/pages/building/index.html" },
+    { "source": "/building/", "destination": "/pages/building/index.html" },
+    { "source": "/contact", "destination": "/pages/contact/index.html" },
+    { "source": "/contact/", "destination": "/pages/contact/index.html" },
+    { "source": "/film-club", "destination": "/pages/film-club/index.html" },
+    { "source": "/film-club/", "destination": "/pages/film-club/index.html" },
+    { "source": "/makerspace", "destination": "/pages/makerspace/index.html" },
+    { "source": "/makerspace/", "destination": "/pages/makerspace/index.html" },
+    { "source": "/payment-complete", "destination": "/pages/payment-complete/index.html" },
+    { "source": "/payment-complete/", "destination": "/pages/payment-complete/index.html" }
+  ]
+}
