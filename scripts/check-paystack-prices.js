@@ -2,9 +2,9 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const workshops = [
-    ['Introduction to Ceramics', 'introduction-to-clay', 'PAYSTACK_VARIANT_CERAMICS_AMOUNT'],
-    ['Introduction to 3D Printing', 'introduction-to-3d-printing', 'PAYSTACK_VARIANT_3D_PRINTING_AMOUNT'],
-    ['Introduction to Making bundle', 'introduction-to-making', 'PAYSTACK_VARIANT_MAKING_AMOUNT'],
+    ['Intro to Ceramics', 'introduction-to-clay', 'PAYSTACK_VARIANT_CERAMICS_AMOUNT'],
+    ['Intro to 3D Printing', 'introduction-to-3d-printing', 'PAYSTACK_VARIANT_3D_PRINTING_AMOUNT'],
+    ['Intro to Concrete', 'introduction-to-making', 'PAYSTACK_VARIANT_MAKING_AMOUNT'],
 ];
 
 function formatAmount(amount) {

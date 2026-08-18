@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { SESSION_CAPACITY } from '../server/config.js'
+import { getWorkshop, SESSION_CAPACITY } from '../server/config.js'
 import {
     PaystackConfigurationError,
     requirePaystackKeys,
@@ -35,7 +35,7 @@ const testProductEnv = {
     PAYSTACK_VARIANT_3D_PRINTING_AMOUNT: '3000000',
     PAYSTACK_VARIANT_VALUE_MAKING_ID: '338897',
     PAYSTACK_PRODUCT_VARIANT_MAKING_ID: '802875',
-    PAYSTACK_VARIANT_MAKING_AMOUNT: '5000000',
+    PAYSTACK_VARIANT_MAKING_AMOUNT: '3000000',
 }
 
 test('Popup test mode rejects missing and live public keys', () => {
@@ -132,10 +132,16 @@ test('Popup amount is derived from the configured Paystack variant price', () =>
     assert.equal(product.amount * validBooking.quantity, 6_000_000)
 })
 
-test('individual classes are 30k and the Making bundle is 50k', () => {
+test('all three classes are 30k', () => {
     assert.equal(requirePaystackProduct(testProductEnv, 'introduction-to-clay').amount, 3_000_000)
     assert.equal(requirePaystackProduct(testProductEnv, 'introduction-to-3d-printing').amount, 3_000_000)
-    assert.equal(requirePaystackProduct(testProductEnv, 'introduction-to-making').amount, 5_000_000)
+    assert.equal(requirePaystackProduct(testProductEnv, 'introduction-to-making').amount, 3_000_000)
+})
+
+test('workshop names use the shorter Intro labels', () => {
+    assert.equal(getWorkshop('introduction-to-clay').name, 'Intro to Ceramics')
+    assert.equal(getWorkshop('introduction-to-3d-printing').name, 'Intro to 3D Printing')
+    assert.equal(getWorkshop('introduction-to-making').name, 'Intro to Concrete')
 })
 
 test('verified Paystack transaction must match the stored payment', () => {

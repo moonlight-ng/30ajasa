@@ -6,9 +6,9 @@ Current rule:
 
 | Workshop | Naira | Kobo variable value |
 | --- | ---: | ---: |
-| Introduction to Ceramics | ₦30,000 | `3000000` |
-| Introduction to 3D Printing | ₦30,000 | `3000000` |
-| Introduction to Making bundle | ₦50,000 | `5000000` |
+| Intro to Ceramics | ₦30,000 | `3000000` |
+| Intro to 3D Printing | ₦30,000 | `3000000` |
+| Intro to Concrete | ₦30,000 | `3000000` |
 
 ## Update process
 
@@ -18,7 +18,7 @@ Current rule:
    ```dotenv
    PAYSTACK_VARIANT_CERAMICS_AMOUNT=3000000
    PAYSTACK_VARIANT_3D_PRINTING_AMOUNT=3000000
-   PAYSTACK_VARIANT_MAKING_AMOUNT=5000000
+   PAYSTACK_VARIANT_MAKING_AMOUNT=3000000
    ```
 
 3. In Vercel, open **moonlight-ng → makerspace → Settings → Environment Variables** and update the same three names for Preview and Production. Amounts are in kobo: multiply the naira price by 100.

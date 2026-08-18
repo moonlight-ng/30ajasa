@@ -36,12 +36,12 @@
     const FALLBACK_PRICES = Object.freeze({
         'introduction-to-clay': 30000,
         'introduction-to-3d-printing': 30000,
-        'introduction-to-making': 50000
+        'introduction-to-making': 30000
     });
     const WORKSHOP_NAMES = Object.freeze({
-        'introduction-to-clay': 'Introduction to Ceramics',
-        'introduction-to-3d-printing': 'Introduction to 3D Printing',
-        'introduction-to-making': 'Introduction to Making'
+        'introduction-to-clay': 'Intro to Ceramics',
+        'introduction-to-3d-printing': 'Intro to 3D Printing',
+        'introduction-to-making': 'Intro to Concrete'
     });
     const SESSION_TIMES = Object.freeze({
         morning: '10am – 1pm',

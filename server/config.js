@@ -1,12 +1,12 @@
 export const WORKSHOPS = Object.freeze({
     'introduction-to-clay': Object.freeze({
-        name: 'Introduction to Ceramics',
+        name: 'Intro to Ceramics',
     }),
     'introduction-to-3d-printing': Object.freeze({
-        name: 'Introduction to 3D Printing',
+        name: 'Intro to 3D Printing',
     }),
     'introduction-to-making': Object.freeze({
-        name: 'Introduction to Making',
+        name: 'Intro to Concrete',
     }),
 });
 

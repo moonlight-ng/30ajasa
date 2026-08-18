@@ -51,7 +51,7 @@ PAYSTACK_PRODUCT_VARIANT_3D_PRINTING_ID=802792
 PAYSTACK_VARIANT_3D_PRINTING_AMOUNT=3000000
 PAYSTACK_VARIANT_VALUE_MAKING_ID=338848
 PAYSTACK_PRODUCT_VARIANT_MAKING_ID=802793
-PAYSTACK_VARIANT_MAKING_AMOUNT=5000000
+PAYSTACK_VARIANT_MAKING_AMOUNT=3000000
 ```
 
 Amounts are in kobo. The Vercel API derives the amount and product metadata from these server variables, then checks Paystack's verified reference, amount, currency and customer email before marking a booking paid.
@@ -71,12 +71,12 @@ PAYSTACK_PRODUCT_VARIANT_3D_PRINTING_ID=802874
 PAYSTACK_VARIANT_3D_PRINTING_AMOUNT=3000000
 PAYSTACK_VARIANT_VALUE_MAKING_ID=338897
 PAYSTACK_PRODUCT_VARIANT_MAKING_ID=802875
-PAYSTACK_VARIANT_MAKING_AMOUNT=5000000
+PAYSTACK_VARIANT_MAKING_AMOUNT=3000000
 ```
 
 The Product Link's product ID, option-value ID and concrete variant ID are all retained. A separate Paystack account ID or integration ID is not required: the public/secret key pair identifies the integration.
 
-Pricing is currently ₦30,000 for each individual class and ₦50,000 for the Introduction to Making bundle. See [`docs/paystack-pricing.md`](docs/paystack-pricing.md) for the exact update and verification process.
+Intro to Ceramics, Intro to 3D Printing, and Intro to Concrete are each ₦30,000. See [`docs/paystack-pricing.md`](docs/paystack-pricing.md) for the exact update and verification process.
 
 ## Paystack webhook
 
