@@ -13,8 +13,8 @@ import { cancelBooking, validateBooking, validateBookingCancellation } from '../
 
 const validBooking = {
     classSlug: 'introduction-to-clay',
-    date: '2026-09-01',
-    period: 'morning',
+    date: '2026-09-03',
+    period: 'evening',
     quantity: 2,
     name: 'Test Maker',
     email: 'maker@example.com',
@@ -61,6 +61,16 @@ test('Paystack public and secret keys must use the same environment', () => {
 
 test('booking quantity is validated against session capacity', () => {
     assert.deepEqual(validateBooking(validBooking), validBooking)
+    assert.equal(validateBooking({ ...validBooking, date: '2026-09-01' }).error, 'Choose a valid session date.')
+    assert.equal(validateBooking({ ...validBooking, period: 'morning' }).error, 'Choose the available time for that date.')
+    assert.deepEqual(
+        validateBooking({ ...validBooking, date: '2026-09-05', period: 'morning' }),
+        { ...validBooking, date: '2026-09-05', period: 'morning' },
+    )
+    assert.equal(
+        validateBooking({ ...validBooking, date: '2026-09-05', period: 'evening' }).error,
+        'Choose the available time for that date.',
+    )
     assert.equal(validateBooking({ ...validBooking, quantity: 0 }).error, 'Choose between 1 and 3 places.')
     assert.equal(
         validateBooking({ ...validBooking, quantity: SESSION_CAPACITY + 1 }).error,

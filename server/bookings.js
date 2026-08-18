@@ -6,6 +6,7 @@ import {
     SESSION_CAPACITY,
     SESSION_DATES,
     SESSION_PERIODS,
+    SESSIONS,
     WORKSHOPS,
 } from './config.js';
 import { AppError } from './errors.js';
@@ -22,7 +23,10 @@ export function validateBooking(input = {}) {
 
     if (!Object.hasOwn(WORKSHOPS, classSlug)) return { error: 'Choose a valid class.' };
     if (!SESSION_DATES.includes(date)) return { error: 'Choose a valid session date.' };
-    if (!SESSION_PERIODS.includes(period)) return { error: 'Choose Morning or Evening.' };
+    if (!SESSION_PERIODS.includes(period)) return { error: 'Choose a valid session time.' };
+    if (!SESSIONS.some((session) => session.date === date && session.period === period)) {
+        return { error: 'Choose the available time for that date.' };
+    }
     if (!Number.isInteger(quantity) || quantity < 1 || quantity > SESSION_CAPACITY) {
         return { error: `Choose between 1 and ${SESSION_CAPACITY} places.` };
     }
@@ -70,18 +74,16 @@ export async function getAvailability(env = process.env, supabase = getSupabaseC
         reservedBySession.set(key, (reservedBySession.get(key) || 0) + Number(booking.quantity));
     }
 
-    const sessions = SESSION_DATES.flatMap((date) => (
-        SESSION_PERIODS.map((period) => {
-            const reserved = reservedBySession.get(`${date}:${period}`) || 0;
-            return {
-                date,
-                period,
-                capacity: SESSION_CAPACITY,
-                reserved,
-                remaining: Math.max(0, SESSION_CAPACITY - reserved),
-            };
-        })
-    ));
+    const sessions = SESSIONS.map(({ date, period }) => {
+        const reserved = reservedBySession.get(`${date}:${period}`) || 0;
+        return {
+            date,
+            period,
+            capacity: SESSION_CAPACITY,
+            reserved,
+            remaining: Math.max(0, SESSION_CAPACITY - reserved),
+        };
+    });
 
     const workshops = Object.entries(WORKSHOPS).map(([slug, workshop]) => ({
         slug,

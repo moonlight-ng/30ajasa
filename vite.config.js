@@ -5,8 +5,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy'
 import {
     getWorkshop,
     SESSION_CAPACITY,
-    SESSION_DATES,
-    SESSION_PERIODS,
+    SESSIONS,
     WORKSHOPS,
 } from './server/config.js'
 import { requirePaystackProduct } from './server/paystack.js'
@@ -60,24 +59,22 @@ const bookingApiPlugin = (paystackEnv) => {
                 const url = new URL(req.url, 'http://localhost')
 
                 if (url.pathname === '/api/availability' && req.method === 'GET') {
-                    const sessions = SESSION_DATES.flatMap((date) => (
-                        SESSION_PERIODS.map((period) => {
-                            const reserved = bookings
-                                .filter((booking) => (
-                                    booking.date === date
-                                    && booking.period === period
-                                    && ['reserved', 'paid'].includes(booking.status)
-                                ))
-                                .reduce((total, booking) => total + booking.quantity, 0)
-                            return {
-                                date,
-                                period,
-                                capacity: SESSION_CAPACITY,
-                                reserved,
-                                remaining: Math.max(0, SESSION_CAPACITY - reserved),
-                            }
-                        })
-                    ))
+                    const sessions = SESSIONS.map(({ date, period }) => {
+                        const reserved = bookings
+                            .filter((booking) => (
+                                booking.date === date
+                                && booking.period === period
+                                && ['reserved', 'paid'].includes(booking.status)
+                            ))
+                            .reduce((total, booking) => total + booking.quantity, 0)
+                        return {
+                            date,
+                            period,
+                            capacity: SESSION_CAPACITY,
+                            reserved,
+                            remaining: Math.max(0, SESSION_CAPACITY - reserved),
+                        }
+                    })
                     let workshops
                     try {
                         workshops = Object.entries(WORKSHOPS).map(([slug, workshop]) => ({
@@ -98,6 +95,11 @@ const bookingApiPlugin = (paystackEnv) => {
                         const input = await readBody(req)
                         const workshop = getWorkshop(input.classSlug)
                         if (!workshop) return sendJson(res, 400, { error: 'Choose a valid class.' })
+                        if (!SESSIONS.some((session) => (
+                            session.date === input.date && session.period === input.period
+                        ))) {
+                            return sendJson(res, 400, { error: 'Choose the available time for that date.' })
+                        }
                         if (!publicKey?.startsWith('pk_test_')) {
                             return sendJson(res, 503, { error: 'Paystack Popup requires a public test key.' })
                         }

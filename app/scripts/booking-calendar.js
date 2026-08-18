@@ -44,7 +44,7 @@
         'introduction-to-making': 'Intro to Concrete'
     });
     const SESSION_TIMES = Object.freeze({
-        morning: '10am – 1pm',
+        morning: '11am – 2pm',
         evening: '4 – 7pm'
     });
 
@@ -54,6 +54,7 @@
     let holdEndsAt = 0;
     let reviewState = 'idle';
     let paymentPreview = null;
+    let availabilityLoaded = false;
 
     const sessionKey = (date, period) => `${date}:${period}`;
     const formatNaira = (amount) => `₦${amount.toLocaleString('en-NG')}`;
@@ -257,7 +258,7 @@
         setReviewValue('date', formatSessionDate(payload.date));
         setReviewValue(
             'time',
-            payload.period === 'morning' ? 'Morning' : 'Evening',
+            payload.period === 'morning' ? 'Saturday morning' : 'Thursday evening',
             SESSION_TIMES[payload.period]
         );
         setReviewValue('quantity', quantity === 1 ? '1 place' : `${quantity} places`);
@@ -483,15 +484,20 @@
             }
 
             const session = availability.get(sessionKey(selectedDate, input.value));
-            const remaining = session ? session.remaining : 3;
-            input.disabled = remaining < 1;
+            const day = new Date(`${selectedDate}T12:00:00Z`).getUTCDay();
+            const scheduledPeriod = day === 4 ? 'evening' : day === 6 ? 'morning' : '';
+            const isScheduled = availabilityLoaded ? Boolean(session) : input.value === scheduledPeriod;
+            const remaining = session?.remaining ?? (isScheduled ? DEFAULT_CAPACITY : 0);
+            input.disabled = !isScheduled || remaining < 1;
 
             if (input.disabled && input.checked) {
                 input.checked = false;
             }
 
             if (detail) {
-                detail.textContent = remaining === 1 ? '1 place left' : `${remaining} places left`;
+                detail.textContent = !isScheduled
+                    ? 'Not available this day'
+                    : remaining === 1 ? '1 place left' : `${remaining} places left`;
             }
         });
 
@@ -526,8 +532,10 @@
             (data.sessions || []).forEach((session) => {
                 availability.set(sessionKey(session.date, session.period), session);
             });
+            availabilityLoaded = true;
             updatePeriodChoices();
         } catch (error) {
+            availabilityLoaded = false;
             setStatus(
                 previewFlowEnabled
                     ? ''

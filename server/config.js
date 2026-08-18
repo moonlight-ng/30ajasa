@@ -10,18 +10,18 @@ export const WORKSHOPS = Object.freeze({
     }),
 });
 
-export const SESSION_DATES = Object.freeze([
-    '2026-09-01',
-    '2026-09-03',
-    '2026-09-08',
-    '2026-09-10',
-    '2026-09-15',
-    '2026-09-17',
-    '2026-09-22',
-    '2026-09-24',
-    '2026-09-29',
+export const SESSIONS = Object.freeze([
+    Object.freeze({ date: '2026-09-03', period: 'evening' }),
+    Object.freeze({ date: '2026-09-05', period: 'morning' }),
+    Object.freeze({ date: '2026-09-10', period: 'evening' }),
+    Object.freeze({ date: '2026-09-12', period: 'morning' }),
+    Object.freeze({ date: '2026-09-17', period: 'evening' }),
+    Object.freeze({ date: '2026-09-19', period: 'morning' }),
+    Object.freeze({ date: '2026-09-24', period: 'evening' }),
+    Object.freeze({ date: '2026-09-26', period: 'morning' }),
 ]);
 
+export const SESSION_DATES = Object.freeze(SESSIONS.map(({ date }) => date));
 export const SESSION_PERIODS = Object.freeze(['morning', 'evening']);
 export const SESSION_CAPACITY = 3;
 export const PAYMENT_CURRENCY = 'NGN';
