@@ -2207,6 +2207,10 @@ h1.making-introduction-title {
     color: var(--shape-orange);
 }
 
+.booking-choice-grid input:checked + span .booking-shape--yellow {
+    color: var(--shape-yellow);
+}
+
 .booking-period {
     gap: 0;
 }
