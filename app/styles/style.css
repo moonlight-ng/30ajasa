@@ -1959,6 +1959,10 @@ h1.making-introduction-title {
     border-bottom: 1px solid var(--making-line);
 }
 
+.rental-details--single {
+    grid-template-columns: 1fr;
+}
+
 .rental-details > div {
     padding: var(--space-sm) 0;
 }
