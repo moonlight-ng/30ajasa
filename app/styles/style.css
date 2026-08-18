@@ -1950,36 +1950,6 @@ h1.making-introduction-title {
     margin-top: var(--space-md);
 }
 
-.rental-details {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    max-width: 38rem;
-    margin-top: var(--space-md);
-    border-top: 1px solid var(--making-line);
-    border-bottom: 1px solid var(--making-line);
-}
-
-.rental-details--single {
-    grid-template-columns: 1fr;
-}
-
-.rental-details > div {
-    padding: var(--space-sm) 0;
-}
-
-.rental-details > div + div {
-    padding-left: var(--space-sm);
-    border-left: 1px solid var(--making-line);
-}
-
-.rental-details p {
-    margin: 0;
-}
-
-.rental-details .making-label {
-    margin-bottom: 0.5rem;
-}
-
 .rental-guidelines {
     max-width: 38rem;
     margin-top: var(--space-md);
