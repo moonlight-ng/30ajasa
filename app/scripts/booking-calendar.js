@@ -4,7 +4,9 @@
 
     const status = document.getElementById('booking-status');
     const submitButton = form.querySelector('button[type="submit"]');
-    const periodInputs = Array.from(form.querySelectorAll('input[name="period"]'));
+    const dateInputs = Array.from(form.querySelectorAll('input[type="radio"][name="date"]'));
+    const periodInput = form.querySelector('input[type="hidden"][name="period"]');
+    const periodInputs = Array.from(form.querySelectorAll('input[type="radio"][name="period"]'));
     const steps = Array.from(form.querySelectorAll('fieldset'));
     const submitRow = form.querySelector('.booking-submit-row');
     const quantityOutput = document.getElementById('booking-quantity');
@@ -504,6 +506,42 @@
         updateSteps();
     }
 
+    function updateDateChoices() {
+        dateInputs.forEach((input) => {
+            const period = input.dataset.period;
+            const session = availability.get(sessionKey(input.value, period));
+            const detail = form.querySelector(`[data-remaining-for-date="${input.value}"]`);
+            const remaining = session?.remaining ?? DEFAULT_CAPACITY;
+            input.disabled = availabilityLoaded && (!session || remaining < 1);
+
+            if (input.disabled && input.checked) input.checked = false;
+
+            if (detail) {
+                let availabilityText = 'Availability on reserve';
+                if (availabilityLoaded && !session) availabilityText = 'Unavailable';
+                if (availabilityLoaded && session) {
+                    availabilityText = remaining === 0
+                        ? 'Fully booked'
+                        : remaining === 1 ? '1 place left' : `${remaining} places left`;
+                }
+                detail.textContent = availabilityText;
+            }
+        });
+
+        const selectedDate = form.querySelector('input[name="date"]:checked');
+        periodInput.value = selectedDate?.dataset.period || '';
+        updateSteps();
+    }
+
+    function updateAvailabilityChoices() {
+        if (periodInput) {
+            updateDateChoices();
+            return;
+        }
+
+        updatePeriodChoices();
+    }
+
     function applyWorkshopCatalog(workshops = []) {
         workshops.forEach((workshop) => {
             const input = form.querySelector(`input[name="class"][value="${workshop.slug}"]`);
@@ -533,7 +571,7 @@
                 availability.set(sessionKey(session.date, session.period), session);
             });
             availabilityLoaded = true;
-            updatePeriodChoices();
+            updateAvailabilityChoices();
         } catch (error) {
             availabilityLoaded = false;
             setStatus(
@@ -541,13 +579,13 @@
                     ? ''
                     : 'Availability will be confirmed when you reserve.'
             );
-            updatePeriodChoices();
+            updateAvailabilityChoices();
         }
     }
 
     form.addEventListener('change', (event) => {
         if (event.target.name === 'date') {
-            updatePeriodChoices();
+            updateAvailabilityChoices();
             return;
         }
 

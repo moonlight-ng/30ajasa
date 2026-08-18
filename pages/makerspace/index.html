@@ -130,33 +130,21 @@
                 <fieldset>
                     <legend><span>02</span> Date</legend>
                     <div class="booking-choice-grid booking-choice-grid--dates">
-                        <label><input type="radio" name="date" value="2026-09-03" required><span><small>Thu</small>03 Sep</span></label>
-                        <label><input type="radio" name="date" value="2026-09-05" required><span><small>Sat</small>05 Sep</span></label>
-                        <label><input type="radio" name="date" value="2026-09-10" required><span><small>Thu</small>10 Sep</span></label>
-                        <label><input type="radio" name="date" value="2026-09-12" required><span><small>Sat</small>12 Sep</span></label>
-                        <label><input type="radio" name="date" value="2026-09-17" required><span><small>Thu</small>17 Sep</span></label>
-                        <label><input type="radio" name="date" value="2026-09-19" required><span><small>Sat</small>19 Sep</span></label>
-                        <label><input type="radio" name="date" value="2026-09-24" required><span><small>Thu</small>24 Sep</span></label>
-                        <label><input type="radio" name="date" value="2026-09-26" required><span><small>Sat</small>26 Sep</span></label>
+                        <label><input type="radio" name="date" value="2026-09-03" data-period="evening" required><span><span><small>Thu</small>03 Sep</span><span class="booking-date-meta"><small>4–7pm</small><small data-remaining-for-date="2026-09-03">Checking availability…</small></span></span></label>
+                        <label><input type="radio" name="date" value="2026-09-05" data-period="morning" required><span><span><small>Sat</small>05 Sep</span><span class="booking-date-meta"><small>11am–2pm</small><small data-remaining-for-date="2026-09-05">Checking availability…</small></span></span></label>
+                        <label><input type="radio" name="date" value="2026-09-10" data-period="evening" required><span><span><small>Thu</small>10 Sep</span><span class="booking-date-meta"><small>4–7pm</small><small data-remaining-for-date="2026-09-10">Checking availability…</small></span></span></label>
+                        <label><input type="radio" name="date" value="2026-09-12" data-period="morning" required><span><span><small>Sat</small>12 Sep</span><span class="booking-date-meta"><small>11am–2pm</small><small data-remaining-for-date="2026-09-12">Checking availability…</small></span></span></label>
+                        <label><input type="radio" name="date" value="2026-09-17" data-period="evening" required><span><span><small>Thu</small>17 Sep</span><span class="booking-date-meta"><small>4–7pm</small><small data-remaining-for-date="2026-09-17">Checking availability…</small></span></span></label>
+                        <label><input type="radio" name="date" value="2026-09-19" data-period="morning" required><span><span><small>Sat</small>19 Sep</span><span class="booking-date-meta"><small>11am–2pm</small><small data-remaining-for-date="2026-09-19">Checking availability…</small></span></span></label>
+                        <label><input type="radio" name="date" value="2026-09-24" data-period="evening" required><span><span><small>Thu</small>24 Sep</span><span class="booking-date-meta"><small>4–7pm</small><small data-remaining-for-date="2026-09-24">Checking availability…</small></span></span></label>
+                        <label><input type="radio" name="date" value="2026-09-26" data-period="morning" required><span><span><small>Sat</small>26 Sep</span><span class="booking-date-meta"><small>11am–2pm</small><small data-remaining-for-date="2026-09-26">Checking availability…</small></span></span></label>
                     </div>
                 </fieldset>
 
-                <fieldset>
-                    <legend><span>03</span> Time</legend>
-                    <div class="booking-choice-grid booking-choice-grid--times">
-                        <label>
-                            <input type="radio" name="period" value="morning" required>
-                            <span>Saturday morning, 11am–2pm <small data-remaining-for="morning">Select a date</small></span>
-                        </label>
-                        <label>
-                            <input type="radio" name="period" value="evening" required>
-                            <span>Thursday evening, 4–7pm <small data-remaining-for="evening">Select a date</small></span>
-                        </label>
-                    </div>
-                </fieldset>
+                <input type="hidden" name="period" value="">
 
                 <fieldset>
-                    <legend><span>04</span> Your details</legend>
+                    <legend><span>03</span> Your details</legend>
                     <div class="booking-details-grid">
                         <label>
                             <span>Name</span>

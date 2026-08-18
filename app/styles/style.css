@@ -2083,12 +2083,7 @@ h1.making-introduction-title {
 }
 
 .booking-choice-grid--dates {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-}
-
-.booking-choice-grid--dates::after {
-    content: "";
-    background: #fff;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .booking-choice-grid--times {
@@ -2146,6 +2141,11 @@ h1.making-introduction-title {
     color: inherit;
     font-size: var(--making-type-meta);
     font-weight: 500;
+}
+
+.booking-date-meta {
+    display: grid;
+    gap: 0.2rem;
 }
 
 .booking-choice-grid--classes label > span {
@@ -3068,14 +3068,6 @@ body.booking-payment-preview-open {
 
     .booking-choice-grid--dates {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .booking-choice-grid--dates::after {
-        content: none;
-    }
-
-    .booking-choice-grid--dates label:last-child {
-        grid-column: 1 / -1;
     }
 
     .booking-details-grid {
