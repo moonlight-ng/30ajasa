@@ -2159,11 +2159,8 @@ h1.making-introduction-title {
     gap: 0.75rem;
 }
 
-.booking-date-icon {
-    flex: 0 0 auto;
-    width: 1.5rem;
-    height: 1.5rem;
-    color: inherit;
+.booking-date-time {
+    text-align: right;
 }
 
 .booking-choice-grid--classes label > span {
@@ -3086,10 +3083,6 @@ body.booking-payment-preview-open {
 
     .booking-choice-grid--dates {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .booking-date-icon {
-        display: none;
     }
 
     .booking-details-grid {
