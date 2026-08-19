@@ -2148,6 +2148,24 @@ h1.making-introduction-title {
     gap: 0.2rem;
 }
 
+.booking-choice-grid--dates label > span span {
+    color: inherit;
+}
+
+.booking-date-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.booking-date-icon {
+    flex: 0 0 auto;
+    width: 1.5rem;
+    height: 1.5rem;
+    color: inherit;
+}
+
 .booking-choice-grid--classes label > span {
     min-height: 8rem;
     justify-content: flex-start;
