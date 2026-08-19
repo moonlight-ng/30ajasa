@@ -46,8 +46,8 @@
         'introduction-to-making': 'Intro to Concrete'
     });
     const SESSION_TIMES = Object.freeze({
-        morning: '11am – 2pm',
-        evening: '4 – 7pm'
+        morning: '11am - 2pm',
+        evening: '4 - 7pm'
     });
 
     let quantity = 1;

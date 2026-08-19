@@ -1695,7 +1695,7 @@ body.product-slideshow-open {
 }
 
 .making-header a:hover,
-.making-introduction a:hover {
+.making-introduction p:not(.making-home-ctas) a:hover {
     text-decoration: underline;
     text-underline-offset: 0.25em;
 }
@@ -3007,25 +3007,6 @@ body.booking-payment-preview-open {
     text-underline-offset: 0.2em;
 }
 
-/* Space rental */
-.rental-request-link {
-    padding: 1rem 1.6rem;
-    border: 1px solid var(--text-primary);
-    background: transparent;
-    color: var(--text-primary);
-    font-size: var(--making-type-ui);
-    font-weight: 600;
-    text-decoration: none;
-    transition: background 0.15s ease, color 0.15s ease;
-}
-
-.rental-request-link:hover,
-.rental-request-link:focus-visible {
-    background: var(--text-primary);
-    color: #fff;
-    text-decoration: none;
-}
-
 @media (max-width: 768px) {
     .making-booking-page {
         --making-inset-x: var(--space-sm);
@@ -3082,7 +3063,19 @@ body.booking-payment-preview-open {
     }
 
     .booking-choice-grid--dates {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: 1fr;
+    }
+
+    .booking-choice-grid--dates label {
+        min-height: 5.75rem;
+    }
+
+    .booking-choice-grid--dates label > span {
+        padding: 0.875rem;
+    }
+
+    .booking-choice-grid--dates .booking-date-head {
+        gap: 0.5rem;
     }
 
     .booking-details-grid {
