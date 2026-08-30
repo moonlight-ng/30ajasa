@@ -18,12 +18,8 @@ function normalizePayment(row) {
     return {
         reference: row.reference,
         environment: row.environment,
-        productSlug: row.product_slug,
-        productId: row.product_id,
-        productCode: row.product_code,
-        productVariantId: row.product_variant_id,
-        variantOptionId: row.variant_option_id,
-        variantValueId: row.variant_value_id,
+        eventSlug: row.event_slug,
+        subaccount_code: row.subaccount_code,
         customer_email: row.customer_email,
         amount: Number(row.amount),
         currency: row.currency,
@@ -33,6 +29,7 @@ function normalizePayment(row) {
         paidAt: row.paid_at,
         createdAt: row.created_at,
         classSlug: booking.class_slug,
+        bookingEventSlug: booking.event_slug,
         sessionDate: booking.session_date,
         sessionPeriod: booking.session_period,
         customerName: booking.customer_name,
@@ -46,12 +43,8 @@ export async function findPayment(reference, env = process.env, supabase = getSu
         .select(`
             reference,
             environment,
-            product_slug,
-            product_id,
-            product_code,
-            product_variant_id,
-            variant_option_id,
-            variant_value_id,
+            event_slug,
+            subaccount_code,
             customer_email,
             amount,
             currency,
@@ -62,6 +55,7 @@ export async function findPayment(reference, env = process.env, supabase = getSu
             created_at,
             makerspace_bookings!inner (
                 class_slug,
+                event_slug,
                 session_date,
                 session_period,
                 customer_name,
@@ -85,11 +79,7 @@ export function paymentSummary(payment) {
         customerName: payment.customerName,
         workshop: workshop?.name || payment.classSlug,
         classSlug: payment.classSlug,
-        productId: payment.productId,
-        productCode: payment.productCode,
-        productVariantId: payment.productVariantId,
-        variantOptionId: payment.variantOptionId,
-        variantValueId: payment.variantValueId,
+        eventSlug: payment.eventSlug || payment.bookingEventSlug,
         sessionDate: payment.sessionDate,
         sessionPeriod: payment.sessionPeriod,
         quantity: payment.quantity,
@@ -104,8 +94,21 @@ export async function getPaymentStatus(reference, env = process.env, supabase = 
     const cleaned = cleanReference(reference);
     if (!cleaned) throw new AppError('A valid payment reference is required.', 400, 'invalid_reference');
 
-    const payment = await findPayment(cleaned, env, supabase);
+    let payment = await findPayment(cleaned, env, supabase);
     if (!payment) throw new AppError('We could not find that payment.', 404, 'payment_not_found');
+
+    if (['pending', 'unverified'].includes(payment.status)) {
+        try {
+            const transaction = await verifyPaystackTransaction(cleaned, env);
+            if (transaction?.status === 'success') {
+                return confirmTransaction(transaction, env, supabase);
+            }
+        } catch (error) {
+            if (error.code !== 'verification_unavailable') throw error;
+        }
+        payment = await findPayment(cleaned, env, supabase);
+    }
+
     return paymentSummary(payment);
 }
 
@@ -134,15 +137,4 @@ export async function confirmTransaction(transaction, env = process.env, supabas
 
     payment = await findPayment(reference, env, supabase);
     return paymentSummary(payment);
-}
-
-export async function acknowledgePopupPayment(input, env = process.env, supabase = getSupabaseClient(env)) {
-    const reference = cleanReference(input?.reference);
-    const popupReference = cleanReference(input?.transaction?.reference || input?.transaction?.trxref);
-    if (!reference || popupReference !== reference) {
-        throw new AppError('The Paystack Popup result is incomplete.', 400, 'invalid_popup_result');
-    }
-
-    const transaction = await verifyPaystackTransaction(reference, env);
-    return confirmTransaction(transaction, env, supabase);
 }

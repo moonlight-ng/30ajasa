@@ -1,35 +1,26 @@
-# Changing workshop prices
+# Event pricing and Paystack transactions
 
-Workshop amounts are configured independently for each Paystack environment. The browser never decides the charge: the Vercel API reads these variables and sends the amount to Paystack in kobo.
+Makerspace no longer uses Paystack Product Links or product variants for workshops. Every reservation initializes a new transaction from the server.
 
-Current rule:
+## Changing an event
 
-| Workshop | Naira | Kobo variable value |
-| --- | ---: | ---: |
-| Intro to Ceramics | ₦30,000 | `3000000` |
-| Intro to 3D Printing | ₦30,000 | `3000000` |
-| Intro to Concrete | ₦30,000 | `3000000` |
+Edit the relevant record in `server/config.js`:
 
-## Update process
+- `slug` is the stable event identifier.
+- `date` and `period` control the calendar and receipt.
+- `capacity` controls availability.
+- `amount` is the booking price in kobo.
 
-1. Change each variant price on the matching Paystack Product page first. Update both test and live products when they should match.
-2. In local `.env`, change only these values unless Paystack created entirely new variants:
+The browser sends the event slug and a fixed booking quantity of one. The server looks up the authoritative event, calculates the total and initializes Paystack with the customer email, amount, currency, reference, metadata and Makerspace subaccount.
 
-   ```dotenv
-   PAYSTACK_VARIANT_CERAMICS_AMOUNT=3000000
-   PAYSTACK_VARIANT_3D_PRINTING_AMOUNT=3000000
-   PAYSTACK_VARIANT_MAKING_AMOUNT=3000000
-   ```
+## Settlement
 
-3. In Vercel, open **moonlight-ng → makerspace → Settings → Environment Variables** and update the same three names for Preview and Production. Amounts are in kobo: multiply the naira price by 100.
-4. Redeploy Production. Vercel environment changes do not alter deployments that already exist.
-5. Verify both configurations:
+All new event transactions use subaccount `ACCT_x95j3w6lcfe44s4`. Verification checks that Paystack returned the same subaccount before a booking is marked paid.
 
-   ```sh
-   npm run prices
-   npm run prices:live
-   ```
+## Verification checklist
 
-6. Open checkout and confirm the workshop total before entering payment details. Paystack may display a slightly higher final amount when it adds its transaction fee.
-
-The product, option-value and product-variant IDs normally stay unchanged when only the price changes. Re-inspect and update those IDs only if a variant is deleted and recreated in Paystack.
+1. Run the automated tests and production build.
+2. Apply the latest Supabase migration.
+3. Confirm the production Paystack secret key and callback URL.
+4. Make one live booking and check the Paystack transaction’s subaccount and settlement details.
+5. Confirm the webhook still points to `/api/payments/webhook`.

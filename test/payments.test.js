@@ -1,81 +1,65 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { getWorkshop, SESSION_CAPACITY } from '../server/config.js'
 import {
+    EVENTS,
+    getEvent,
+    getWorkshop,
+    MAKERSPACE_SUBACCOUNT_CODE,
+    WORKSHOP,
+} from '../server/config.js'
+import {
+    initializePaystackTransaction,
     PaystackConfigurationError,
     requirePaystackKeys,
-    requirePaystackProduct,
-    requireTestPublicKey,
     transactionMatchesPayment,
 } from '../server/paystack.js'
 import { cancelBooking, validateBooking, validateBookingCancellation } from '../server/bookings.js'
 
-const validBooking = {
-    classSlug: 'introduction-to-clay',
-    date: '2026-09-03',
-    period: 'evening',
-    quantity: 2,
+const validInput = {
+    eventSlug: 'intro-to-3d-printing-2026-09-03',
+    quantity: 1,
     name: 'Test Maker',
     email: 'maker@example.com',
 }
 
-const testProductEnv = {
-    PAYSTACK_PUBLIC_KEY: 'pk_test_example',
+const testEnv = {
     PAYSTACK_SECRET_KEY: 'sk_test_example',
-    PAYSTACK_PRODUCT_ID: '2667163',
-    PAYSTACK_PRODUCT_CODE: 'PROD_skcfz5d23llcbx5',
-    PAYSTACK_PRODUCT_PAGE_SLUG: 'introduction-to-making-vilhxq',
-    PAYSTACK_VARIANT_OPTION_ID: '212885',
-    PAYSTACK_VARIANT_VALUE_CERAMICS_ID: '338895',
-    PAYSTACK_PRODUCT_VARIANT_CERAMICS_ID: '802873',
-    PAYSTACK_VARIANT_CERAMICS_AMOUNT: '3000000',
-    PAYSTACK_VARIANT_VALUE_3D_PRINTING_ID: '338896',
-    PAYSTACK_PRODUCT_VARIANT_3D_PRINTING_ID: '802874',
-    PAYSTACK_VARIANT_3D_PRINTING_AMOUNT: '3000000',
-    PAYSTACK_VARIANT_VALUE_MAKING_ID: '338897',
-    PAYSTACK_PRODUCT_VARIANT_MAKING_ID: '802875',
-    PAYSTACK_VARIANT_MAKING_AMOUNT: '3000000',
+    PAYSTACK_CALLBACK_URL: 'https://makerspace.example/payment-complete/',
 }
 
-test('Popup test mode rejects missing and live public keys', () => {
-    assert.throws(() => requireTestPublicKey(), PaystackConfigurationError)
-    assert.throws(() => requireTestPublicKey('pk_live_example'), PaystackConfigurationError)
-    assert.equal(requireTestPublicKey('pk_test_example'), 'pk_test_example')
-})
-
-test('Paystack public and secret keys must use the same environment', () => {
-    assert.deepEqual(requirePaystackKeys(testProductEnv), {
-        publicKey: 'pk_test_example',
+test('Paystack secret key determines the transaction environment', () => {
+    assert.deepEqual(requirePaystackKeys(testEnv), {
         secretKey: 'sk_test_example',
         environment: 'test',
     })
+    assert.throws(() => requirePaystackKeys({}), PaystackConfigurationError)
     assert.throws(
-        () => requirePaystackKeys({
-            PAYSTACK_PUBLIC_KEY: 'pk_live_example',
-            PAYSTACK_SECRET_KEY: 'sk_test_example',
-        }),
+        () => requirePaystackKeys({ PAYSTACK_SECRET_KEY: 'not-a-secret-key' }),
         PaystackConfigurationError,
     )
 })
 
-test('booking quantity is validated against session capacity', () => {
-    assert.deepEqual(validateBooking(validBooking), validBooking)
-    assert.equal(validateBooking({ ...validBooking, date: '2026-09-01' }).error, 'Choose a valid session date.')
-    assert.equal(validateBooking({ ...validBooking, period: 'morning' }).error, 'Choose the available time for that date.')
-    assert.deepEqual(
-        validateBooking({ ...validBooking, date: '2026-09-05', period: 'morning' }),
-        { ...validBooking, date: '2026-09-05', period: 'morning' },
-    )
-    assert.equal(
-        validateBooking({ ...validBooking, date: '2026-09-05', period: 'evening' }).error,
-        'Choose the available time for that date.',
-    )
-    assert.equal(validateBooking({ ...validBooking, quantity: 0 }).error, 'Choose between 1 and 3 places.')
-    assert.equal(
-        validateBooking({ ...validBooking, quantity: SESSION_CAPACITY + 1 }).error,
-        'Choose between 1 and 3 places.',
-    )
+test('booking details are derived from the selected event', () => {
+    assert.deepEqual(validateBooking(validInput), {
+        ...validInput,
+        classSlug: WORKSHOP.slug,
+        date: '2026-09-03',
+        period: 'evening',
+    })
+    assert.equal(validateBooking({ ...validInput, eventSlug: 'missing-event' }).error, 'Choose a valid event.')
+    assert.equal(validateBooking({ ...validInput, quantity: 0 }).error, 'This session accepts one booking.')
+    assert.equal(validateBooking({ ...validInput, quantity: 2 }).error, 'This session accepts one booking.')
+})
+
+test('the calendar exposes one workshop across dated events', () => {
+    assert.equal(WORKSHOP.name, 'Intro to 3D Printing')
+    assert.equal(getWorkshop(WORKSHOP.slug), WORKSHOP)
+    assert.equal(getWorkshop('introduction-to-clay'), null)
+    assert.equal(EVENTS.length, 8)
+    assert.equal(getEvent(validInput.eventSlug).amount, 3_000_000)
+    assert.equal(new Set(EVENTS.map((event) => event.amount)).size, 1)
+    assert.deepEqual(new Set(EVENTS.map((event) => event.capacity)), new Set([1]))
 })
 
 test('booking cancellation requires the reservation ID and matching payment reference', () => {
@@ -121,45 +105,54 @@ test('booking cancellation is delegated to one atomic database operation', async
     }])
 })
 
-test('Paystack product metadata resolves the concrete workshop variant', () => {
-    assert.deepEqual(requirePaystackProduct(testProductEnv, validBooking.classSlug), {
-        id: 2667163,
-        code: 'PROD_skcfz5d23llcbx5',
-        pageSlug: 'introduction-to-making-vilhxq',
-        variantOptionId: 212885,
-        variantValueId: 338895,
-        productVariantId: 802873,
-        amount: 3000000,
+test('transaction initialization assigns the Makerspace subaccount', async () => {
+    const requests = []
+    const request = async (url, options) => {
+        requests.push({ url, options })
+        return {
+            ok: true,
+            async json() {
+                return {
+                    status: true,
+                    data: {
+                        access_code: 'access-example',
+                        authorization_url: 'https://checkout.paystack.com/access-example',
+                        reference: 'mksp-example',
+                    },
+                }
+            },
+        }
+    }
+
+    const checkout = await initializePaystackTransaction({
+        email: 'maker@example.com',
+        amount: 3_000_000,
+        currency: 'NGN',
+        reference: 'mksp-example',
+        metadata: { event_slug: validInput.eventSlug },
+    }, testEnv, request)
+
+    assert.deepEqual(checkout, {
+        accessCode: 'access-example',
+        authorizationUrl: 'https://checkout.paystack.com/access-example',
+        reference: 'mksp-example',
+        environment: 'test',
     })
-    assert.throws(
-        () => requirePaystackProduct({}, validBooking.classSlug),
-        PaystackConfigurationError,
-    )
+    const body = JSON.parse(requests[0].options.body)
+    assert.equal(requests[0].url, 'https://api.paystack.co/transaction/initialize')
+    assert.equal(body.amount, '3000000')
+    assert.equal(body.subaccount, MAKERSPACE_SUBACCOUNT_CODE)
+    assert.equal(body.callback_url, testEnv.PAYSTACK_CALLBACK_URL)
+    assert.deepEqual(JSON.parse(body.metadata), { event_slug: validInput.eventSlug })
 })
 
-test('Popup amount is derived from the configured Paystack variant price', () => {
-    const product = requirePaystackProduct(testProductEnv, validBooking.classSlug)
-    assert.equal(product.amount * validBooking.quantity, 6_000_000)
-})
-
-test('all three classes are 30k', () => {
-    assert.equal(requirePaystackProduct(testProductEnv, 'introduction-to-clay').amount, 3_000_000)
-    assert.equal(requirePaystackProduct(testProductEnv, 'introduction-to-3d-printing').amount, 3_000_000)
-    assert.equal(requirePaystackProduct(testProductEnv, 'introduction-to-making').amount, 3_000_000)
-})
-
-test('workshop names use the shorter Intro labels', () => {
-    assert.equal(getWorkshop('introduction-to-clay').name, 'Intro to Ceramics')
-    assert.equal(getWorkshop('introduction-to-3d-printing').name, 'Intro to 3D Printing')
-    assert.equal(getWorkshop('introduction-to-making').name, 'Intro to Concrete')
-})
-
-test('verified Paystack transaction must match the stored payment', () => {
+test('verified transaction must match amount, customer and Makerspace subaccount', () => {
     const payment = {
         reference: 'mksp-example',
         amount: 3_000_000,
         currency: 'NGN',
         customer_email: 'maker@example.com',
+        subaccount_code: MAKERSPACE_SUBACCOUNT_CODE,
     }
     const transaction = {
         status: 'success',
@@ -167,9 +160,10 @@ test('verified Paystack transaction must match the stored payment', () => {
         amount: 3_000_000,
         currency: 'NGN',
         customer: { email: 'Maker@Example.com' },
+        subaccount: { subaccount_code: MAKERSPACE_SUBACCOUNT_CODE },
     }
 
     assert.equal(transactionMatchesPayment(transaction, payment), true)
     assert.equal(transactionMatchesPayment({ ...transaction, amount: 2_999_999 }, payment), false)
-    assert.equal(transactionMatchesPayment({ ...transaction, reference: 'another' }, payment), false)
+    assert.equal(transactionMatchesPayment({ ...transaction, subaccount: {} }, payment), false)
 })

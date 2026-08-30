@@ -7,8 +7,6 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "prices": "node scripts/check-paystack-prices.js",
-    "prices:live": "node scripts/check-paystack-prices.js --live",
     "preview": "vite preview",
     "test": "node --test"
   },

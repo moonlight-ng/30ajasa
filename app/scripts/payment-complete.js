@@ -55,7 +55,7 @@
         setState(
             'error',
             'Payment reference needed',
-            'Open the link Paystack returned after checkout, or return to the workshops and try again.',
+            'Open the link Paystack returned after checkout, or return to the events and try again.',
         );
             returnLink.hidden = false;
             return;
@@ -99,7 +99,7 @@
                 setState(
                     'error',
                     'Payment not completed',
-                    'No real charge was made. Return to the workshops whenever you’re ready to try again.',
+                    'No real charge was made. Return to the events whenever you’re ready to try again.',
                 );
                 returnLink.hidden = false;
                 return;

@@ -1,4 +1,5 @@
 import { AppError } from './errors.js';
+import { MAKERSPACE_SUBACCOUNT_CODE, PAYMENT_CALLBACK_URL } from './config.js';
 
 export class PaystackConfigurationError extends AppError {
     constructor(message, status = 503) {
@@ -7,35 +8,9 @@ export class PaystackConfigurationError extends AppError {
     }
 }
 
-const PRODUCT_VARIANT_KEYS = Object.freeze({
-    'introduction-to-clay': Object.freeze({
-        valueId: 'PAYSTACK_VARIANT_VALUE_CERAMICS_ID',
-        productVariantId: 'PAYSTACK_PRODUCT_VARIANT_CERAMICS_ID',
-        amount: 'PAYSTACK_VARIANT_CERAMICS_AMOUNT',
-    }),
-    'introduction-to-3d-printing': Object.freeze({
-        valueId: 'PAYSTACK_VARIANT_VALUE_3D_PRINTING_ID',
-        productVariantId: 'PAYSTACK_PRODUCT_VARIANT_3D_PRINTING_ID',
-        amount: 'PAYSTACK_VARIANT_3D_PRINTING_AMOUNT',
-    }),
-    'introduction-to-making': Object.freeze({
-        valueId: 'PAYSTACK_VARIANT_VALUE_MAKING_ID',
-        productVariantId: 'PAYSTACK_PRODUCT_VARIANT_MAKING_ID',
-        amount: 'PAYSTACK_VARIANT_MAKING_AMOUNT',
-    }),
-});
-
 function requireText(env, key) {
     const value = String(env?.[key] || '').trim();
     if (!value) throw new PaystackConfigurationError(`Paystack configuration is missing ${key}.`);
-    return value;
-}
-
-function requirePositiveInteger(env, key) {
-    const value = Number(requireText(env, key));
-    if (!Number.isSafeInteger(value) || value < 1) {
-        throw new PaystackConfigurationError(`Paystack configuration has an invalid ${key}.`);
-    }
     return value;
 }
 
@@ -45,41 +20,57 @@ function keyEnvironment(key, prefix) {
     return null;
 }
 
-export function requireTestPublicKey(publicKey) {
-    if (!publicKey) throw new PaystackConfigurationError('Paystack Popup has not been configured yet.');
-    if (!String(publicKey).startsWith('pk_test_')) {
-        throw new PaystackConfigurationError('This checkout is currently limited to Paystack test mode.');
-    }
-    return String(publicKey);
-}
-
 export function requirePaystackKeys(env) {
-    const publicKey = requireText(env, 'PAYSTACK_PUBLIC_KEY');
     const secretKey = requireText(env, 'PAYSTACK_SECRET_KEY');
-    const publicEnvironment = keyEnvironment(publicKey, 'pk');
     const secretEnvironment = keyEnvironment(secretKey, 'sk');
 
-    if (!publicEnvironment || publicEnvironment !== secretEnvironment) {
-        throw new PaystackConfigurationError('Paystack public and secret keys must belong to the same test or live environment.');
+    if (!secretEnvironment) {
+        throw new PaystackConfigurationError('Paystack must use a valid test or live secret key.');
     }
 
-    return Object.freeze({ publicKey, secretKey, environment: publicEnvironment });
+    return Object.freeze({ secretKey, environment: secretEnvironment });
 }
 
-export function requirePaystackProduct(env, classSlug) {
-    const variantKeys = PRODUCT_VARIANT_KEYS[classSlug];
-    if (!variantKeys) {
-        throw new PaystackConfigurationError('Paystack does not have a variant mapping for this workshop.', 400);
+export async function initializePaystackTransaction(transaction, env = process.env, request = fetch) {
+    const { secretKey, environment } = requirePaystackKeys(env);
+    const callbackUrl = String(env.PAYSTACK_CALLBACK_URL || PAYMENT_CALLBACK_URL).trim();
+    const body = {
+        email: transaction.email,
+        amount: String(transaction.amount),
+        currency: transaction.currency,
+        reference: transaction.reference,
+        callback_url: callbackUrl,
+        subaccount: MAKERSPACE_SUBACCOUNT_CODE,
+        metadata: JSON.stringify(transaction.metadata || {}),
+    };
+
+    const response = await request('https://api.paystack.co/transaction/initialize', {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${secretKey}`,
+            'Content-Type': 'application/json',
+            Accept: 'application/json',
+        },
+        body: JSON.stringify(body),
+    });
+    const result = await response.json().catch(() => null);
+
+    if (!response.ok || !result?.status || !result?.data?.access_code || !result?.data?.authorization_url) {
+        throw new AppError(
+            result?.message || 'Paystack could not start this payment.',
+            502,
+            'initialization_unavailable',
+        );
+    }
+    if (result.data.reference !== transaction.reference) {
+        throw new AppError('Paystack returned an unexpected payment reference.', 502, 'initialization_mismatch');
     }
 
     return Object.freeze({
-        id: requirePositiveInteger(env, 'PAYSTACK_PRODUCT_ID'),
-        code: requireText(env, 'PAYSTACK_PRODUCT_CODE'),
-        pageSlug: requireText(env, 'PAYSTACK_PRODUCT_PAGE_SLUG'),
-        variantOptionId: requirePositiveInteger(env, 'PAYSTACK_VARIANT_OPTION_ID'),
-        variantValueId: requirePositiveInteger(env, variantKeys.valueId),
-        productVariantId: requirePositiveInteger(env, variantKeys.productVariantId),
-        amount: requirePositiveInteger(env, variantKeys.amount),
+        accessCode: result.data.access_code,
+        authorizationUrl: result.data.authorization_url,
+        reference: result.data.reference,
+        environment,
     });
 }
 
@@ -105,11 +96,18 @@ export async function verifyPaystackTransaction(reference, env) {
 
 export function transactionMatchesPayment(transaction, payment) {
     const transactionEmail = String(transaction?.customer?.email || '').trim().toLowerCase();
+    const transactionSubaccount = String(
+        transaction?.subaccount?.subaccount_code
+        || transaction?.subaccount?.subaccountCode
+        || transaction?.subaccount
+        || '',
+    ).trim();
     return (
         transaction?.status === 'success'
         && transaction?.reference === payment.reference
         && Number(transaction?.amount) === Number(payment.amount)
         && String(transaction?.currency || '').toUpperCase() === String(payment.currency || '').toUpperCase()
         && transactionEmail === String(payment.customer_email || '').trim().toLowerCase()
+        && (!payment.subaccount_code || transactionSubaccount === payment.subaccount_code)
     );
 }

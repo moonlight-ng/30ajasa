@@ -1,41 +1,41 @@
 import { randomUUID } from 'node:crypto';
 
 import {
-    getWorkshop,
+    EVENTS,
+    getEvent,
+    MAKERSPACE_SUBACCOUNT_CODE,
     PAYMENT_CURRENCY,
-    SESSION_CAPACITY,
-    SESSION_DATES,
-    SESSION_PERIODS,
-    SESSIONS,
-    WORKSHOPS,
+    WORKSHOP,
 } from './config.js';
 import { AppError } from './errors.js';
-import { requirePaystackKeys, requirePaystackProduct } from './paystack.js';
+import { initializePaystackTransaction, requirePaystackKeys } from './paystack.js';
 import { getSupabaseClient } from './supabase.js';
 
 export function validateBooking(input = {}) {
-    const classSlug = String(input.classSlug || '');
-    const date = String(input.date || '');
-    const period = String(input.period || '');
+    const eventSlug = String(input.eventSlug || '');
+    const event = getEvent(eventSlug);
     const quantity = Number(input.quantity ?? 1);
     const name = String(input.name || '').trim();
     const email = String(input.email || '').trim().toLowerCase();
 
-    if (!Object.hasOwn(WORKSHOPS, classSlug)) return { error: 'Choose a valid class.' };
-    if (!SESSION_DATES.includes(date)) return { error: 'Choose a valid session date.' };
-    if (!SESSION_PERIODS.includes(period)) return { error: 'Choose a valid session time.' };
-    if (!SESSIONS.some((session) => session.date === date && session.period === period)) {
-        return { error: 'Choose the available time for that date.' };
-    }
-    if (!Number.isInteger(quantity) || quantity < 1 || quantity > SESSION_CAPACITY) {
-        return { error: `Choose between 1 and ${SESSION_CAPACITY} places.` };
+    if (!event) return { error: 'Choose a valid event.' };
+    if (!Number.isInteger(quantity) || quantity < 1 || quantity > event.capacity) {
+        return { error: event.capacity === 1 ? 'This session accepts one booking.' : `Choose between 1 and ${event.capacity} bookings.` };
     }
     if (name.length < 2 || name.length > 100) return { error: 'Enter your name.' };
     if (email.length > 160 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
         return { error: 'Enter a valid email address.' };
     }
 
-    return { classSlug, date, period, quantity, name, email };
+    return {
+        eventSlug,
+        classSlug: WORKSHOP.slug,
+        date: event.date,
+        period: event.period,
+        quantity,
+        name,
+        email,
+    };
 }
 
 export function validateBookingCancellation(input = {}) {
@@ -60,52 +60,47 @@ function createReference(bookingId) {
 export async function getAvailability(env = process.env, supabase = getSupabaseClient(env)) {
     const { data, error } = await supabase
         .from('makerspace_bookings')
-        .select('session_date,session_period,quantity,status,expires_at')
+        .select('event_slug,quantity,status,expires_at')
         .in('status', ['reserved', 'paid']);
 
     if (error) {
         throw new AppError('Availability is temporarily unavailable.', 503, 'storage_unavailable');
     }
 
-    const reservedBySession = new Map();
+    const reservedByEvent = new Map();
     for (const booking of data || []) {
         if (booking.status === 'reserved' && Date.parse(booking.expires_at) <= Date.now()) continue;
-        const key = `${booking.session_date}:${booking.session_period}`;
-        reservedBySession.set(key, (reservedBySession.get(key) || 0) + Number(booking.quantity));
+        if (!booking.event_slug) continue;
+        reservedByEvent.set(
+            booking.event_slug,
+            (reservedByEvent.get(booking.event_slug) || 0) + Number(booking.quantity),
+        );
     }
 
-    const sessions = SESSIONS.map(({ date, period }) => {
-        const reserved = reservedBySession.get(`${date}:${period}`) || 0;
+    const events = EVENTS.map((event) => {
+        const reserved = reservedByEvent.get(event.slug) || 0;
         return {
-            date,
-            period,
-            capacity: SESSION_CAPACITY,
+            ...event,
+            title: WORKSHOP.name,
+            currency: PAYMENT_CURRENCY,
             reserved,
-            remaining: Math.max(0, SESSION_CAPACITY - reserved),
+            remaining: Math.max(0, event.capacity - reserved),
         };
     });
 
-    const workshops = Object.entries(WORKSHOPS).map(([slug, workshop]) => ({
-        slug,
-        name: workshop.name,
-        amount: requirePaystackProduct(env, slug).amount,
-        currency: PAYMENT_CURRENCY,
-    }));
-
-    return { sessions, workshops };
+    return { workshop: WORKSHOP, events };
 }
 
 export async function createBooking(input, env = process.env, supabase = getSupabaseClient(env)) {
     const booking = validateBooking(input);
     if (booking.error) throw new AppError(booking.error, 400, 'invalid_booking');
 
-    const workshop = getWorkshop(booking.classSlug);
+    const event = getEvent(booking.eventSlug);
     const paystack = requirePaystackKeys(env);
-    const product = requirePaystackProduct(env, booking.classSlug);
     const bookingId = randomUUID();
     const paymentId = randomUUID();
     const reference = createReference(bookingId);
-    const amount = product.amount * booking.quantity;
+    const amount = event.amount * booking.quantity;
 
     const { data, error } = await supabase.rpc('reserve_makerspace_booking', {
         p_booking_id: bookingId,
@@ -118,11 +113,9 @@ export async function createBooking(input, env = process.env, supabase = getSupa
         p_customer_email: booking.email,
         p_quantity: booking.quantity,
         p_environment: paystack.environment,
-        p_product_id: product.id,
-        p_product_code: product.code,
-        p_product_variant_id: product.productVariantId,
-        p_variant_option_id: product.variantOptionId,
-        p_variant_value_id: product.variantValueId,
+        p_event_slug: booking.eventSlug,
+        p_capacity: event.capacity,
+        p_subaccount_code: MAKERSPACE_SUBACCOUNT_CODE,
         p_amount: amount,
         p_currency: PAYMENT_CURRENCY,
     });
@@ -132,63 +125,50 @@ export async function createBooking(input, env = process.env, supabase = getSupa
     }
     if (!data?.ok) {
         if (data?.reason === 'session_full') {
-            throw new AppError('That session has just filled up. Please choose another.', 409, 'session_full');
+            throw new AppError('That session has just been booked. Please choose another.', 409, 'session_full');
         }
-        throw new AppError('We could not reserve that place. Please try again.', 409, data?.reason || 'reservation_failed');
+        throw new AppError('We could not reserve that session. Please try again.', 409, data?.reason || 'reservation_failed');
     }
 
-    return {
-        bookingId,
-        reference,
-        checkout: {
-            publicKey: paystack.publicKey,
-            environment: paystack.environment,
+    try {
+        const checkout = await initializePaystackTransaction({
             email: booking.email,
             amount,
             currency: PAYMENT_CURRENCY,
             reference,
             metadata: {
                 booking_id: bookingId,
-                product_slug: booking.classSlug,
-                product_id: product.id,
-                product_code: product.code,
-                product_page_slug: product.pageSlug,
-                product_variant_id: product.productVariantId,
-                variant_option_id: product.variantOptionId,
-                variant_value_id: product.variantValueId,
+                event_slug: booking.eventSlug,
+                workshop_slug: booking.classSlug,
                 session_date: booking.date,
                 session_period: booking.period,
                 quantity: booking.quantity,
                 custom_fields: [
-                    {
-                        display_name: 'Workshop',
-                        variable_name: 'workshop',
-                        value: workshop.name,
-                    },
-                    {
-                        display_name: 'Paystack product',
-                        variable_name: 'paystack_product',
-                        value: `${product.code} · variant ${product.productVariantId}`,
-                    },
-                    {
-                        display_name: 'Session',
-                        variable_name: 'session',
-                        value: `${booking.date} · ${booking.period}`,
-                    },
-                    {
-                        display_name: 'Places',
-                        variable_name: 'quantity',
-                        value: booking.quantity,
-                    },
-                    {
-                        display_name: 'Booking ID',
-                        variable_name: 'booking_id',
-                        value: bookingId,
-                    },
+                    { display_name: 'Workshop', variable_name: 'workshop', value: WORKSHOP.name },
+                    { display_name: 'Event', variable_name: 'event', value: booking.eventSlug },
+                    { display_name: 'Session', variable_name: 'session', value: `${booking.date} · ${booking.period}` },
+                    { display_name: 'Booking ID', variable_name: 'booking_id', value: bookingId },
                 ],
             },
-        },
-    };
+        }, env);
+
+        return {
+            bookingId,
+            reference,
+            checkout: {
+                ...checkout,
+                amount,
+                currency: PAYMENT_CURRENCY,
+            },
+        };
+    } catch (error) {
+        try {
+            await cancelBooking({ bookingId, reference }, env, supabase);
+        } catch {
+            // The database hold expires automatically if immediate cleanup is unavailable.
+        }
+        throw error;
+    }
 }
 
 export async function cancelBooking(input, env = process.env, supabase = getSupabaseClient(env)) {

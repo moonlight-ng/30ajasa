@@ -4,16 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Makerspace - Create something physical</title>
+    <title>Makerspace — Workshop for creators</title>
     <meta name="description"
-        content="Book hands-on ceramics, 3D printing and concrete workshops at Makerspace, 30 Ajasa Street, Lagos Island. Beginner sessions and venue hire available.">
+        content="Makerspace is a workshop for creators at 30 Ajasa Street, Lagos Island—built for learning, experimenting and making work together.">
     <link rel="canonical" href="https://makerspace.16by16.co/">
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <meta property="og:site_name" content="Makerspace">
     <meta property="og:locale" content="en_NG">
-    <meta property="og:title" content="Makerspace - Create something physical">
+    <meta property="og:title" content="Makerspace — Workshop for creators">
     <meta property="og:description"
-        content="Book hands-on ceramics, 3D printing and concrete workshops at 30 Ajasa Street, Lagos Island. Beginner sessions and creative venue hire available.">
+        content="A workshop for creators on Lagos Island—built for learning, experimenting and making work together.">
     <meta property="og:url" content="https://makerspace.16by16.co/">
     <meta property="og:type" content="website">
     <meta property="og:image" content="https://makerspace.16by16.co/images/makerspace/seo.jpg">
@@ -21,9 +21,9 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Makerspace wordmark behind a sculptural green lamp">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Makerspace - Create something physical">
+    <meta name="twitter:title" content="Makerspace — Workshop for creators">
     <meta name="twitter:description"
-        content="Book hands-on ceramics, 3D printing and concrete workshops at 30 Ajasa Street, Lagos Island. Beginner sessions and creative venue hire available.">
+        content="A workshop for creators on Lagos Island—built for learning, experimenting and making work together.">
     <meta name="twitter:image" content="https://makerspace.16by16.co/images/makerspace/seo.jpg">
     <link rel="stylesheet" href="/app/styles/style.css">
     <script type="application/ld+json">
@@ -37,7 +37,7 @@
                 "url": "https://makerspace.16by16.co/",
                 "logo": "https://makerspace.16by16.co/images/shared/logos/16-16.webp",
                 "email": "makerspace@16by16.co",
-                "description": "A workshop and community of artists and tinkerers at 30 Ajasa Street, Lagos Island.",
+                "description": "A workshop for creators at 30 Ajasa Street, Lagos Island.",
                 "address": {
                     "@type": "PostalAddress",
                     "streetAddress": "30 Ajasa Street",
@@ -83,20 +83,35 @@
 
     <header class="making-header">
         <span class="making-wordmark">Makerspace</span>
-        <a href="/contact/">Contact</a>
+        <nav class="making-header-links" aria-label="Primary navigation">
+            <a href="#workshop">Book a workshop</a>
+            <a href="/contact/">Contact</a>
+        </nav>
+        <button class="making-menu-toggle" type="button" aria-expanded="false" aria-controls="making-mobile-menu">
+            <span data-making-menu-label>Menu</span>
+            <span class="making-menu-mark" aria-hidden="true"></span>
+        </button>
+        <div class="making-mobile-menu" id="making-mobile-menu" aria-hidden="true">
+            <nav class="making-mobile-menu-links" aria-label="Mobile navigation">
+                <a href="/"><span>01</span>Home</a>
+                <a href="/#capabilities"><span>02</span>Capabilities</a>
+                <a href="/#workshop"><span>03</span>Book a workshop</a>
+                <a href="/contact/"><span>04</span>Contact</a>
+                <a href="/#use-space"><span>05</span>Use the space</a>
+            </nav>
+            <div class="making-mobile-menu-footer">
+                <p>30 Ajasa Street, Lagos Island</p>
+            </div>
+        </div>
     </header>
 
     <main>
         <section class="making-home-intro" aria-labelledby="makerspace-heading">
-            <h1 class="making-home-logo" id="makerspace-heading">
-                <img src="/images/shared/logos/16-16.webp" alt="" width="58" height="58">
-                <span class="visually-hidden">Makerspace</span>
-            </h1>
+            <h1 class="visually-hidden" id="makerspace-heading">Workshop for creators.</h1>
             <div>
-                <p><strong>Makerspace is a workshop and community of artists and tinkerers.</strong> Our space at 30 Ajasa Street, Lagos Island doubles as a venue for creative events.</p>
+                <p><strong>Makerspace is a shared workshop for creators to turn ideas into physical work.</strong> Find us at 30 Ajasa Street, Lagos Island.</p>
                 <p class="making-home-ctas">
-                    <a href="#book">Book a session</a>
-                    <a href="#rent">Rent the space</a>
+                    <a href="#workshop">Book a workshop</a>
                 </p>
             </div>
         </section>
@@ -123,71 +138,82 @@
             </ul>
         </section>
 
-        <section class="making-introduction" id="book" aria-labelledby="book-session-heading">
-            <h2 class="making-introduction-title" id="book-session-heading">Create something physical.</h2>
-            <div>
-                <p class="making-label">Learn ceramics, 3D printing or concrete casting in a guided, hands-on workshop. Choose a session, pick a date and leave with something you made yourself.</p>
-            </div>
+        <section class="making-introduction capabilities-section" id="capabilities" aria-labelledby="capabilities-heading">
+            <header class="capabilities-heading">
+                <h2 class="making-introduction-title" id="capabilities-heading">Capabilities.</h2>
+                <p>Develop an object from first experiment to finished piece. We support hands-on learning, prototyping and small production across digital fabrication and material experimentation.</p>
+            </header>
+            <ul class="capabilities-list">
+                    <li>
+                        <span>01</span>
+                        <div>
+                            <h3>Digital fabrication</h3>
+                            <p>Turn a digital model into a physical prototype.</p>
+                            <span class="capability-provider">Makerspace</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span>02</span>
+                        <div>
+                            <h3>Clay &amp; casting</h3>
+                            <p>Shape objects by hand, test moulds and cast small forms.</p>
+                            <span class="capability-provider">Makerspace</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span>03</span>
+                        <div>
+                            <h3>Material reuse</h3>
+                            <p>Transform discarded plastics into useful new objects.</p>
+                            <span class="capability-provider">Makerspace</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span>04</span>
+                        <div>
+                            <h3>Woodwork</h3>
+                            <p>Make functional objects and prototypes with wood.</p>
+                            <span class="capability-provider">Hangar 1</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span>05</span>
+                        <div>
+                            <h3>Metalwork</h3>
+                            <p>Develop metal structures, objects and prototypes.</p>
+                            <span class="capability-provider">Hangar 1</span>
+                        </div>
+                    </li>
+            </ul>
         </section>
 
-        <section class="booking-section" aria-labelledby="book-heading">
-            <h2 class="visually-hidden" id="book-heading">Book a class</h2>
-            <form class="booking-form" id="booking-form">
-                <fieldset>
-                    <legend>Choose workshop</legend>
-                    <div class="booking-choice-grid booking-choice-grid--classes">
-                        <label>
-                            <input type="radio" name="class" value="introduction-to-clay" data-price="30000" required>
-                            <span>
-                                <span class="booking-class-avatars" aria-hidden="true">
-                                    <svg class="booking-shape booking-shape--green" viewBox="0 0 44 44" width="44" height="44" focusable="false">
-                                        <circle cx="22" cy="22" r="15" fill="currentColor" />
-                                    </svg>
-                                </span>
-                                Intro to Ceramics
-                                <small>₦30,000</small>
-                            </span>
-                        </label>
-                        <label>
-                            <input type="radio" name="class" value="introduction-to-3d-printing" data-price="30000" required>
-                            <span>
-                                <span class="booking-class-avatars" aria-hidden="true">
-                                    <svg class="booking-shape booking-shape--orange" viewBox="0 0 44 44" width="44" height="44" focusable="false">
-                                        <polygon points="22,7 38,37 6,37" fill="currentColor" />
-                                    </svg>
-                                </span>
-                                Intro to 3D Printing
-                                <small>₦30,000</small>
-                            </span>
-                        </label>
-                        <label>
-                            <input type="radio" name="class" value="introduction-to-making" data-price="30000" required>
-                            <span>
-                                <span class="booking-class-avatars" aria-hidden="true">
-                                    <svg class="booking-shape booking-shape--yellow" viewBox="0 0 44 44" width="44" height="44" focusable="false">
-                                        <rect x="7" y="7" width="30" height="30" fill="currentColor" />
-                                    </svg>
-                                </span>
-                                Intro to Concrete
-                                <small>₦30,000</small>
-                            </span>
-                        </label>
-                    </div>
-                </fieldset>
+        <section class="making-introduction current-workshop" id="workshop" aria-labelledby="current-workshop-heading">
+            <h2 class="making-introduction-title" id="current-workshop-heading">Book a workshop</h2>
+            <div>
+                <p class="making-label current-workshop-kicker">Intro to 3D Printing</p>
+                <p>Learn how a digital model becomes a physical object. This beginner session covers preparing a file, understanding the machine and producing a first print.</p>
+                <dl class="current-workshop-details">
+                    <div><dt>Level</dt><dd>Beginner</dd></div>
+                    <div><dt>Duration</dt><dd>3 hours</dd></div>
+                    <div><dt>Price</dt><dd>₦30,000</dd></div>
+                </dl>
+                <button class="current-workshop-booking-toggle" id="booking-toggle" type="button" aria-expanded="false" aria-controls="booking-panel">Book a session</button>
 
+                <div class="current-workshop-booking" id="booking-panel" hidden>
+                    <p class="current-workshop-booking-intro">Thursday evening and Saturday morning sessions begin in September. Select an available session to book.</p>
+                    <form class="booking-form" id="booking-form">
                 <fieldset>
-                    <legend>Choose a date</legend>
+                    <legend>Available sessions</legend>
                     <div class="booking-choice-grid booking-choice-grid--dates">
-                        <label><input type="radio" name="date" value="2026-09-03" data-period="evening" required><span><span class="booking-date-head"><span><small>Thu</small>03 Sep</span><small class="booking-date-time">4 - 7pm</small></span><span class="booking-date-meta"><small data-remaining-for-date="2026-09-03">Checking availability…</small></span></span></label>
-                        <label><input type="radio" name="date" value="2026-09-05" data-period="morning" required><span><span class="booking-date-head"><span><small>Sat</small>05 Sep</span><small class="booking-date-time">11am - 2pm</small></span><span class="booking-date-meta"><small data-remaining-for-date="2026-09-05">Checking availability…</small></span></span></label>
-                        <label><input type="radio" name="date" value="2026-09-10" data-period="evening" required><span><span class="booking-date-head"><span><small>Thu</small>10 Sep</span><small class="booking-date-time">4 - 7pm</small></span><span class="booking-date-meta"><small data-remaining-for-date="2026-09-10">Checking availability…</small></span></span></label>
-                        <label><input type="radio" name="date" value="2026-09-12" data-period="morning" required><span><span class="booking-date-head"><span><small>Sat</small>12 Sep</span><small class="booking-date-time">11am - 2pm</small></span><span class="booking-date-meta"><small data-remaining-for-date="2026-09-12">Checking availability…</small></span></span></label>
-                        <label><input type="radio" name="date" value="2026-09-17" data-period="evening" required><span><span class="booking-date-head"><span><small>Thu</small>17 Sep</span><small class="booking-date-time">4 - 7pm</small></span><span class="booking-date-meta"><small data-remaining-for-date="2026-09-17">Checking availability…</small></span></span></label>
-                        <label><input type="radio" name="date" value="2026-09-19" data-period="morning" required><span><span class="booking-date-head"><span><small>Sat</small>19 Sep</span><small class="booking-date-time">11am - 2pm</small></span><span class="booking-date-meta"><small data-remaining-for-date="2026-09-19">Checking availability…</small></span></span></label>
-                        <label><input type="radio" name="date" value="2026-09-24" data-period="evening" required><span><span class="booking-date-head"><span><small>Thu</small>24 Sep</span><small class="booking-date-time">4 - 7pm</small></span><span class="booking-date-meta"><small data-remaining-for-date="2026-09-24">Checking availability…</small></span></span></label>
-                        <label><input type="radio" name="date" value="2026-09-26" data-period="morning" required><span><span class="booking-date-head"><span><small>Sat</small>26 Sep</span><small class="booking-date-time">11am - 2pm</small></span><span class="booking-date-meta"><small data-remaining-for-date="2026-09-26">Checking availability…</small></span></span></label>
+                        <label hidden><input type="radio" name="event" value="intro-to-3d-printing-2026-09-03" data-date="2026-09-03" data-period="evening" data-capacity="1" data-price="30000" required disabled><span><span class="booking-date-head"><span><small>Thu</small>03 Sep</span><small class="booking-date-time">4 - 7pm</small></span></span></label>
+                        <label hidden><input type="radio" name="event" value="intro-to-3d-printing-2026-09-05" data-date="2026-09-05" data-period="morning" data-capacity="1" data-price="30000" required disabled><span><span class="booking-date-head"><span><small>Sat</small>05 Sep</span><small class="booking-date-time">11am - 2pm</small></span></span></label>
+                        <label hidden><input type="radio" name="event" value="intro-to-3d-printing-2026-09-10" data-date="2026-09-10" data-period="evening" data-capacity="1" data-price="30000" required disabled><span><span class="booking-date-head"><span><small>Thu</small>10 Sep</span><small class="booking-date-time">4 - 7pm</small></span></span></label>
+                        <label hidden><input type="radio" name="event" value="intro-to-3d-printing-2026-09-12" data-date="2026-09-12" data-period="morning" data-capacity="1" data-price="30000" required disabled><span><span class="booking-date-head"><span><small>Sat</small>12 Sep</span><small class="booking-date-time">11am - 2pm</small></span></span></label>
+                        <label hidden><input type="radio" name="event" value="intro-to-3d-printing-2026-09-17" data-date="2026-09-17" data-period="evening" data-capacity="1" data-price="30000" required disabled><span><span class="booking-date-head"><span><small>Thu</small>17 Sep</span><small class="booking-date-time">4 - 7pm</small></span></span></label>
+                        <label hidden><input type="radio" name="event" value="intro-to-3d-printing-2026-09-19" data-date="2026-09-19" data-period="morning" data-capacity="1" data-price="30000" required disabled><span><span class="booking-date-head"><span><small>Sat</small>19 Sep</span><small class="booking-date-time">11am - 2pm</small></span></span></label>
+                        <label hidden><input type="radio" name="event" value="intro-to-3d-printing-2026-09-24" data-date="2026-09-24" data-period="evening" data-capacity="1" data-price="30000" required disabled><span><span class="booking-date-head"><span><small>Thu</small>24 Sep</span><small class="booking-date-time">4 - 7pm</small></span></span></label>
+                        <label hidden><input type="radio" name="event" value="intro-to-3d-printing-2026-09-26" data-date="2026-09-26" data-period="morning" data-capacity="1" data-price="30000" required disabled><span><span class="booking-date-head"><span><small>Sat</small>26 Sep</span><small class="booking-date-time">11am - 2pm</small></span></span></label>
                     </div>
-                    <input type="hidden" name="period" value="">
                 </fieldset>
 
                 <fieldset>
@@ -206,11 +232,6 @@
 
                 <div class="booking-submit-row">
                     <div class="booking-order">
-                        <div class="booking-stepper" role="group" aria-label="Places">
-                            <button type="button" data-quantity-step="-1" aria-label="Remove a place">&minus;</button>
-                            <output id="booking-quantity" aria-live="polite">1</output>
-                            <button type="button" data-quantity-step="1" aria-label="Add a place">+</button>
-                        </div>
                         <div class="booking-order-total">
                             <span class="making-label">Total</span>
                             <p class="booking-total" id="booking-total">&#8358;30,000</p>
@@ -219,9 +240,9 @@
                     <button type="submit">Reserve</button>
                 </div>
                 <p class="booking-status" id="booking-status" role="status" aria-live="polite"></p>
-            </form>
+                    </form>
 
-            <section class="booking-review" id="booking-review" aria-labelledby="booking-review-title" hidden>
+                    <section class="booking-review" id="booking-review" aria-labelledby="booking-review-title" hidden>
                 <header class="booking-review-header">
                     <div>
                         <p class="making-label" id="booking-review-kicker">Reservation held</p>
@@ -234,7 +255,7 @@
                 </header>
 
                 <p class="booking-review-intro" id="booking-review-intro">
-                    Your places are set aside. Complete payment before the timer reaches zero.
+                    Your session is set aside. Complete payment before the timer reaches zero.
                 </p>
 
                 <dl class="booking-review-summary" id="booking-review-summary">
@@ -251,10 +272,6 @@
                         <dd data-review-value="time"></dd>
                     </div>
                     <div>
-                        <dt>Places</dt>
-                        <dd data-review-value="quantity"></dd>
-                    </div>
-                    <div>
                         <dt>Reserved for</dt>
                         <dd data-review-value="customer"></dd>
                     </div>
@@ -265,37 +282,38 @@
                 </dl>
 
                 <p class="booking-review-notice" id="booking-review-notice">
-                    Cancelling releases your places immediately. Payment is handled securely by Paystack.
+                    Cancelling releases the session immediately. Payment is handled securely by Paystack.
                 </p>
 
                 <div class="booking-review-actions" id="booking-review-actions">
                     <button type="button" class="booking-review-cancel" id="booking-review-cancel">Cancel reservation</button>
                     <button type="button" class="booking-review-pay" id="booking-review-pay">Pay now</button>
                 </div>
-            </section>
+                    </section>
+                </div>
+            </div>
         </section>
 
-        <section class="making-introduction making-introduction--rent" id="rent" aria-labelledby="rent-space-heading">
-            <h2 class="making-introduction-title" id="rent-space-heading">Rent the space.</h2>
+        <section class="making-introduction making-introduction--rent" id="use-space" aria-labelledby="use-space-heading">
+            <h2 class="making-introduction-title" id="use-space-heading">Use the space.</h2>
             <div>
-                <p class="making-label">Makerspace is a place for sharing skills, trying ideas and building together. Take it over to host a workshop, class, shoot, meeting or gathering of your own.</p>
-                <details class="rental-guidelines">
+                <p class="making-label">Come in to design for free, host a workshop of your own, or hire Makerspace for a class, shoot, meeting or gathering.</p>
+                <details class="rental-guidelines" open>
                     <summary>
                         <span class="rental-guidelines-title">Guidelines</span>
                     </summary>
                     <ul>
+                        <li>Free design visits include access to our shared computer with design tools installed and a Codex subscription.</li>
+                        <li>To host a workshop, tell us what you want to teach, your preferred date, group size and any tools you need.</li>
+                        <li>For private hire, send your date, hours, guest count and setup so we can confirm availability and cost.</li>
                         <li>This is a shared building, so there may be other guests around.</li>
                         <li>We can’t promise 24/7 power, but a backup is available.</li>
-                        <li>There’s no air conditioning, but there are fans.</li>
-                        <li>Workshop tools are not included unless arranged separately.</li>
                         <li>Street parking is limited. Shared transport or taxis work best.</li>
-                        <li>Setup is yours to handle. Leave the space as you found it.</li>
-                        <li>Do not place anything on the street.</li>
-                        <li>You are responsible for your guests and any damage.</li>
+                        <li>Setup is yours to handle. Leave the space as you found it and take responsibility for your guests.</li>
                     </ul>
                 </details>
                 <p class="making-home-ctas">
-                    <a href="https://moonlight-studios.notion.site/336599ecfca68369b1cd81c00f648e25?pvs=105" target="_blank" rel="noopener noreferrer">Send a rental request</a>
+                    <a href="mailto:makerspace@16by16.co?subject=Using%20Makerspace">Use the space</a>
                 </p>
             </div>
         </section>
@@ -308,8 +326,8 @@
         </a>
     </footer>
     <script src="/app/scripts/page-transitions.js"></script>
+    <script src="/app/scripts/making-navigation.js"></script>
     <script src="/app/scripts/carousel.js"></script>
-    <script src="https://js.paystack.co/v2/inline.js"></script>
     <script src="/app/scripts/booking-calendar.js"></script>
 </body>
 

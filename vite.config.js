@@ -1,34 +1,15 @@
 import { resolve } from 'path'
 import { randomUUID } from 'node:crypto'
-import { defineConfig, loadEnv } from 'vite'
+import { defineConfig } from 'vite'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 import {
-    getWorkshop,
-    SESSION_CAPACITY,
-    SESSIONS,
-    WORKSHOPS,
+    EVENTS,
+    getEvent,
+    MAKERSPACE_SUBACCOUNT_CODE,
+    WORKSHOP,
 } from './server/config.js'
-import { requirePaystackProduct } from './server/paystack.js'
 
-const PAYSTACK_ENV_KEYS = [
-    'PAYSTACK_PUBLIC_KEY',
-    'PAYSTACK_PRODUCT_ID',
-    'PAYSTACK_PRODUCT_CODE',
-    'PAYSTACK_PRODUCT_PAGE_SLUG',
-    'PAYSTACK_VARIANT_OPTION_ID',
-    'PAYSTACK_VARIANT_VALUE_CERAMICS_ID',
-    'PAYSTACK_PRODUCT_VARIANT_CERAMICS_ID',
-    'PAYSTACK_VARIANT_CERAMICS_AMOUNT',
-    'PAYSTACK_VARIANT_VALUE_3D_PRINTING_ID',
-    'PAYSTACK_PRODUCT_VARIANT_3D_PRINTING_ID',
-    'PAYSTACK_VARIANT_3D_PRINTING_AMOUNT',
-    'PAYSTACK_VARIANT_VALUE_MAKING_ID',
-    'PAYSTACK_PRODUCT_VARIANT_MAKING_ID',
-    'PAYSTACK_VARIANT_MAKING_AMOUNT',
-]
-
-const bookingApiPlugin = (paystackEnv) => {
-    const publicKey = paystackEnv.PAYSTACK_PUBLIC_KEY
+const bookingApiPlugin = () => {
     const bookings = []
     const payments = []
 
@@ -59,89 +40,65 @@ const bookingApiPlugin = (paystackEnv) => {
                 const url = new URL(req.url, 'http://localhost')
 
                 if (url.pathname === '/api/availability' && req.method === 'GET') {
-                    const sessions = SESSIONS.map(({ date, period }) => {
+                    const events = EVENTS.map((event) => {
                         const reserved = bookings
                             .filter((booking) => (
-                                booking.date === date
-                                && booking.period === period
+                                booking.eventSlug === event.slug
                                 && ['reserved', 'paid'].includes(booking.status)
                             ))
                             .reduce((total, booking) => total + booking.quantity, 0)
                         return {
-                            date,
-                            period,
-                            capacity: SESSION_CAPACITY,
+                            ...event,
+                            title: WORKSHOP.name,
+                            currency: 'NGN',
                             reserved,
-                            remaining: Math.max(0, SESSION_CAPACITY - reserved),
+                            remaining: Math.max(0, event.capacity - reserved),
                         }
                     })
-                    let workshops
-                    try {
-                        workshops = Object.entries(WORKSHOPS).map(([slug, workshop]) => ({
-                            slug,
-                            name: workshop.name,
-                            amount: requirePaystackProduct(paystackEnv, slug).amount,
-                            currency: 'NGN',
-                        }))
-                    } catch (error) {
-                        return sendJson(res, error.status || 503, { error: error.message })
-                    }
 
-                    return sendJson(res, 200, { sessions, workshops })
+                    return sendJson(res, 200, { workshop: WORKSHOP, events })
                 }
 
                 if (url.pathname === '/api/bookings' && req.method === 'POST') {
                     try {
                         const input = await readBody(req)
-                        const workshop = getWorkshop(input.classSlug)
-                        if (!workshop) return sendJson(res, 400, { error: 'Choose a valid class.' })
-                        if (!SESSIONS.some((session) => (
-                            session.date === input.date && session.period === input.period
-                        ))) {
-                            return sendJson(res, 400, { error: 'Choose the available time for that date.' })
-                        }
-                        if (!publicKey?.startsWith('pk_test_')) {
-                            return sendJson(res, 503, { error: 'Paystack Popup requires a public test key.' })
-                        }
-
-                        let paystackProduct
-                        try {
-                            paystackProduct = requirePaystackProduct(paystackEnv, input.classSlug)
-                        } catch (error) {
-                            return sendJson(res, error.status || 503, { error: error.message })
-                        }
+                        const event = getEvent(input.eventSlug)
+                        if (!event) return sendJson(res, 400, { error: 'Choose a valid event.' })
 
                         const quantity = Number(input.quantity || 1)
-                        if (!Number.isInteger(quantity) || quantity < 1 || quantity > SESSION_CAPACITY) {
-                            return sendJson(res, 400, { error: `Choose between 1 and ${SESSION_CAPACITY} places.` })
+                        if (!Number.isInteger(quantity) || quantity < 1 || quantity > event.capacity) {
+                            return sendJson(res, 400, { error: `Choose between 1 and ${event.capacity} places.` })
                         }
 
                         const reserved = bookings
                             .filter((booking) => (
-                                booking.date === input.date
-                                && booking.period === input.period
+                                booking.eventSlug === event.slug
                                 && ['reserved', 'paid'].includes(booking.status)
                             ))
                             .reduce((total, booking) => total + booking.quantity, 0)
 
-                        if (reserved + quantity > SESSION_CAPACITY) {
+                        if (reserved + quantity > event.capacity) {
                             return sendJson(res, 409, { error: 'That session has just filled up. Please choose another.' })
                         }
 
                         const bookingId = randomUUID()
                         const reference = `local-${Date.now().toString(36)}-${bookingId.replaceAll('-', '').slice(0, 8)}`
-                        bookings.push({ ...input, quantity, id: bookingId, status: 'reserved' })
+                        bookings.push({
+                            ...input,
+                            date: event.date,
+                            period: event.period,
+                            quantity,
+                            id: bookingId,
+                            status: 'reserved',
+                        })
                         payments.push({
                             reference,
                             bookingId,
-                            amount: paystackProduct.amount * quantity,
+                            eventSlug: event.slug,
+                            subaccountCode: MAKERSPACE_SUBACCOUNT_CODE,
+                            amount: event.amount * quantity,
                             currency: 'NGN',
                             environment: 'test',
-                            productId: paystackProduct.id,
-                            productCode: paystackProduct.code,
-                            productVariantId: paystackProduct.productVariantId,
-                            variantOptionId: paystackProduct.variantOptionId,
-                            variantValueId: paystackProduct.variantValueId,
                             status: 'pending',
                             createdAt: new Date().toISOString(),
                         })
@@ -149,24 +106,12 @@ const bookingApiPlugin = (paystackEnv) => {
                             bookingId,
                             reference,
                             checkout: {
-                                publicKey,
-                                email: input.email.toLowerCase(),
-                                amount: paystackProduct.amount * quantity,
+                                accessCode: `local-${reference}`,
+                                authorizationUrl: `/payment-complete/?reference=${encodeURIComponent(reference)}`,
+                                amount: event.amount * quantity,
                                 currency: 'NGN',
                                 reference,
-                                metadata: {
-                                    booking_id: bookingId,
-                                    product_slug: input.classSlug,
-                                    product_id: paystackProduct.id,
-                                    product_code: paystackProduct.code,
-                                    product_page_slug: paystackProduct.pageSlug,
-                                    product_variant_id: paystackProduct.productVariantId,
-                                    variant_option_id: paystackProduct.variantOptionId,
-                                    variant_value_id: paystackProduct.variantValueId,
-                                    session_date: input.date,
-                                    session_period: input.period,
-                                    quantity,
-                                },
+                                environment: 'test',
                             },
                         })
                     } catch (error) {
@@ -205,20 +150,6 @@ const bookingApiPlugin = (paystackEnv) => {
                     }
                 }
 
-                if (url.pathname === '/api/payments/acknowledge' && req.method === 'POST') {
-                    const input = await readBody(req)
-                    const payment = payments.find((candidate) => candidate.reference === input.reference)
-                    const popupReference = input.transaction?.reference || input.transaction?.trxref
-                    if (!payment || popupReference !== payment.reference || input.transaction?.status !== 'success') {
-                        return sendJson(res, 400, { error: 'The Paystack Popup result is incomplete.' })
-                    }
-
-                    payment.status = 'unverified'
-                    payment.paidAt = payment.paidAt || new Date().toISOString()
-                    payment.providerTransactionId = input.transaction.transaction || input.transaction.trans || null
-                    return sendJson(res, 200, { status: payment.status, reference: payment.reference })
-                }
-
                 if (url.pathname === '/api/payments/status' && req.method === 'GET') {
                     const reference = url.searchParams.get('reference')
                     const payment = payments.find((candidate) => candidate.reference === reference)
@@ -231,8 +162,9 @@ const bookingApiPlugin = (paystackEnv) => {
                         ...payment,
                         email: booking.email.toLowerCase(),
                         customerName: booking.name,
-                        workshop: getWorkshop(booking.classSlug).name,
-                        classSlug: booking.classSlug,
+                        workshop: WORKSHOP.name,
+                        classSlug: WORKSHOP.slug,
+                        eventSlug: booking.eventSlug,
                         sessionDate: booking.date,
                         sessionPeriod: booking.period,
                         quantity: booking.quantity,
@@ -267,15 +199,10 @@ const rewritePlugin = () => {
     }
 }
 
-export default defineConfig(({ mode }) => {
-    const localEnv = loadEnv(mode, __dirname, '')
-    const paystackEnv = Object.fromEntries(
-        PAYSTACK_ENV_KEYS.map((key) => [key, process.env[key] || localEnv[key]])
-    )
-
+export default defineConfig(() => {
     return {
         plugins: [
-            bookingApiPlugin(paystackEnv),
+            bookingApiPlugin(),
             rewritePlugin(),
             viteStaticCopy({
                 targets: [

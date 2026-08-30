@@ -1687,6 +1687,28 @@ body.product-slideshow-open {
     text-decoration: none;
 }
 
+.making-header-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 1.25rem;
+}
+
+.making-menu-toggle,
+.making-mobile-menu {
+    display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .making-mobile-menu,
+    .making-menu-mark::before,
+    .making-menu-mark::after,
+    .making-header > .making-wordmark,
+    .making-menu-toggle {
+        transition-duration: 0.01ms !important;
+    }
+}
+
 .making-wordmark {
     color: var(--text-primary);
     font-family: var(--font-sans);
@@ -1719,12 +1741,23 @@ body.product-slideshow-open {
     display: grid;
     grid-template-columns: minmax(8rem, 0.4fr) minmax(0, 1fr);
     gap: var(--space-md);
-    align-content: center;
-    padding: var(--space-lg) var(--making-inset-x) var(--space-md);
+    padding: clamp(1.5rem, 3vw, 3rem) var(--making-inset-x) var(--space-md);
+}
+
+.making-home-intro > * {
+    min-width: 0;
+}
+
+.making-home-intro > div {
+    grid-column: 2;
+    max-width: none;
 }
 
 .making-home-logo {
+    max-width: 8.5ch;
     margin: 0;
+    font-size: clamp(4rem, 8vw, 8.5rem);
+    line-height: 0.86;
 }
 
 .making-home-logo img {
@@ -1735,7 +1768,7 @@ body.product-slideshow-open {
 }
 
 .making-home-intro > div > p {
-    max-width: 32rem;
+    max-width: 34rem;
     margin: 0;
     color: var(--text-primary);
     font-size: var(--making-type-body);
@@ -1758,7 +1791,7 @@ body.product-slideshow-open {
 }
 
 .making-home-intro > div > .making-home-ctas {
-    margin-top: 2.5em;
+    margin-top: 2rem;
 }
 
 .making-home-ctas a {
@@ -1995,13 +2028,343 @@ h1.making-introduction-title {
     line-height: 1.4;
 }
 
-.making-home-page .making-introduction > div > .making-label {
+.making-home-page .making-introduction > div > .making-label,
+.capabilities-heading > p {
     max-width: 38rem;
     margin: 0;
     color: var(--text-primary);
     font-size: var(--making-type-body);
     font-weight: 400;
     line-height: 1.4;
+    letter-spacing: normal;
+    text-transform: none;
+}
+
+.capabilities-section {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.4fr) minmax(0, 1fr);
+    column-gap: var(--space-md);
+}
+
+.capabilities-heading {
+    display: contents;
+}
+
+.capabilities-list {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-column: 2;
+    gap: 0;
+    max-width: none;
+    margin: var(--space-md) 0 0;
+    padding: 0;
+    border-top: 1px solid var(--making-line);
+    list-style: none;
+}
+
+.capabilities-list li {
+    max-width: none;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: 0.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--making-line);
+}
+
+.capabilities-list li:last-child {
+    border-bottom: 0;
+}
+
+.capabilities-list li > span {
+    padding-top: 0.2rem;
+    color: var(--making-muted);
+    font-size: var(--making-type-meta);
+    font-weight: 500;
+}
+
+.capabilities-list li > div {
+    min-width: 0;
+    display: grid;
+    grid-template-columns: minmax(12rem, 0.45fr) minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 4vw, 4rem);
+    row-gap: 0.15rem;
+    align-items: start;
+}
+
+.capabilities-list h3 {
+    grid-column: 1;
+    grid-row: 1;
+    max-width: none;
+    margin: 0;
+    font-size: var(--making-type-body);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+}
+
+.capability-provider {
+    grid-column: 1;
+    grid-row: 2;
+    color: var(--making-muted);
+    font-size: var(--making-type-meta);
+    font-weight: 500;
+    letter-spacing: normal;
+    text-transform: none;
+}
+
+.capabilities-list p {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    max-width: 38rem;
+    margin: 0;
+    font-size: var(--making-type-ui);
+    font-weight: 400;
+    line-height: 1.45;
+}
+
+@media (min-width: 769px) {
+    .capabilities-list p {
+        font-size: var(--making-type-body);
+        line-height: 1.35;
+    }
+}
+
+.current-workshop {
+    background: #f3f0e8;
+}
+
+.current-workshop-kicker {
+    max-width: 12ch !important;
+    margin: 0 !important;
+    font-size: clamp(2.3rem, 5vw, 5.8rem) !important;
+    font-weight: 600 !important;
+    line-height: 0.95 !important;
+    letter-spacing: -0.045em;
+}
+
+.current-workshop > div > p:not(.current-workshop-kicker) {
+    margin-top: var(--space-md);
+    font-weight: 400;
+}
+
+.current-workshop-details {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin-top: var(--space-md);
+    border: 1px solid var(--making-line);
+    background: var(--making-line);
+}
+
+.current-workshop-details div {
+    min-width: 0;
+    padding: 1rem;
+    background: #f3f0e8;
+}
+
+.current-workshop-details dt {
+    color: var(--making-muted);
+    font-size: var(--making-type-meta);
+    font-weight: 500;
+}
+
+.current-workshop-details dd {
+    margin-top: 0.35rem;
+    font-size: var(--making-type-ui);
+    font-weight: 600;
+}
+
+.making-home-page .current-workshop {
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
+}
+
+.current-workshop-booking-toggle {
+    min-width: 11rem;
+    margin-top: var(--space-md);
+    padding: 1rem 1.6rem;
+    border: 1px solid var(--text-primary);
+    background: var(--text-primary);
+    color: #fff;
+    font-size: var(--making-type-ui);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.current-workshop-booking-toggle:hover,
+.current-workshop-booking-toggle:focus-visible {
+    background: transparent;
+    color: var(--text-primary);
+}
+
+.current-workshop-booking[hidden] {
+    display: none;
+}
+
+.current-workshop-booking {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--text-primary);
+}
+
+.current-workshop-booking.is-revealed {
+    animation: booking-panel-reveal 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.current-workshop-booking-intro {
+    max-width: 38rem;
+    margin: 0 0 var(--space-md);
+    color: var(--text-primary);
+    font-size: var(--making-type-ui);
+    line-height: 1.45;
+}
+
+@keyframes booking-panel-reveal {
+    from {
+        opacity: 0;
+        transform: translateY(0.75rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .current-workshop-booking.is-revealed {
+        animation: none;
+    }
+}
+
+/* Artist residency */
+.residency-hero {
+    min-height: calc(86svh - 8.5rem);
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.4fr) minmax(0, 1fr);
+    gap: var(--space-md);
+    align-content: center;
+    padding: var(--space-lg) var(--making-inset-x) var(--space-xl);
+}
+
+.residency-hero > .making-label {
+    align-self: start;
+}
+
+.residency-hero h1 {
+    max-width: 11ch;
+    margin: 0;
+    font-size: clamp(3.4rem, 8vw, 8.5rem);
+    line-height: 0.86;
+}
+
+.residency-hero > p:last-child {
+    grid-column: 2;
+    max-width: 42rem;
+    margin-top: var(--space-md);
+    font-size: var(--making-type-body);
+    line-height: 1.4;
+}
+
+.residency-lead-image {
+    margin: 0;
+    padding: 0 var(--making-inset-x) var(--space-xl);
+}
+
+.residency-lead-image img {
+    display: block;
+    width: 100%;
+    height: min(68svh, 46rem);
+    object-fit: cover;
+}
+
+.residency-statement > div > p,
+.residency-invitation > div > p:not(.making-home-ctas) {
+    max-width: 43rem;
+    margin: 0 0 1em;
+    font-size: var(--making-type-body);
+    line-height: 1.4;
+}
+
+.residency-week {
+    padding: var(--space-xl) var(--making-inset-x);
+    background: #111;
+    color: #fff;
+}
+
+.residency-week header {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.4fr) minmax(0, 1fr);
+    gap: var(--space-md);
+}
+
+.residency-week .making-label {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.residency-week h2 {
+    max-width: 12ch;
+    margin: 0;
+    color: #fff;
+    font-size: clamp(2.8rem, 6.5vw, 7rem);
+    line-height: 0.92;
+}
+
+.residency-strands {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    margin: var(--space-xl) 0 0;
+    padding: 0;
+    background: rgba(255, 255, 255, 0.25);
+    list-style: none;
+}
+
+.residency-strands li {
+    min-height: 19rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-lg);
+    padding: var(--space-sm);
+    background: #111;
+}
+
+.residency-strands > li > span {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: var(--making-type-meta);
+}
+
+.residency-strands h3 {
+    margin-bottom: 0.65rem;
+    color: #fff;
+    font-size: var(--making-type-body);
+}
+
+.residency-strands p {
+    max-width: 28rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: var(--making-type-ui);
+    line-height: 1.5;
+}
+
+.residency-gallery {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr 1fr;
+    gap: var(--space-sm);
+    padding: var(--space-xl) var(--making-inset-x);
+}
+
+.residency-gallery img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.residency-invitation {
+    padding-bottom: var(--space-xl);
 }
 
 .booking-heading--prose {
@@ -2084,6 +2447,11 @@ h1.making-introduction-title {
 
 .booking-choice-grid--dates {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 0.75rem;
+}
+
+.booking-choice-grid--dates.has-selection {
+    grid-template-columns: minmax(0, 1fr);
 }
 
 .booking-choice-grid--times {
@@ -3013,8 +3381,164 @@ body.booking-payment-preview-open {
     }
 
     .making-header {
+        position: relative;
+        z-index: 1201;
         min-height: 6.5rem;
+        align-items: flex-start;
         padding: var(--space-sm) var(--making-inset-x);
+    }
+
+    .making-header.has-making-menu .making-header-links {
+        display: none;
+    }
+
+    .making-header > .making-wordmark {
+        position: relative;
+        z-index: 1202;
+        transition: color 0.2s ease;
+    }
+
+    .making-header.has-making-menu .making-menu-toggle {
+        position: relative;
+        z-index: 1202;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        color: var(--text-primary);
+        font-size: var(--making-type-ui);
+        font-weight: 600;
+        cursor: pointer;
+        transition: color 0.2s ease;
+    }
+
+    .making-menu-toggle:focus-visible {
+        outline: 2px solid currentColor;
+        outline-offset: 0.35rem;
+    }
+
+    .making-menu-mark {
+        position: relative;
+        width: 1rem;
+        height: 1rem;
+    }
+
+    .making-menu-mark::before,
+    .making-menu-mark::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: currentColor;
+        transition: transform 0.25s ease;
+    }
+
+    .making-menu-mark::after {
+        transform: rotate(90deg);
+    }
+
+    .making-mobile-menu {
+        position: fixed;
+        inset: 0;
+        z-index: 1200;
+        display: grid;
+        grid-template-rows: minmax(0, 1fr) auto;
+        gap: var(--space-sm);
+        padding: 6.8rem var(--making-inset-x) var(--space-sm);
+        background: #111;
+        color: #fff;
+        overflow-y: auto;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-0.75rem);
+        transition: opacity 0.22s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.32s;
+    }
+
+    .making-header.is-menu-open > .making-wordmark,
+    .making-header.is-menu-open .making-menu-toggle {
+        color: #fff;
+    }
+
+    .making-header.is-menu-open .making-menu-mark::before {
+        transform: rotate(45deg);
+    }
+
+    .making-header.is-menu-open .making-menu-mark::after {
+        transform: rotate(-45deg);
+    }
+
+    .making-header.is-menu-open .making-mobile-menu {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        transition-delay: 0s;
+    }
+
+    .making-mobile-menu-links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .making-mobile-menu-links a {
+        display: grid;
+        grid-template-columns: 2.1rem minmax(0, 1fr);
+        gap: 0.7rem;
+        align-items: baseline;
+        padding: 0.42rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        color: #fff;
+        font-size: clamp(2.2rem, 10.5vw, 4rem);
+        font-weight: 600;
+        line-height: 0.95;
+        letter-spacing: -0.045em;
+        text-decoration: none;
+    }
+
+    .making-mobile-menu-links a:first-child {
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .making-mobile-menu-links a > span {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: var(--making-type-meta);
+        font-weight: 500;
+        letter-spacing: normal;
+    }
+
+    .making-mobile-menu-links a:hover,
+    .making-mobile-menu-links a:focus-visible {
+        color: #fff;
+        background: transparent;
+    }
+
+    .making-mobile-menu-links a:hover {
+        opacity: 0.68;
+    }
+
+    .making-mobile-menu-links a:focus-visible {
+        outline: 2px solid #fff;
+        outline-offset: 0.3rem;
+    }
+
+    .making-mobile-menu-footer {
+        padding-top: var(--space-sm);
+    }
+
+    .making-mobile-menu-footer p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.55);
+        font-size: var(--making-type-meta);
+        font-weight: 500;
+        line-height: 1.4;
+    }
+
+    body.making-menu-open {
+        overflow: hidden;
     }
 
     .making-hero {
@@ -3028,9 +3552,126 @@ body.booking-payment-preview-open {
 
     .making-home-intro {
         grid-template-columns: 1fr;
-        gap: var(--space-md);
-        align-content: center;
-        padding: var(--space-lg) var(--making-inset-x) var(--space-md);
+        padding: 2.5rem var(--making-inset-x) var(--space-md);
+    }
+
+    .making-home-intro > div {
+        grid-column: 1;
+    }
+
+    .making-home-logo {
+        max-width: 100%;
+        font-size: clamp(3.55rem, 17.5vw, 5.5rem);
+        line-height: 0.86;
+    }
+
+    .making-home-intro > div > p {
+        max-width: 100%;
+    }
+
+    .making-home-intro > div > .making-home-ctas {
+        margin-top: var(--space-sm);
+    }
+
+    .making-home-intro .making-home-ctas,
+    .making-home-intro .making-home-ctas a {
+        width: 100%;
+    }
+
+    .making-home-intro .making-home-ctas a {
+        text-align: center;
+    }
+
+    .capabilities-list,
+    .current-workshop-details {
+        grid-template-columns: 1fr;
+    }
+
+    .capabilities-heading {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--space-sm);
+    }
+
+    .capabilities-section {
+        display: block;
+    }
+
+    .capabilities-list {
+        grid-column: auto;
+    }
+
+    .capabilities-list li,
+    .capabilities-list li:nth-child(even) {
+        min-height: 0;
+        padding: 1.25rem 0 1.5rem;
+        border-right: 0;
+    }
+
+    .capabilities-list li > div {
+        grid-template-columns: 1fr;
+        gap: 0.65rem;
+    }
+
+    .capabilities-list h3 {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .capability-provider,
+    .capabilities-list p {
+        grid-column: auto;
+        grid-row: auto;
+    }
+
+    .current-workshop-details div {
+        display: grid;
+        grid-template-columns: 5rem minmax(0, 1fr);
+        align-items: baseline;
+        gap: 0.75rem;
+    }
+
+    .residency-hero,
+    .residency-week header {
+        grid-template-columns: 1fr;
+    }
+
+    .residency-hero {
+        min-height: calc(82svh - 6.5rem);
+        padding: var(--space-md) var(--making-inset-x) var(--space-lg);
+    }
+
+    .residency-hero > p:last-child {
+        grid-column: 1;
+    }
+
+    .residency-lead-image {
+        padding-bottom: var(--space-lg);
+    }
+
+    .residency-lead-image img {
+        height: 62svh;
+    }
+
+    .residency-week {
+        padding: var(--space-lg) var(--making-inset-x);
+    }
+
+    .residency-strands,
+    .residency-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .residency-strands {
+        margin-top: var(--space-lg);
+    }
+
+    .residency-strands li {
+        min-height: 14rem;
+    }
+
+    .residency-gallery {
+        padding: var(--space-lg) var(--making-inset-x);
     }
 
     .making-introduction,

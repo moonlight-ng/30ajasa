@@ -3,7 +3,6 @@ function initNavigation() {
     let currentPage = 'home';
     if (currentPath.includes('/building/')) currentPage = 'building';
     else if (currentPath.includes('/contact/')) currentPage = 'contact';
-    else if (currentPath.includes('/makerspace/')) currentPage = 'makerspace';
 
     const archiveBase = currentPath.startsWith('/archive/v1') ? '/archive/v1/' : '/';
 
